@@ -57,9 +57,9 @@ public class DataSender : MonoBehaviourExtension
             this.DelayInvoke(delegate ()
             {
                 this.localPort = this.dataReceiver.localPort;
-                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.LocalIP), this.localPort);
+                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.LocalIP), this.remotePort);
                 this.remotePort = this.dataReceiver.remotePort;
-                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.RemoteIP), this.remotePort);
+                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.RemoteIP), this.localPort);
                 this.Channel = this.dataReceiver.Channel;
                 this.OnInitialized();
             }, 1f);

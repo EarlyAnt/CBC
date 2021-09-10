@@ -164,9 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b8a284d420500479e9230ed11277d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localIP: 192.168.0.103
   localPort: 1000
-  remoteIP: 255.255.255.255
   remotePort: 2000
 --- !u!1 &3861778
 GameObject:
@@ -759,8 +757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc29621d3038414897253369c7bfe5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localIP: 192.168.0.103
-  localPort: 2000
-  remoteIP: 255.255.255.255
-  remotePort: 1000
-  dataReceiver: {fileID: 0}
+  localPort: 0
+  remotePort: 0
+  dataReceiver: {fileID: 731930}
