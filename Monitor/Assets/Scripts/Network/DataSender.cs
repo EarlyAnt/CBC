@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HLSoft.Framework.Util;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,11 +12,7 @@ public class DataSender : MonoBehaviourExtension
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    public string localIP;          //本机IP地址
-    [SerializeField]
     public int localPort;           //本机端口号
-    [SerializeField]
-    public string remoteIP;         //远程IP地址
     [SerializeField]
     public int remotePort;          //远程端口号
     [SerializeField]
@@ -48,8 +45,8 @@ public class DataSender : MonoBehaviourExtension
         //初始化通道
         if (this.dataReceiver == null)
         {
-            this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.localIP), this.localPort);
-            this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.remoteIP), this.remotePort);
+            this.localEndPoint = new IPEndPoint(IPAddress.Parse(NetHelper.GetLocalIPv4()), this.localPort);
+            this.remoteEndPoint = new IPEndPoint(IPAddress.Parse("255.255.255.255"), this.remotePort);
             this.Channel = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             this.Channel.Bind(this.localEndPoint);
             this.Channel.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
@@ -59,12 +56,10 @@ public class DataSender : MonoBehaviourExtension
         {
             this.DelayInvoke(delegate ()
             {
-                this.localIP = this.dataReceiver.localIP;
                 this.localPort = this.dataReceiver.localPort;
-                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.localIP), this.localPort);
-                this.remoteIP = this.dataReceiver.remoteIP;
+                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.LocalIP), this.localPort);
                 this.remotePort = this.dataReceiver.remotePort;
-                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.remoteIP), this.remotePort);
+                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.RemoteIP), this.remotePort);
                 this.Channel = this.dataReceiver.Channel;
                 this.OnInitialized();
             }, 1f);

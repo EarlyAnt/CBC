@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HLSoft.Framework.Util;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,13 +12,11 @@ public class DataReceiver : MonoBehaviour
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    public string localIP = "127.0.0.1";            //本机IP地址
-    [SerializeField]
-    public int localPort;                           //本机端口号
-    [SerializeField]
-    public string remoteIP = "255.255.255.0";       //远程IP地址
+    public int localPort;                           //本机端口号        
     [SerializeField]
     public int remotePort;                          //远程端口号
+    public string LocalIP { get; private set; }            //本机IP地址
+    public string RemoteIP { get; private set; }       //远程IP地址
     public Action<string> ReceiveDataAction;        //接收数据委托
     public Socket Channel { get; private set; }     //套接字通道
     private IPEndPoint localEndPoint = null;        //本地地址端口号
@@ -36,6 +35,7 @@ public class DataReceiver : MonoBehaviour
         if (this.Channel != null)
         {
             this.Channel.Close();
+            this.Channel = null;
         }
     }
     /************************************************自 定 义 方 法************************************************/
@@ -43,8 +43,10 @@ public class DataReceiver : MonoBehaviour
     void Initialize()
     {
         //初始化网络连接
-        this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.localIP), this.localPort);
-        this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.remoteIP), this.remotePort);
+        this.LocalIP = NetHelper.GetLocalIPv4();
+        this.RemoteIP = "255.255.255.255";
+        this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.LocalIP), this.localPort);
+        this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.RemoteIP), this.remotePort);
         //初始化通道
         this.Channel = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         this.Channel.Bind(this.localEndPoint);
@@ -66,7 +68,7 @@ public class DataReceiver : MonoBehaviour
             //if (((IPEndPoint)this.remoteEndPoint).Address.Equals(this.localEndPoint.Address) ||
             //    ((IPEndPoint)this.remoteEndPoint).Address.Equals(IPAddress.Broadcast)) return;
             string receiveData = Encoding.Default.GetString(((StateObject)result.AsyncState).Buffer, 0, dataLength);
-            //print(string.Format("{0} XXXX: {1}", DateTime.Now.ToyyyyMMddHHmmss(), receiveData));
+            print(string.Format("{0}->receive data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
             this.OnReceiveData(receiveData);
         }
         catch (ObjectDisposedException) { }
@@ -76,8 +78,11 @@ public class DataReceiver : MonoBehaviour
         }
         finally
         {
-            this.Channel.BeginReceiveFrom(this.stateObject.Buffer, 0, StateObject.BUFFER_SIZE, SocketFlags.None,
-                                          ref this.remoteEndPoint, new AsyncCallback(this.ReceiveData), this.stateObject);
+            if (this.Channel != null)
+            {
+                this.Channel.BeginReceiveFrom(this.stateObject.Buffer, 0, StateObject.BUFFER_SIZE, SocketFlags.None,
+                                              ref this.remoteEndPoint, new AsyncCallback(this.ReceiveData), this.stateObject);
+            }
         }
     }
     //解析定位数据(Demo版程序用)
