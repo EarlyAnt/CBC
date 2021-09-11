@@ -19,6 +19,8 @@ public class MonitorView : MonoBehaviourExtension
     private Text leftCard;
     [SerializeField]
     private Text rightCard;
+    [SerializeField]
+    private AnimationPlayer animationPlayer;
     private Queue<Action> actions = new Queue<Action>();
     /************************************************Unity方法与事件***********************************************/
     private void Start()
@@ -48,8 +50,14 @@ public class MonitorView : MonoBehaviourExtension
             switch (netData.Tag)
             {
                 case NetDataTags.AUDIO:
+                    string audioDataString = JsonUtil.Json2String(netData.Data);
+                    AudioEffect audioEffect = JsonUtil.String2Json<AudioEffect>(audioDataString);
+                    this.animationPlayer.Play(audioEffect.EffectFile);
                     break;
                 case NetDataTags.ANIMATION:
+                    string animationEffectString = JsonUtil.Json2String(netData.Data);
+                    AudioEffect animationEffect = JsonUtil.String2Json<AudioEffect>(animationEffectString);
+                    this.animationPlayer.Play(animationEffect.EffectFile);
                     break;
                 case NetDataTags.HEALTH:
                     string healthDataString = JsonUtil.Json2String(netData.Data);

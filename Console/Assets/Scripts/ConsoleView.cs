@@ -27,6 +27,30 @@ public class ConsoleView : MonoBehaviourExtension
 
     }
     /************************************************自 定 义 方 法************************************************/
+    public void PlayAudioEffect(string effectName)
+    {
+        if (string.IsNullOrEmpty(effectName))
+            return;
+
+        this.dataSender.SendData(PackageHelper.Package(new NetData()
+        {
+            Tag = NetDataTags.AUDIO,
+            Data = new AudioEffect() { EffectFile = effectName }
+        }));
+    }
+
+    public void PlayAnimationEffect(string effectName)
+    {
+        if (string.IsNullOrEmpty(effectName))
+            return;
+
+        this.dataSender.SendData(PackageHelper.Package(new NetData()
+        {
+            Tag = NetDataTags.ANIMATION,
+            Data = new AnimationEffect() { EffectFile = effectName }
+        }));
+    }
+
     public void PlusHealth(int value)
     {
         int healthValue = int.Parse(this.health.text) + value;
