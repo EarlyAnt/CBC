@@ -27,7 +27,7 @@ public class Snow : MonoBehaviourExtension
     }
     private void Update()
     {
-        this.transform.Translate(this.originX, -this.speed, 0, Space.World);
+        this.transform.Translate(0, -this.speed, 0, Space.World);
         this.transform.Rotate(0, 0, this.angle, Space.Self);
 
         this.time += Time.deltaTime;

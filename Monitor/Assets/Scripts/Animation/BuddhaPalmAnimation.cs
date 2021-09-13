@@ -11,12 +11,14 @@ public class BuddhaPalmAnimation : MonoBehaviourExtension
     private float rate = 1.5f;
     [SerializeField, Range(0f, 3f)]
     private float duration = 1.5f;
+    [SerializeField, Range(0f, 3f)]
+    private float remain = 1.5f;
     /************************************************Unity方法与事件***********************************************/
     private void Start()
     {
         this.transform.DOScale(this.rate, this.duration).onComplete += () =>
         {
-            GameObject.Destroy(this.gameObject);
+            this.DelayInvoke(() => GameObject.Destroy(this.gameObject), this.remain);
         };
     }
     private void OnDestroy()
