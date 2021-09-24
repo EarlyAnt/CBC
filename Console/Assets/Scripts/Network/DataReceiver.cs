@@ -12,16 +12,18 @@ public class DataReceiver : MonoBehaviour
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    public int localPort;                           //本机端口号        
+    private int localPort;                                          //本机端口号
     [SerializeField]
-    public int remotePort;                          //远程端口号
-    public string LocalIP { get; private set; }     //本机IP地址
-    public string RemoteIP { get; private set; }    //远程IP地址
-    public Action<string> ReceiveDataAction;        //接收数据委托
-    public Socket Channel { get; private set; }     //套接字通道
-    private IPEndPoint localEndPoint = null;        //本地地址端口号
-    private EndPoint remoteEndPoint = null;         //远程地址端口号
-    private StateObject stateObject = null;         //异步通信数据    
+    private int remotePort;                                         //远程端口号
+    public string LocalIP { get; private set; }                     //本机IP地址
+    public string RemoteIP { get; private set; }                    //远程IP地址
+    public int LocalPort { get { return this.localPort; } }         //本机端口号
+    public int RemotePort { get { return this.remotePort; } }       //远程端口号
+    public Action<string> ReceiveDataAction;                        //接收数据委托
+    public Socket Channel { get; private set; }                     //套接字通道
+    private IPEndPoint localEndPoint = null;                        //本地地址端口号
+    private EndPoint remoteEndPoint = null;                         //远程地址端口号
+    private StateObject stateObject = null;                         //异步通信数据
     /************************************************Unity方法与事件***********************************************/
     void Start()
     {
