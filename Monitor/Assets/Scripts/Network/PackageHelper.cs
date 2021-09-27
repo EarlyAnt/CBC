@@ -60,6 +60,7 @@ static class PackageHelper
 /// </summary>
 public static class NetDataTags
 {
+    public const string AVATAR = "avatar";
     public const string AUDIO = "audio";
     public const string ANIMATION = "animation";
     public const string HEALTH = "health";
@@ -156,6 +157,22 @@ public class CardData : CommandData
     public override string ToString()
     {
         return string.Format("{0}: {1}", this.GetType().Name, this.Value);
+    }
+}
+
+/// <summary>
+/// 头像数据
+/// </summary>
+public class AvatarData : CommandData
+{
+    public string DataString { get; set; }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.DataString);
     }
 }
 #endregion

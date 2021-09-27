@@ -13,21 +13,15 @@ public class Snow : MonoBehaviourExtension
     [SerializeField, Range(1f, 5f)]
     private float lifeTime = 3f;
     private float time = 0;
-    private float originX = 0;
     /************************************************Unity方法与事件***********************************************/
-    private void Awake()
-    {
-        this.originX = this.transform.position.x;
-    }
     private void Start()
     {
         this.angle *= Random.Range(0.5f, 2f);
         this.speed *= Random.Range(0.5f, 2f);
-        this.originX = this.transform.position.x;
     }
     private void Update()
     {
-        this.transform.Translate(this.originX, -this.speed, 0, Space.World);
+        this.transform.Translate(0, -this.speed, 0, Space.World);
         this.transform.Rotate(0, 0, this.angle, Space.Self);
 
         this.time += Time.deltaTime;

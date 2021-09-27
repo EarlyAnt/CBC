@@ -10,7 +10,11 @@ public class MonitorView : MonoBehaviourExtension
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    private DataReceiver dataReceiver;
+    private DataReceiver messageReceiver;
+    [SerializeField]
+    private DataReceiver rawDataReceiver;
+    [SerializeField]
+    private RawImage image;
     [SerializeField]
     private Text leftHealth;
     [SerializeField]
@@ -25,7 +29,8 @@ public class MonitorView : MonoBehaviourExtension
     /************************************************Unity方法与事件***********************************************/
     private void Start()
     {
-        this.dataReceiver.ReceiveDataAction = this.OnReceiveData;
+        this.messageReceiver.ReceiveDataAction = this.OnReceiveData;
+        this.rawDataReceiver.ReceiveRawDataAction = this.OnReceiveRawData;
     }
     private void Update()
     {
@@ -75,6 +80,34 @@ public class MonitorView : MonoBehaviourExtension
                     else if (cardData.DataOwner == DataOwners.RIGHT)
                         this.rightCard.text = cardData.Value.ToString();
                     break;
+                case NetDataTags.AVATAR:
+                    string avatarDataString = JsonUtil.Json2String(netData.Data);
+                    AvatarData avatarData = JsonUtil.String2Json<AvatarData>(avatarDataString);
+                    string[] stringArray = avatarData.DataString.Split(',');
+                    List<byte> byteArray = new List<byte>();
+                    for (int i = 0; i < stringArray.Length; i++)
+                    {
+                        byteArray.Add(byte.Parse(stringArray[i]));
+                    }
+                    Texture2D texture = new Texture2D(512, 512);
+                    texture.LoadImage(byteArray.ToArray());
+                    this.image.texture = texture;
+                    break;
+            }
+        });
+    }
+
+    private void OnReceiveRawData(byte[] byteDatas)
+    {
+        this.actions.Enqueue(() =>
+        {
+            if (byteDatas != null && byteDatas.Length > 0)
+            {
+                int width = 1080;
+                int height = 1920;
+                Texture2D texture = new Texture2D(width, height);
+                texture.LoadImage(byteDatas);
+                this.image.texture = texture;
             }
         });
     }

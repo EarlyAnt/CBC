@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 远程数据发送器
@@ -12,11 +13,13 @@ public class DataSender : MonoBehaviourExtension
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    public int localPort;           //本机端口号
+    private InputField ipAddress;
     [SerializeField]
-    public int remotePort;          //远程端口号
+    private int localPort;           //本机端口号
     [SerializeField]
-    public DataReceiver dataReceiver;           //数据接收器
+    private int remotePort;          //远程端口号
+    [SerializeField]
+    private DataReceiver dataReceiver;           //数据接收器
     private IPEndPoint localEndPoint = null;    //本地地址端口号
     private EndPoint remoteEndPoint = null;     //远程地址端口号
     public bool Initialized { get; private set; }                    //是否已初始化
@@ -42,27 +45,35 @@ public class DataSender : MonoBehaviourExtension
     //初始化
     private void Initialize()
     {
-        //初始化通道
-        if (this.dataReceiver == null)
+        try
         {
-            this.localEndPoint = new IPEndPoint(IPAddress.Parse(NetHelper.GetLocalIPv4()), this.localPort);
-            this.remoteEndPoint = new IPEndPoint(IPAddress.Parse("255.255.255.255"), this.remotePort);
-            this.Channel = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            this.Channel.Bind(this.localEndPoint);
-            this.Channel.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
-            this.OnInitialized();
-        }
-        else
-        {
-            this.DelayInvoke(delegate ()
+            //初始化通道
+            if (this.dataReceiver == null)
             {
-                this.localPort = this.dataReceiver.localPort;
-                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.LocalIP), this.remotePort);
-                this.remotePort = this.dataReceiver.remotePort;
-                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.RemoteIP), this.localPort);
-                this.Channel = this.dataReceiver.Channel;
+                //this.localEndPoint = new IPEndPoint(IPAddress.Parse(NetHelper.GetLocalIPv4()), this.localPort);
+                this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.ipAddress.text), this.localPort);
+                this.remoteEndPoint = new IPEndPoint(IPAddress.Parse("255.255.255.255"), this.remotePort);
+                this.Channel = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                this.Channel.Bind(this.localEndPoint);
+                this.Channel.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, 1);
                 this.OnInitialized();
-            }, 1f);
+            }
+            else
+            {
+                this.DelayInvoke(delegate ()
+                {
+                    this.localPort = this.dataReceiver.LocalPort;
+                    this.localEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.LocalIP), this.remotePort);
+                    this.remotePort = this.dataReceiver.RemotePort;
+                    this.remoteEndPoint = new IPEndPoint(IPAddress.Parse(this.dataReceiver.RemoteIP), this.localPort);
+                    this.Channel = this.dataReceiver.Channel;
+                    this.OnInitialized();
+                }, 1f);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogErrorFormat("<><DataSender.Initialize>Error: {0}", ex.Message);
         }
     }
     //发送数据
@@ -78,7 +89,7 @@ public class DataSender : MonoBehaviourExtension
         }
         catch (Exception ex)
         {
-            print(string.Format("发送数据发生错误: {0}", ex.ToString()));
+            print(string.Format("<><DataSender.Initialize>发送数据发生错误: {0}", ex.ToString()));
         }
     }
     //当发送数据时
