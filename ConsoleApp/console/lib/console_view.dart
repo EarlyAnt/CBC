@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'ui_component/game_setting_view.dart';
+
 class ConsoleView extends StatefulWidget {
   const ConsoleView({Key? key}) : super(key: key);
 
@@ -121,6 +123,7 @@ class _ConsoleViewState extends State<ConsoleView> {
         child: Text(effectButtonData.buttonText),
         onPressed: () {
           //Todo: 发送命令
+          // ignore: avoid_print
           print("execute command: ${effectButtonData.effectCommand}");
         });
   }
@@ -130,97 +133,14 @@ class _ConsoleViewState extends State<ConsoleView> {
       child: Padding(
         padding:
             const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Container(
-          // color: Colors.lightGreenAccent,
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue, width: 2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                      ),
-                      child: _consolePanel(
-                          "left", "assets/images/ui/avatar_2.jpg", "韩菱纱"))),
-              SizedBox(width: 10),
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.red, width: 2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                      ),
-                      child: _consolePanel(
-                          "right", "assets/images/ui/avatar_3.jpg", "蕾安娜"))),
-            ],
-          ),
+        child: Row(
+          children: const [
+            Expanded(flex: 1, child: GameSettingView(direction: "left")),
+            SizedBox(width: 10),
+            Expanded(flex: 1, child: GameSettingView(direction: "right")),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _consolePanel(String role, String avatarPath, String name) {
-    return Column(
-      children: [
-        _playerInfo(avatarPath, name),
-        _playerHealth(),
-        _playerStatus(),
-        _cardStatus(),
-        _hurtStatus(),
-      ],
-    );
-  }
-
-  Widget _playerInfo(String avatarPath, String name) {
-    return Row(children: [
-      Image.asset(avatarPath, width: 32, height: 32),
-      Text(name),
-    ]);
-  }
-
-  Widget _playerHealth() {
-    return Row(
-      children: [
-        const Text("英雄当前体力"),
-        // const TextField(),
-        TextButton(child: const Text("设定"), onPressed: () {}),
-      ],
-    );
-  }
-
-  Widget _playerStatus() {
-    return Row(
-      children: [
-        const Text("状态加成"),
-        TextButton(child: const Text("衰弱"), onPressed: () {}),
-        TextButton(child: const Text("支援"), onPressed: () {}),
-        TextButton(child: const Text("效果"), onPressed: () {}),
-      ],
-    );
-  }
-
-  Widget _cardStatus() {
-    return Row(
-      children: [
-        const Text("当前牌库"),
-        const Text("30"),
-        TextButton(child: const Text("+"), onPressed: () {}),
-        TextButton(child: const Text("-"), onPressed: () {}),
-      ],
-    );
-  }
-
-  Widget _hurtStatus() {
-    return Row(
-      children: [
-        const Text("当前伤害区"),
-        const Text("5"),
-        TextButton(child: const Text("+"), onPressed: () {}),
-        TextButton(child: const Text("-"), onPressed: () {}),
-      ],
     );
   }
 }
