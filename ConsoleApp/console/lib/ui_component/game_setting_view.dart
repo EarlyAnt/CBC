@@ -1,11 +1,14 @@
+import 'package:console/data/command_data.dart';
+import 'package:console/data/player_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../plugins/udp/udp.dart';
 
 class GameSettingView extends StatefulWidget {
-  final String? direction;
+  final String? player;
 
-  const GameSettingView({Key? key, this.direction}) : super(key: key);
+  const GameSettingView({Key? key, this.player}) : super(key: key);
 
   @override
   _GameSettingViewState createState() => _GameSettingViewState();
@@ -20,13 +23,15 @@ class _GameSettingViewState extends State<GameSettingView> {
   UDP? _sender;
   String? _message;
   int? _dataLength;
+  PlayerData? _playerData;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
     _healthController = TextEditingController();
-    _inititialize();
+    _playerData = PlayerData(10000, 30, 0);
+    _initSocket();
   }
 
   @override
@@ -45,7 +50,7 @@ class _GameSettingViewState extends State<GameSettingView> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-            color: widget.direction == "left" ? Colors.blue : Colors.red,
+            color: widget.player == "left" ? Colors.blue : Colors.red,
             width: 2),
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
@@ -91,13 +96,31 @@ class _GameSettingViewState extends State<GameSettingView> {
                 borderRadius: const BorderRadius.all(Radius.circular(4)),
               ),
               child: TextFormField(
-                  controller: _healthController,
-                  showCursor: false,
-                  decoration: const InputDecoration(border: InputBorder.none)),
+                controller: _healthController,
+                maxLines: 1,
+                showCursor: false,
+                decoration: const InputDecoration(border: InputBorder.none),
+                inputFormatters: [
+                  FilteringTextInputFormatter(RegExp("[0-9]"), //限制只允许输入数字
+                      // RegExp("[a-z,A-Z,0-9]"), //限制只允许输入字母和数字
+                      allow: true),
+                ],
+                onChanged: (value) {
+                  int? cardCount = int.tryParse(value);
+                  if (cardCount != null) {
+                    _playerData!.health = cardCount;
+                  }
+                },
+              ),
             )),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("设定"), onPressed: () {})),
+            child: TextButton(
+                child: const Text("设定"),
+                onPressed: () {
+                  _sendStringMessage(CommandUtil.buildHealthCommand(
+                      _playerData!.health, widget.player!));
+                })),
       ],
     );
   }
@@ -124,13 +147,32 @@ class _GameSettingViewState extends State<GameSettingView> {
       children: [
         const Text("当前牌库"),
         Padding(
-            padding: EdgeInsets.only(left: _spacing), child: const Text("30")),
+            padding: EdgeInsets.only(left: _spacing),
+            child: Text("${_playerData!.cardCount}")),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("+"), onPressed: () {})),
+            child: TextButton(
+                child: const Text("+"),
+                onPressed: () {
+                  setState(() {
+                    _playerData!.cardCount += 1;
+                  });
+                  _sendStringMessage(CommandUtil.buildCardCommand(
+                      _playerData!.cardCount, widget.player!));
+                })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("-"), onPressed: () {})),
+            child: TextButton(
+                child: const Text("-"),
+                onPressed: () {
+                  if (_playerData!.cardCount > 0) {
+                    setState(() {
+                      _playerData!.cardCount -= 1;
+                    });
+                    _sendStringMessage(CommandUtil.buildCardCommand(
+                        _playerData!.cardCount, widget.player!));
+                  }
+                })),
       ],
     );
   }
@@ -140,24 +182,43 @@ class _GameSettingViewState extends State<GameSettingView> {
       children: [
         const Text("当前伤害区"),
         Padding(
-            padding: EdgeInsets.only(left: _spacing), child: const Text("5")),
+            padding: EdgeInsets.only(left: _spacing),
+            child: Text("${_playerData!.hurt}")),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("+"), onPressed: () {})),
+            child: TextButton(
+                child: const Text("+"),
+                onPressed: () {
+                  setState(() {
+                    _playerData!.hurt += 1;
+                  });
+                  _sendStringMessage(CommandUtil.buildHurtCommand(
+                      _playerData!.hurt, widget.player!));
+                })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("-"), onPressed: () {})),
+            child: TextButton(
+                child: const Text("-"),
+                onPressed: () {
+                  if (_playerData!.hurt > 0) {
+                    setState(() {
+                      _playerData!.hurt -= 1;
+                    });
+                    _sendStringMessage(CommandUtil.buildHurtCommand(
+                        _playerData!.hurt, widget.player!));
+                  }
+                })),
       ],
     );
   }
 
-  void _inititialize() async {
+  void _initSocket() async {
     _sender = await UDP.bind(Endpoint.any(port: const Port(2000)));
   }
 
   void _sendStringMessage(String? message) async {
     _message = message;
-    print(message);
+    debugPrint("execute command: $message");
     _dataLength = await _sender?.send(
         message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
   }

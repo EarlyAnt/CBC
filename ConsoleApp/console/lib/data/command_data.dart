@@ -1,10 +1,14 @@
 class CommandUtil {
-  static String buildHealthCommand(int health) {
-    return "{\"Tag\":\"health\",\"Data\":{\"Value\":$health,\"DataOwner\":\"left\"}}";
+  static String buildHealthCommand(int health, String player) {
+    return "{\"Tag\":\"health\",\"Data\":{\"Value\":$health,\"DataOwner\":\"$player\"}}";
   }
 
-  static String buildCardCommand(int cardCount) {
-    return "{\"Tag\":\"card\",\"Data\":{\"Value\":$cardCount,\"DataOwner\":\"left\"}}";
+  static String buildCardCommand(int cardCount, String player) {
+    return "{\"Tag\":\"card\",\"Data\":{\"Value\":$cardCount,\"DataOwner\":\"$player\"}}";
+  }
+
+  static String buildHurtCommand(int hurt, String player) {
+    return "{\"Tag\":\"hurt\",\"Data\":{\"Value\":$hurt,\"DataOwner\":\"$player\"}}";
   }
 
   static String buildAudioCommand(String audio) {

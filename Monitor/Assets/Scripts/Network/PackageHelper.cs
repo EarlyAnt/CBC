@@ -64,6 +64,7 @@ public static class NetDataTags
     public const string AUDIO = "audio";
     public const string ANIMATION = "animation";
     public const string HEALTH = "health";
+    public const string HURT = "hurt";
     public const string CARD = "card";
 }
 
@@ -132,6 +133,22 @@ public class CommandData : BaseData
 /// 英雄体力(战力)
 /// </summary>
 public class HealthData : CommandData
+{
+    public int Value { get; set; }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.Value);
+    }
+}
+
+/// <summary>
+/// 英雄伤害区
+/// </summary>
+public class HurtData : CommandData
 {
     public int Value { get; set; }
     /// <summary>

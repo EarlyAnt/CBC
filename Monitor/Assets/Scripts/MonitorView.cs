@@ -20,6 +20,10 @@ public class MonitorView : MonoBehaviourExtension
     [SerializeField]
     private Text rightHealth;
     [SerializeField]
+    private Text leftHurt;
+    [SerializeField]
+    private Text rightHurt;
+    [SerializeField]
     private Text leftCard;
     [SerializeField]
     private Text rightCard;
@@ -71,6 +75,14 @@ public class MonitorView : MonoBehaviourExtension
                         this.leftHealth.text = healthData.Value.ToString();
                     else if (healthData.DataOwner == DataOwners.RIGHT)
                         this.rightHealth.text = healthData.Value.ToString();
+                    break;
+                case NetDataTags.HURT:
+                    string hurtDataString = JsonUtil.Json2String(netData.Data);
+                    HurtData hurtData = JsonUtil.String2Json<HurtData>(hurtDataString);
+                    if (hurtData.DataOwner == DataOwners.LEFT)
+                        this.leftHurt.text = hurtData.Value.ToString();
+                    else if (hurtData.DataOwner == DataOwners.RIGHT)
+                        this.rightHurt.text = hurtData.Value.ToString();
                     break;
                 case NetDataTags.CARD:
                     string cardDataString = JsonUtil.Json2String(netData.Data);

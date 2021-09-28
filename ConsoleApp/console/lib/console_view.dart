@@ -15,7 +15,7 @@ class _ConsoleViewState extends State<ConsoleView> {
   final List<EffectButtonData> _effectButtonDatas = [
     EffectButtonData("UR卡", CommandUtil.buildAnimationCommand("ur")),
     EffectButtonData("CR卡", CommandUtil.buildAnimationCommand("cr")),
-    EffectButtonData("掌声", CommandUtil.buildAudioCommand("guzhang2")),
+    EffectButtonData("掌声", CommandUtil.buildAudioCommand("guzhang")),
     EffectButtonData("欢呼", CommandUtil.buildAudioCommand("huanhu")),
     // EffectButtonData("UR卡", "ur"),
     // EffectButtonData("CR卡", "cr"),
@@ -144,9 +144,9 @@ class _ConsoleViewState extends State<ConsoleView> {
             const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
         child: Row(
           children: const [
-            Expanded(flex: 1, child: GameSettingView(direction: "left")),
+            Expanded(flex: 1, child: GameSettingView(player: "left")),
             SizedBox(width: 10),
-            Expanded(flex: 1, child: GameSettingView(direction: "right")),
+            Expanded(flex: 1, child: GameSettingView(player: "right")),
           ],
         ),
       ),
