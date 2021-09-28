@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../plugins/udp/udp.dart';
+
 class GameSettingView extends StatefulWidget {
   final String? direction;
 
@@ -15,12 +17,16 @@ class _GameSettingViewState extends State<GameSettingView> {
   TextEditingController? _healthController;
   String? _avatarPath;
   String? _playerName;
+  UDP? _sender;
+  String? _message;
+  int? _dataLength;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController();
     _healthController = TextEditingController();
+    _inititialize();
   }
 
   @override
@@ -143,5 +149,16 @@ class _GameSettingViewState extends State<GameSettingView> {
             child: TextButton(child: const Text("-"), onPressed: () {})),
       ],
     );
+  }
+
+  void _inititialize() async {
+    _sender = await UDP.bind(Endpoint.any(port: const Port(2000)));
+  }
+
+  void _sendStringMessage(String? message) async {
+    _message = message;
+    print(message);
+    _dataLength = await _sender?.send(
+        message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
   }
 }

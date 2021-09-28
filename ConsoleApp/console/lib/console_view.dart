@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'data/command_data.dart';
+import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
 
 class ConsoleView extends StatefulWidget {
@@ -11,24 +13,33 @@ class ConsoleView extends StatefulWidget {
 
 class _ConsoleViewState extends State<ConsoleView> {
   final List<EffectButtonData> _effectButtonDatas = [
-    EffectButtonData("UR卡", "ur"),
-    EffectButtonData("CR卡", "cr"),
-    EffectButtonData("掌声", "zhangsheng"),
-    EffectButtonData("欢呼", "huanhu"),
-    EffectButtonData("UR卡", "ur"),
-    EffectButtonData("CR卡", "cr"),
-    EffectButtonData("掌声", "zhangsheng"),
-    EffectButtonData("欢呼", "huanhu"),
-    EffectButtonData("UR卡", "ur"),
-    EffectButtonData("CR卡", "cr"),
-    EffectButtonData("掌声", "zhangsheng"),
-    EffectButtonData("欢呼", "huanhu"),
-    EffectButtonData("UR卡", "ur"),
-    EffectButtonData("CR卡", "cr"),
-    EffectButtonData("掌声", "zhangsheng"),
-    EffectButtonData("欢呼", "huanhu"),
+    EffectButtonData("UR卡", CommandUtil.buildAnimationCommand("ur")),
+    EffectButtonData("CR卡", CommandUtil.buildAnimationCommand("cr")),
+    EffectButtonData("掌声", CommandUtil.buildAudioCommand("guzhang2")),
+    EffectButtonData("欢呼", CommandUtil.buildAudioCommand("huanhu")),
+    // EffectButtonData("UR卡", "ur"),
+    // EffectButtonData("CR卡", "cr"),
+    // EffectButtonData("掌声", "zhangsheng"),
+    // EffectButtonData("欢呼", "huanhu"),
+    // EffectButtonData("UR卡", "ur"),
+    // EffectButtonData("CR卡", "cr"),
+    // EffectButtonData("掌声", "zhangsheng"),
+    // EffectButtonData("欢呼", "huanhu"),
+    // EffectButtonData("UR卡", "ur"),
+    // EffectButtonData("CR卡", "cr"),
+    // EffectButtonData("掌声", "zhangsheng"),
+    // EffectButtonData("欢呼", "huanhu"),
   ];
   Size? _screenSize;
+  UDP? _sender;
+  String? _message;
+  int? _dataLength;
+
+  @override
+  void initState() {
+    super.initState();
+    _inititialize();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +133,7 @@ class _ConsoleViewState extends State<ConsoleView> {
     return TextButton(
         child: Text(effectButtonData.buttonText),
         onPressed: () {
-          //Todo: 发送命令
-          // ignore: avoid_print
-          print("execute command: ${effectButtonData.effectCommand}");
+          _sendStringMessage(effectButtonData.effectCommand);
         });
   }
 
@@ -142,6 +151,17 @@ class _ConsoleViewState extends State<ConsoleView> {
         ),
       ),
     );
+  }
+
+  void _inititialize() async {
+    _sender = await UDP.bind(Endpoint.any(port: const Port(2000)));
+  }
+
+  void _sendStringMessage(String? message) async {
+    _message = message;
+    debugPrint("execute command: $message");
+    _dataLength = await _sender?.send(
+        message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
   }
 }
 
