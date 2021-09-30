@@ -32,20 +32,29 @@ public class GameStartAnimation : MonoBehaviourExtension
     {
         this.originLeftPosition = this.leftPlayer.Transform.position;
         this.originRightPosition = this.rightPlayer.Transform.position;
+
+        this.Initialize();
+        this.Play();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            this.spine.AnimationState.ClearTracks();
-            this.audioPlayer.volume = 0;
-            this.leftPlayer.Transform.position = this.originLeftPosition;
-            this.rightPlayer.Transform.position = this.originRightPosition;
-            this.rootObject.SetActive(false);
+            this.Initialize();
             this.Play();
         }
     }
     /************************************************自 定 义 方 法************************************************/
+    private void Initialize()
+    {
+        if (this.spine != null && this.spine.AnimationState != null)
+            this.spine.AnimationState.ClearTracks();
+        this.audioPlayer.volume = 0;
+        this.leftPlayer.Transform.position = this.originLeftPosition;
+        this.rightPlayer.Transform.position = this.originRightPosition;
+        this.rootObject.SetActive(false);
+    }
+
     public void SetPlayerData(string leftPlayerAvatar, string leftPlayerName, string rightPlayerAvatar, string rightPlayerName)
     {
         this.leftPlayer.SetAvatar(leftPlayerAvatar);
@@ -69,7 +78,8 @@ public class GameStartAnimation : MonoBehaviourExtension
         {
             this.audioPlayer.DOFade(0f, 0.5f).onComplete = () =>
             {
-                this.rootObject.SetActive(false);
+                //this.rootObject.SetActive(false);
+                GameObject.Destroy(this.gameObject);
             };
         }, this.animationDuration - 0.75f);
     }

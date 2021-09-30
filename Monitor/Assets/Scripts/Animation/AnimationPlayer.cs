@@ -16,6 +16,7 @@ public class AnimationPlayer : MonoBehaviourExtension
     private void Start()
     {
         animationInfos = new Dictionary<string, AnimationInfo>();
+        animationInfos.Add("gamestart", new AnimationInfo() { Animation = "Prefabs/GameStart" });
         animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/shengli", Animation = "Prefabs/SnowAnimation" });
         animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/daweitianlong", Animation = "Prefabs/BuddhaPalm" });
         animationInfos.Add("guzhang", new AnimationInfo() { Audio = "Audios/guzhang2" });

@@ -56,13 +56,24 @@ static class PackageHelper
 
 #region 网络数据定义
 /// <summary>
+/// 游戏事件枚举
+/// </summary>
+public enum GameEvents
+{
+    Start = 0,
+    Pause = 1,
+    End = 2
+}
+
+/// <summary>
 /// 网络数据类型
 /// </summary>
 public static class NetDataTags
 {
-    public const string AVATAR = "avatar";
+    public const string EVENT = "event";
     public const string AUDIO = "audio";
     public const string ANIMATION = "animation";
+    public const string AVATAR = "avatar";
     public const string HEALTH = "health";
     public const string HURT = "hurt";
     public const string CARD = "card";
@@ -130,6 +141,45 @@ public class AnimationEffect : EffectData
 public class CommandData : BaseData
 {
     public string DataOwner { get; set; }
+}
+
+/// <summary>
+/// 事件数据
+/// </summary>
+public class EventData : CommandData
+{
+    public string GameEventString { get; set; }
+    public GameEvents GameEvent
+    {
+        get
+        {
+            GameEvents gameEvent = GameEvents.End;
+            if (!string.IsNullOrEmpty(this.GameEventString))
+            {
+                switch (this.GameEventString.ToUpper())
+                {
+                    case "GAMEEVENT.START":
+                        gameEvent = GameEvents.Start;
+                        break;
+                    case "GAMEEVENT.PAUSE":
+                        gameEvent = GameEvents.Pause;
+                        break;
+                    case "GAMEEVENT.END":
+                        gameEvent = GameEvents.End;
+                        break;
+                }
+            }
+            return gameEvent;
+        }
+    }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.GameEventString);
+    }
 }
 
 /// <summary>

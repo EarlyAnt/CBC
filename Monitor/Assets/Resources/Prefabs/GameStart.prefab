@@ -428,7 +428,7 @@ MonoBehaviour:
     duration: 0.5
   spine: {fileID: 9082184066783374552}
   delayShowPlayer: 0.23
-  animationDuration: 2.5
+  animationDuration: 4.5
 --- !u!82 &9082184067228970848
 AudioSource:
   m_ObjectHideFlags: 0

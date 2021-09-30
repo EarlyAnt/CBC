@@ -10,6 +10,8 @@ public class MonitorView : MonoBehaviourExtension
     /************************************************属性与变量命名************************************************/
     #region 页面UI组件
     [SerializeField]
+    private Text timer;
+    [SerializeField]
     private DataReceiver messageReceiver;
     [SerializeField]
     private DataReceiver rawDataReceiver;
@@ -23,8 +25,12 @@ public class MonitorView : MonoBehaviourExtension
     private StatusPanel leftStatusPanel;
     [SerializeField]
     private StatusPanel rightStatusPanel;
+    [SerializeField, Range(0, 60)]
+    private int gameDuration = 20;
     #endregion
     #region 其他变量
+    private int leftSeconds = 0;
+    private GameEvents gameEvent = GameEvents.End;
     private Queue<System.Action> actions = new Queue<System.Action>();
     #endregion
     /************************************************Unity方法与事件***********************************************/
@@ -62,6 +68,23 @@ public class MonitorView : MonoBehaviourExtension
                 case NetDataTags.ANIMATION:
                     AnimationEffect animationEffect = this.GetGameData<AnimationEffect>(netData.Data);
                     this.animationPlayer.Play(animationEffect.EffectFile);
+                    break;
+                case NetDataTags.EVENT:
+                    EventData eventData = this.GetGameData<EventData>(netData.Data);
+                    switch (eventData.GameEvent)
+                    {
+                        case GameEvents.Start:
+                            if (this.gameEvent == GameEvents.End)
+                            {
+                                this.EndGame();
+                                this.StartGame();
+                            }
+                            break;
+                        case GameEvents.End:
+                            this.EndGame();
+                            break;
+                    }
+                    this.gameEvent = eventData.GameEvent;
                     break;
                 case NetDataTags.HURT:
                     HurtData hurtData = this.GetGameData<HurtData>(netData.Data);
@@ -119,8 +142,51 @@ public class MonitorView : MonoBehaviourExtension
                     break;
             }
         });
+    }
 
+    private void StartGame()
+    {
+        this.leftSeconds = this.gameDuration * 60;
+        this.InvokeRepeating("RefreshTimer", 0, 1);
+        this.animationPlayer.Play("gamestart");
+    }
 
+    private void EndGame()
+    {
+        this.CancelInvoke("RefreshTimer");
+        this.leftSeconds = 0;
+        this.timer.text = "00:00";
+        this.leftPlayerPanel.SetCardCount(40);
+        this.leftPlayerPanel.SetHurtCount(0);
+        this.leftStatusPanel.SetHealth(3000);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+
+        this.rightPlayerPanel.SetCardCount(40);
+        this.rightPlayerPanel.SetHurtCount(0);
+        this.rightStatusPanel.SetHealth(3000);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+    }
+
+    private void RefreshTimer()
+    {
+        if (this.gameEvent == GameEvents.Start)
+        {
+            if (this.leftSeconds > 0)
+            {
+                this.leftSeconds -= 1;
+                int minute = this.leftSeconds / 60;
+                int second = this.leftSeconds - (minute > 0 ? minute * 60 : 0);
+                this.timer.text = string.Format("{0:d2}:{1:d2}", minute, second);
+            }
+            else
+            {
+                this.CancelInvoke("RefreshTimer");
+            }
+        }
     }
 
     private T GetGameData<T>(object jsonData)
