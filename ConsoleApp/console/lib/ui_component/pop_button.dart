@@ -32,14 +32,14 @@ class _PopButtonState extends State<PopButton> {
         style: ButtonStyle(
           //圆角
           shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
           //边框
           side: MaterialStateProperty.all(
             BorderSide(
                 color: _pressDown!
                     ? widget.color.withAlpha(200)
                     : const Color.fromRGBO(183, 183, 183, 1),
-                width: 2),
+                width: 1.5),
           ),
           //背景
           backgroundColor: MaterialStateProperty.all(
