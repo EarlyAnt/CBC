@@ -11,6 +11,18 @@ class CommandUtil {
     return "{\"Tag\":\"hurt\",\"Data\":{\"Value\":$hurt,\"DataOwner\":\"$player\"}}";
   }
 
+  static String buildWeakCommand(bool light, String player) {
+    return "{\"Tag\":\"weak\",\"Data\":{\"Light\":$light,\"DataOwner\":\"$player\"}}";
+  }
+
+  static String buildAidCommand(bool light, String player) {
+    return "{\"Tag\":\"aid\",\"Data\":{\"Light\":$light,\"DataOwner\":\"$player\"}}";
+  }
+
+  static String buildEffectCommand(bool light, String player) {
+    return "{\"Tag\":\"effect\",\"Data\":{\"Light\":$light,\"DataOwner\":\"$player\"}}";
+  }
+
   static String buildAudioCommand(String audio) {
     return "{\"Tag\":\"audio\",\"Data\":{\"EffectFile\":\"$audio\"}}";
   }

@@ -1,5 +1,6 @@
 import 'package:console/data/command_data.dart';
 import 'package:console/data/player_data.dart';
+import 'package:console/ui_component/pop_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -30,7 +31,13 @@ class _GameSettingViewState extends State<GameSettingView> {
     super.initState();
     _nameController = TextEditingController();
     _healthController = TextEditingController();
-    _playerData = PlayerData(10000, 30, 0);
+    _playerData = PlayerData(
+        health: 10000,
+        cardCount: 30,
+        hurt: 0,
+        weak: false,
+        aid: false,
+        effect: false);
     _initSocket();
   }
 
@@ -131,13 +138,34 @@ class _GameSettingViewState extends State<GameSettingView> {
         const Text("状态加成"),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("衰弱"), onPressed: () {})),
+            child: PopButton("衰弱", light: false, color: Colors.red,
+                onPressed: (value) {
+              setState(() {
+                _playerData!.weak = value;
+              });
+              _sendStringMessage(CommandUtil.buildWeakCommand(
+                  _playerData!.weak, widget.player!));
+            })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("支援"), onPressed: () {})),
+            child: PopButton("被支援", light: false, color: Colors.green,
+                onPressed: (value) {
+              setState(() {
+                _playerData!.aid = value;
+              });
+              _sendStringMessage(CommandUtil.buildAidCommand(
+                  _playerData!.aid, widget.player!));
+            })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(child: const Text("效果"), onPressed: () {})),
+            child: PopButton("效果", light: false, color: Colors.blue,
+                onPressed: (value) {
+              setState(() {
+                _playerData!.effect = value;
+              });
+              _sendStringMessage(CommandUtil.buildEffectCommand(
+                  _playerData!.effect, widget.player!));
+            })),
       ],
     );
   }
