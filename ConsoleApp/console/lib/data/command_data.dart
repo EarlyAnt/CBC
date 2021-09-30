@@ -23,6 +23,10 @@ class CommandUtil {
     return "{\"Tag\":\"effect\",\"Data\":{\"Light\":$light,\"DataOwner\":\"$player\"}}";
   }
 
+  static String buildGameEventCommand(GameEvent gameEvent) {
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"$gameEvent\"}}";
+  }
+
   static String buildAudioCommand(String audio) {
     return "{\"Tag\":\"audio\",\"Data\":{\"EffectFile\":\"$audio\"}}";
   }
@@ -31,6 +35,8 @@ class CommandUtil {
     return "{\"Tag\":\"animation\",\"Data\":{\"EffectFile\":\"$animation\"}}";
   }
 }
+
+enum GameEvent { start, pause, end }
 
 /*
   * command list:

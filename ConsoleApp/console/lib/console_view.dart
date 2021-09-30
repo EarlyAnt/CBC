@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/command_data.dart';
 import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
+import 'ui_component/text_toggle.dart';
 
 class ConsoleView extends StatefulWidget {
   const ConsoleView({Key? key}) : super(key: key);
@@ -30,6 +31,12 @@ class _ConsoleViewState extends State<ConsoleView> {
     // EffectButtonData("掌声", "zhangsheng"),
     // EffectButtonData("欢呼", "huanhu"),
   ];
+  final List<ButtonData> _buttonDatas = [
+    ButtonData(text: "开始", color: Colors.green, value: GameEvent.start),
+    ButtonData(
+        text: "暂停", color: Colors.amber.shade600, value: GameEvent.pause),
+    ButtonData(text: "结束", color: Colors.red, value: GameEvent.end)
+  ];
   Size? _screenSize;
   UDP? _sender;
   String? _message;
@@ -47,7 +54,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
     return Scaffold(
       body: Stack(children: [
-        Image.asset("assets/images/ui/title_bar.png"),
+        // Image.asset("assets/images/ui/title_bar.png"),
         Column(children: [
           _titleBar(),
           _effectButtonGroup(),
@@ -59,31 +66,27 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _titleBar() {
     return Padding(
-        padding: const EdgeInsets.only(top: 5, right: 5),
+        padding: const EdgeInsets.only(top: 5, right: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _timerLabel(),
-            _gameStartOrPauseButton(),
-            _gameOverButton(),
+            const SizedBox(width: 20),
+            _gameEventButton(),
+            const SizedBox(width: 5),
             _gameSettingButton(),
           ],
         ));
   }
 
   Widget _timerLabel() {
-    return const Text("14:30", style: TextStyle(color: Colors.white));
+    return const Text("14:30", style: TextStyle(color: Colors.black));
   }
 
-  Widget _gameStartOrPauseButton() {
-    return IconButton(
-        icon: const Icon(Icons.pause, color: Colors.white), onPressed: () {});
-  }
-
-  Widget _gameOverButton() {
-    return IconButton(
-        icon: const Icon(Icons.wrong_location, color: Colors.white),
-        onPressed: () {});
+  Widget _gameEventButton() {
+    return TextToggle(_buttonDatas, 60, 30, (gameEvent) {
+      _sendStringMessage(CommandUtil.buildGameEventCommand(gameEvent));
+    }, spacing: 5, defaultButtonIndex: 2);
   }
 
   Widget _gameSettingButton() {
@@ -94,7 +97,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _effectButtonGroup() {
     return Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 0),
         child: Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -140,8 +143,7 @@ class _ConsoleViewState extends State<ConsoleView> {
   Widget _consoleZone() {
     return Expanded(
       child: Padding(
-        padding:
-            const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+        padding: const EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 10),
         child: Row(
           children: const [
             Expanded(flex: 1, child: GameSettingView(player: "left")),
