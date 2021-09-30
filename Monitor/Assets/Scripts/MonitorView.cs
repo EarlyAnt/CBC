@@ -158,14 +158,14 @@ public class MonitorView : MonoBehaviourExtension
         this.timer.text = "00:00";
         this.leftPlayerPanel.SetCardCount(40);
         this.leftPlayerPanel.SetHurtCount(0);
-        this.leftStatusPanel.SetHealth(3000);
+        this.leftStatusPanel.SetHealth(0);
         this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
         this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
         this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
 
         this.rightPlayerPanel.SetCardCount(40);
         this.rightPlayerPanel.SetHurtCount(0);
-        this.rightStatusPanel.SetHealth(3000);
+        this.rightStatusPanel.SetHealth(0);
         this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
         this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
         this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
