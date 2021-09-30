@@ -66,6 +66,9 @@ public static class NetDataTags
     public const string HEALTH = "health";
     public const string HURT = "hurt";
     public const string CARD = "card";
+    public const string WEAK = "weak";
+    public const string AID = "aid";
+    public const string EFFECT = "effect";
 }
 
 public static class DataOwners
@@ -158,6 +161,54 @@ public class HurtData : CommandData
     public override string ToString()
     {
         return string.Format("{0}: {1}", this.GetType().Name, this.Value);
+    }
+}
+
+/// <summary>
+/// 衰弱
+/// </summary>
+public class WeakData : CommandData
+{
+    public bool Light { get; set; }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.Light);
+    }
+}
+
+/// <summary>
+/// 援助
+/// </summary>
+public class AidData : CommandData
+{
+    public bool Light { get; set; }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.Light);
+    }
+}
+
+/// <summary>
+/// 附属效果
+/// </summary>
+public class EffectsData : CommandData
+{
+    public bool Light { get; set; }
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}", this.GetType().Name, this.Light);
     }
 }
 
