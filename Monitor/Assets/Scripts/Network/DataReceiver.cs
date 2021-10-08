@@ -71,10 +71,9 @@ public class DataReceiver : MonoBehaviour
             //if (((IPEndPoint)this.remoteEndPoint).Address.Equals(this.localEndPoint.Address) ||
             //    ((IPEndPoint)this.remoteEndPoint).Address.Equals(IPAddress.Broadcast)) return;
             byte[] bytes = ((StateObject)result.AsyncState).Buffer;
-            string receiveData = Encoding.Default.GetString(bytes, 0, dataLength);
-            print(string.Format("{0}->receive data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
-            this.OnReceiveData(receiveData);
             this.OnReceiveData(bytes);
+            string receiveData = Encoding.Default.GetString(bytes, 0, dataLength);
+            this.OnReceiveData(receiveData);
         }
         catch (ObjectDisposedException) { }
         catch (Exception ex)
@@ -95,6 +94,7 @@ public class DataReceiver : MonoBehaviour
     {
         if (this.ReceiveDataAction != null)
         {
+            print(string.Format("{0}->receive data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), dataString));
             this.ReceiveDataAction(dataString);
         }
     }
@@ -103,6 +103,7 @@ public class DataReceiver : MonoBehaviour
     {
         if (this.ReceiveRawDataAction != null)
         {
+            print(string.Format("{0}->receive raw data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), string.Join(",", byteDatas)));
             this.ReceiveRawDataAction(byteDatas);
         }
     }

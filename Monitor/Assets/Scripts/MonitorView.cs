@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,8 @@ public class MonitorView : MonoBehaviourExtension
 {
     /************************************************属性与变量命名************************************************/
     #region 页面UI组件
+    [SerializeField]
+    private RawImage imageBox;
     [SerializeField]
     private Text timer;
     [SerializeField]
@@ -31,6 +34,7 @@ public class MonitorView : MonoBehaviourExtension
     #region 其他变量
     private int leftSeconds = 0;
     private GameEvents gameEvent = GameEvents.End;
+    private List<byte> imageBuffer = new List<byte>();
     private Queue<System.Action> actions = new Queue<System.Action>();
     #endregion
     /************************************************Unity方法与事件***********************************************/
@@ -198,17 +202,27 @@ public class MonitorView : MonoBehaviourExtension
 
     private void OnReceiveRawData(byte[] byteDatas)
     {
-        this.actions.Enqueue(() =>
+        if (byteDatas != null && byteDatas.Length > 0)
         {
-            if (byteDatas != null && byteDatas.Length > 0)
+            Debug.LogFormat("data: {0}, {1}", byteDatas[0], byteDatas[1]);
+            int start = 6;
+            int count = byteDatas[0] < byteDatas[1] ? byteDatas.Length - 6 :
+                        int.Parse(string.Join("", byteDatas.ToList().GetRange(2, 4)));
+
+            imageBuffer.AddRange(byteDatas.ToList().GetRange(start, count));
+            if (byteDatas[0] >= byteDatas[1])
             {
-                int width = 1080;
-                int height = 1920;
-                Texture2D texture = new Texture2D(width, height);
-                texture.LoadImage(byteDatas);
-                //this.image.texture = texture;
+                this.actions.Enqueue(() =>
+                {
+                    int width = 512;
+                    int height = 512;
+                    Texture2D texture = new Texture2D(width, height);
+                    texture.LoadImage(imageBuffer.ToArray());
+                    this.imageBox.texture = texture;
+                    imageBuffer.Clear();
+                });
             }
-        });
+        }
     }
 }
 

@@ -664,7 +664,7 @@ public class StateObject
     /// <summary>
     /// 缓冲区大小
     /// </summary>
-    public const int BUFFER_SIZE = 1024 * 1;
+    public const int BUFFER_SIZE = 1024 * 3;
     /// <summary>
     /// 套接字通道
     /// </summary>
