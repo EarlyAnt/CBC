@@ -37,6 +37,8 @@ class _ConsoleViewState extends State<ConsoleView> {
         text: "暂停", color: Colors.amber.shade600, value: GameEvent.pause),
     ButtonData(text: "结束", color: Colors.red, value: GameEvent.end)
   ];
+  final GlobalKey<GameSettingViewState> _leftGameSettingViewKey = GlobalKey();
+  final GlobalKey<GameSettingViewState> _rightGameSettingViewKey = GlobalKey();
   Size? _screenSize;
   UDP? _sender;
   String? _message;
@@ -85,6 +87,11 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _gameEventButton() {
     return TextToggle(_buttonDatas, 60, 30, (gameEvent) {
+      if (gameEvent == GameEvent.end) {
+        _leftGameSettingViewKey.currentState?.reset();
+        _rightGameSettingViewKey.currentState?.reset();
+      }
+
       _sendStringMessage(CommandUtil.buildGameEventCommand(gameEvent));
     }, spacing: 5, defaultButtonIndex: 2);
   }
@@ -145,10 +152,16 @@ class _ConsoleViewState extends State<ConsoleView> {
       child: Padding(
         padding: const EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 10),
         child: Row(
-          children: const [
-            Expanded(flex: 1, child: GameSettingView(player: "left")),
-            SizedBox(width: 10),
-            Expanded(flex: 1, child: GameSettingView(player: "right")),
+          children: [
+            Expanded(
+                flex: 1,
+                child: GameSettingView(
+                    player: "left", key: _leftGameSettingViewKey)),
+            const SizedBox(width: 10),
+            Expanded(
+                flex: 1,
+                child: GameSettingView(
+                    player: "right", key: _rightGameSettingViewKey)),
           ],
         ),
       ),

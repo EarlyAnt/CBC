@@ -14,10 +14,10 @@ class PopButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PopButtonState createState() => _PopButtonState();
+  PopButtonState createState() => PopButtonState();
 }
 
-class _PopButtonState extends State<PopButton> {
+class PopButtonState extends State<PopButton> {
   bool? _pressDown;
 
   @override
@@ -54,5 +54,11 @@ class _PopButtonState extends State<PopButton> {
           });
           debugPrint("button[${widget.text}] press down: $_pressDown");
         });
+  }
+
+  void reset() {
+    setState(() {
+      _pressDown = false;
+    });
   }
 }

@@ -12,15 +12,17 @@ class GameSettingView extends StatefulWidget {
   const GameSettingView({Key? key, this.player}) : super(key: key);
 
   @override
-  _GameSettingViewState createState() => _GameSettingViewState();
+  GameSettingViewState createState() => GameSettingViewState();
 }
 
-class _GameSettingViewState extends State<GameSettingView> {
+class GameSettingViewState extends State<GameSettingView> {
   final double _spacing = 10;
+  final GlobalKey<PopButtonState> _weakButtonKey = GlobalKey();
+  final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
+  final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
   TextEditingController? _nameController;
   TextEditingController? _healthController;
   String? _avatarPath;
-  String? _playerName;
   UDP? _sender;
   String? _message;
   int? _dataLength;
@@ -29,15 +31,11 @@ class _GameSettingViewState extends State<GameSettingView> {
   @override
   void initState() {
     super.initState();
+    _playerData = PlayerData.empty;
     _nameController = TextEditingController();
+    _nameController?.text = _playerData!.name;
     _healthController = TextEditingController();
-    _playerData = PlayerData(
-        health: 10000,
-        cardCount: 30,
-        hurt: 0,
-        weak: false,
-        aid: false,
-        effect: false);
+    _healthController?.text = _playerData!.health.toString();
     _initSocket();
   }
 
@@ -81,8 +79,27 @@ class _GameSettingViewState extends State<GameSettingView> {
       Image.asset(_avatarPath ?? "assets/images/ui/avatar_1.jpg",
           width: 32, height: 32),
       Padding(
-          padding: EdgeInsets.only(left: _spacing),
-          child: Text(_playerName ?? "未设置")),
+        padding: EdgeInsets.only(left: _spacing),
+        child: Container(
+            width: 132,
+            height: 30,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2),
+              borderRadius: const BorderRadius.all(Radius.circular(4)),
+            ),
+            child: TextField(
+                controller: _nameController,
+                maxLength: 10,
+                maxLines: 1,
+                showCursor: false,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  counterText: '',
+                ),
+                onChanged: (value) {
+                  _playerData!.name = value;
+                })),
+      ),
       Padding(
           padding: EdgeInsets.only(left: _spacing),
           child: TextButton(child: const Text("设定"), onPressed: () {})),
@@ -138,8 +155,10 @@ class _GameSettingViewState extends State<GameSettingView> {
         const Text("状态加成"),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: PopButton("衰弱", light: false, color: Colors.red,
-                onPressed: (value) {
+            child: PopButton("衰弱",
+                key: _weakButtonKey,
+                light: false,
+                color: Colors.red, onPressed: (value) {
               setState(() {
                 _playerData!.weak = value;
               });
@@ -148,8 +167,10 @@ class _GameSettingViewState extends State<GameSettingView> {
             })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: PopButton("被支援", light: false, color: Colors.green,
-                onPressed: (value) {
+            child: PopButton("被支援",
+                key: _aidButtonKey,
+                light: false,
+                color: Colors.green, onPressed: (value) {
               setState(() {
                 _playerData!.aid = value;
               });
@@ -158,8 +179,10 @@ class _GameSettingViewState extends State<GameSettingView> {
             })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),
-            child: PopButton("效果", light: false, color: Colors.blue,
-                onPressed: (value) {
+            child: PopButton("效果",
+                key: _effectButtonKey,
+                light: false,
+                color: Colors.blue, onPressed: (value) {
               setState(() {
                 _playerData!.effect = value;
               });
@@ -251,5 +274,16 @@ class _GameSettingViewState extends State<GameSettingView> {
     debugPrint("execute command: $message");
     _dataLength = await _sender?.send(
         message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
+  }
+
+  void reset() {
+    setState(() {
+      _playerData = PlayerData.empty;
+      _nameController?.text = _playerData!.name;
+      _healthController?.text = _playerData!.health.toString();
+      _weakButtonKey.currentState?.reset();
+      _aidButtonKey.currentState?.reset();
+      _effectButtonKey.currentState?.reset();
+    });
   }
 }
