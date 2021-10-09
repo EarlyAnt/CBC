@@ -17,13 +17,15 @@ public class AnimationPlayer : MonoBehaviourExtension
     {
         animationInfos = new Dictionary<string, AnimationInfo>();
         animationInfos.Add("gamestart", new AnimationInfo() { Animation = "Prefabs/GameStart" });
+        animationInfos.Add("cutcardleft", new AnimationInfo() { Animation = "Prefabs/CutCardLeft" });
+        animationInfos.Add("cutcardright", new AnimationInfo() { Animation = "Prefabs/CutCardRight" });
         animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/shengli", Animation = "Prefabs/SnowAnimation" });
         animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/daweitianlong", Animation = "Prefabs/BuddhaPalm" });
         animationInfos.Add("guzhang", new AnimationInfo() { Audio = "Audios/guzhang2" });
         animationInfos.Add("huanhu", new AnimationInfo() { Audio = "Audios/huanhu" });
     }
     /************************************************自 定 义 方 法************************************************/
-    public void Play(string animationName)
+    public void Play(string animationName, System.Action callback = null)
     {
         if (!this.animationInfos.ContainsKey(animationName))
             return;
@@ -43,6 +45,17 @@ public class AnimationPlayer : MonoBehaviourExtension
             gameObject.transform.parent = this.animationRoot;
             gameObject.transform.localPosition = Vector3.zero;
             gameObject.transform.localRotation = Quaternion.identity;
+
+            if (callback != null)
+            {
+                BasetAnimation baseAnimation = gameObject.GetComponent<BasetAnimation>();
+                if (baseAnimation != null)
+                    baseAnimation.Complete = () =>
+                    {
+                        print("animation complete");
+                        callback();
+                    };
+            }
         }
     }
 }

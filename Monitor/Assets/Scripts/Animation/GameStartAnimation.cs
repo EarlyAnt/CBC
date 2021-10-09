@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 游戏开始动画
 /// </summary>
-public class GameStartAnimation : MonoBehaviourExtension
+public class GameStartAnimation : BasetAnimation
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]

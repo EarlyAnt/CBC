@@ -217,11 +217,13 @@ class _GameSettingViewState extends State<GameSettingView> {
             child: TextButton(
                 child: const Text("+"),
                 onPressed: () {
-                  setState(() {
-                    _playerData!.hurt += 1;
-                  });
-                  _sendStringMessage(CommandUtil.buildHurtCommand(
-                      _playerData!.hurt, widget.player!));
+                  if (_playerData!.hurt < 5) {
+                    setState(() {
+                      _playerData!.hurt += 1;
+                    });
+                    _sendStringMessage(CommandUtil.buildHurtCommand(
+                        _playerData!.hurt, widget.player!));
+                  }
                 })),
         Padding(
             padding: EdgeInsets.only(left: _spacing),

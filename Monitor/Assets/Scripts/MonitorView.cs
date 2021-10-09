@@ -52,6 +52,7 @@ public class MonitorView : MonoBehaviourExtension
 
     }
     /************************************************自 定 义 方 法************************************************/
+    //当接收到数据时
     private void OnReceiveData(string dataString)
     {
         this.actions.Enqueue(() =>
@@ -89,9 +90,21 @@ public class MonitorView : MonoBehaviourExtension
                 case NetDataTags.HURT:
                     HurtData hurtData = this.GetGameData<HurtData>(netData.Data);
                     if (hurtData.DataOwner == DataOwners.LEFT)
-                        this.leftPlayerPanel.SetHurtCount(hurtData.Value);
+                    {
+                        System.Action setHurtAction = () => this.leftPlayerPanel.SetHurtCount(hurtData.Value);
+                        if (this.leftPlayerPanel.HurtCount < hurtData.Value)
+                            this.animationPlayer.Play("cutcardleft", setHurtAction);
+                        else
+                            setHurtAction();
+                    }
                     else if (hurtData.DataOwner == DataOwners.RIGHT)
-                        this.rightPlayerPanel.SetHurtCount(hurtData.Value);
+                    {
+                        System.Action setHurtAction = () => this.rightPlayerPanel.SetHurtCount(hurtData.Value);
+                        if (this.rightPlayerPanel.HurtCount < hurtData.Value)
+                            this.animationPlayer.Play("cutcardright", setHurtAction);
+                        else
+                            setHurtAction();
+                    }
                     break;
                 case NetDataTags.WEAK:
                     WeakData weakData = this.GetGameData<WeakData>(netData.Data);
@@ -143,14 +156,29 @@ public class MonitorView : MonoBehaviourExtension
             }
         });
     }
-
+    //当接收到原始数据时
+    private void OnReceiveRawData(byte[] byteDatas)
+    {
+        this.actions.Enqueue(() =>
+        {
+            if (byteDatas != null && byteDatas.Length > 0)
+            {
+                int width = 1080;
+                int height = 1920;
+                Texture2D texture = new Texture2D(width, height);
+                texture.LoadImage(byteDatas);
+                //this.image.texture = texture;
+            }
+        });
+    }
+    //开始游戏
     private void StartGame()
     {
         this.leftSeconds = this.gameDuration * 60;
         this.InvokeRepeating("RefreshTimer", 0, 1);
         this.animationPlayer.Play("gamestart");
     }
-
+    //结束游戏
     private void EndGame()
     {
         this.CancelInvoke("RefreshTimer");
@@ -170,7 +198,7 @@ public class MonitorView : MonoBehaviourExtension
         this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
         this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
     }
-
+    //刷新计时器
     private void RefreshTimer()
     {
         if (this.gameEvent == GameEvents.Start)
@@ -188,27 +216,12 @@ public class MonitorView : MonoBehaviourExtension
             }
         }
     }
-
+    //获取游戏数据对象
     private T GetGameData<T>(object jsonData)
     {
         string dataString = JsonUtil.Json2String(jsonData);
         T gameData = JsonUtil.String2Json<T>(dataString);
         return gameData;
-    }
-
-    private void OnReceiveRawData(byte[] byteDatas)
-    {
-        this.actions.Enqueue(() =>
-        {
-            if (byteDatas != null && byteDatas.Length > 0)
-            {
-                int width = 1080;
-                int height = 1920;
-                Texture2D texture = new Texture2D(width, height);
-                texture.LoadImage(byteDatas);
-                //this.image.texture = texture;
-            }
-        });
     }
 }
 
@@ -226,6 +239,14 @@ public class PlayerPanel
     private Text cardCountBox;//卡牌数
     [SerializeField]
     private List<Icon> hurtCountList;//伤害
+    public int HurtCount//伤害数
+    {
+        get
+        {
+            return hurtCountList != null && hurtCountList.Count > 0 ?
+                   hurtCountList.FindAll(t => t.Light).Count : 0;
+        }
+    }
 
     /// <summary>
     /// 设置头像
@@ -256,10 +277,15 @@ public class PlayerPanel
     /// <param name="hurtCount"></param>
     public void SetHurtCount(int hurtCount)
     {
+        int currentHurtCount = this.HurtCount;
+
         for (int i = 0; i < this.hurtCountList.Count; i++)
         {
-            this.hurtCountList[i].SetStatus(i < hurtCount);
+            this.hurtCountList[i].SetStatus(i < hurtCount, false);
         }
+
+        if (currentHurtCount < this.HurtCount && hurtCount > 0)
+            this.hurtCountList[hurtCount - 1].SetStatus(true, true);
     }
 }
 
@@ -269,7 +295,7 @@ public class PlayerPanel
 [System.Serializable]
 public class StatusPanel
 {
-    public enum Items { Weak, Aid, Effect }
+    public enum Items { Weak, Aid, Effect }//游戏效果状态枚举
     [SerializeField]
     private Icon weakBox;//衰弱
     [SerializeField]
@@ -321,13 +347,20 @@ public class Icon
     private Sprite normalSprite;//常态图片
     [SerializeField]
     private Sprite lightSprite;//高亮图片
+    public bool Light { get; private set; }//是否点亮
 
     /// <summary>
     /// 设置图标状态
     /// </summary>
     /// <param name="light">是否点亮</param>
-    public void SetStatus(bool light)
+    public void SetStatus(bool light, bool showAnimation = false)
     {
+        this.Light = light;
         this.imageBox.sprite = light ? this.lightSprite : this.normalSprite;
+        if (showAnimation)
+        {
+            ShowHurt showHurt = this.imageBox.GetComponent<ShowHurt>();
+            if (showHurt != null) showHurt.Play();
+        }
     }
 }

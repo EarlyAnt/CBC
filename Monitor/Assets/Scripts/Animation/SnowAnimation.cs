@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 雪花动画
 /// </summary>
-public class SnowAnimation : MonoBehaviourExtension
+public class SnowAnimation : BasetAnimation
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
