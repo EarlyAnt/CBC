@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &109971900
 GameObject:
@@ -549,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &120686535
 GameObject:
@@ -801,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &250434195
 GameObject:
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &272521105
 GameObject:
@@ -979,7 +979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &272965026
 GameObject:
@@ -1487,7 +1487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &422990186
 GameObject:
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &535160164
 GameObject:
@@ -2264,7 +2264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &715317358
 GameObject:
@@ -3445,7 +3445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &1237258244
 GameObject:
@@ -4518,7 +4518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4178b3a92cefb54fb26666c37156717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 15
+  imageBox: {fileID: 0}
   duration: 0.2
 --- !u!1 &1797845484
 GameObject:
