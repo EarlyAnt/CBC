@@ -19,7 +19,7 @@ class PlayerData {
   static PlayerData get empty => PlayerData(
       name: "未设置",
       health: 10000,
-      cardCount: 30,
+      cardCount: 40,
       hurt: 0,
       weak: false,
       aid: false,
