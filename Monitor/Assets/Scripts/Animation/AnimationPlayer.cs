@@ -19,8 +19,8 @@ public class AnimationPlayer : MonoBehaviourExtension
         animationInfos.Add("gamestart", new AnimationInfo() { Animation = "Prefabs/GameStart" });
         animationInfos.Add("cutcardleft", new AnimationInfo() { Animation = "Prefabs/CutCardLeft" });
         animationInfos.Add("cutcardright", new AnimationInfo() { Animation = "Prefabs/CutCardRight" });
-        animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/shengli", Animation = "Prefabs/SnowAnimation" });
-        animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/daweitianlong", Animation = "Prefabs/BuddhaPalm" });
+        animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardS" });
+        animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardSS" });
         animationInfos.Add("guzhang", new AnimationInfo() { Audio = "Audios/guzhang2" });
         animationInfos.Add("huanhu", new AnimationInfo() { Audio = "Audios/huanhu" });
     }
@@ -48,7 +48,7 @@ public class AnimationPlayer : MonoBehaviourExtension
 
             if (callback != null)
             {
-                BasetAnimation baseAnimation = gameObject.GetComponent<BasetAnimation>();
+                BaseAnimation baseAnimation = gameObject.GetComponent<BaseAnimation>();
                 if (baseAnimation != null)
                     baseAnimation.Complete = () =>
                     {

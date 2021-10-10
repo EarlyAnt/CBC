@@ -1,0 +1,937 @@
+
+rare_card.png
+size: 2033,1413
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+超稀有卡/card_s_00004
+  rotate: false
+  xy: 421, 626
+  size: 36, 3
+  orig: 480, 80
+  offset: 440, 55
+  index: -1
+超稀有卡/card_s_00005
+  rotate: false
+  xy: 1914, 89
+  size: 114, 63
+  orig: 480, 80
+  offset: 366, 12
+  index: -1
+超稀有卡/card_s_00006
+  rotate: true
+  xy: 4, 4
+  size: 143, 67
+  orig: 480, 80
+  offset: 337, 11
+  index: -1
+超稀有卡/card_s_00007
+  rotate: true
+  xy: 162, 4
+  size: 168, 67
+  orig: 480, 80
+  offset: 312, 11
+  index: -1
+超稀有卡/card_s_00008
+  rotate: false
+  xy: 1055, 437
+  size: 191, 67
+  orig: 480, 80
+  offset: 289, 11
+  index: -1
+超稀有卡/card_s_00009
+  rotate: true
+  xy: 233, 24
+  size: 209, 67
+  orig: 480, 80
+  offset: 271, 11
+  index: -1
+超稀有卡/card_s_00010
+  rotate: true
+  xy: 304, 20
+  size: 232, 67
+  orig: 480, 80
+  offset: 248, 11
+  index: -1
+超稀有卡/card_s_00011
+  rotate: false
+  xy: 1761, 229
+  size: 259, 67
+  orig: 480, 80
+  offset: 221, 11
+  index: -1
+超稀有卡/card_s_00012
+  rotate: false
+  xy: 1527, 616
+  size: 274, 67
+  orig: 480, 80
+  offset: 192, 11
+  index: -1
+超稀有卡/card_s_00013
+  rotate: false
+  xy: 1527, 925
+  size: 329, 67
+  orig: 480, 80
+  offset: 122, 11
+  index: -1
+超稀有卡/card_s_00014
+  rotate: true
+  xy: 337, 292
+  size: 304, 69
+  orig: 480, 80
+  offset: 123, 11
+  index: -1
+超稀有卡/card_s_00015
+  rotate: false
+  xy: 493, 268
+  size: 277, 69
+  orig: 480, 80
+  offset: 127, 11
+  index: -1
+超稀有卡/card_s_00016
+  rotate: false
+  xy: 784, 436
+  size: 267, 69
+  orig: 480, 80
+  offset: 125, 11
+  index: -1
+超稀有卡/card_s_00017
+  rotate: false
+  xy: 784, 363
+  size: 263, 69
+  orig: 480, 80
+  offset: 118, 11
+  index: -1
+超稀有卡/card_s_00018
+  rotate: false
+  xy: 1262, 544
+  size: 261, 69
+  orig: 480, 80
+  offset: 113, 11
+  index: -1
+超稀有卡/card_s_00019
+  rotate: false
+  xy: 1264, 843
+  size: 259, 69
+  orig: 480, 80
+  offset: 111, 11
+  index: -1
+超稀有卡/card_s_00020
+  rotate: false
+  xy: 1755, 156
+  size: 259, 69
+  orig: 480, 80
+  offset: 110, 11
+  index: -1
+超稀有卡/card_s_00021
+  rotate: false
+  xy: 448, 195
+  size: 258, 69
+  orig: 480, 80
+  offset: 111, 11
+  index: -1
+超稀有卡/card_s_00022
+  rotate: false
+  xy: 448, 122
+  size: 258, 69
+  orig: 480, 80
+  offset: 111, 11
+  index: -1
+超稀有卡/card_s_00023
+  rotate: true
+  xy: 375, 29
+  size: 259, 69
+  orig: 480, 80
+  offset: 111, 11
+  index: -1
+超稀有卡/card_s_00024
+  rotate: false
+  xy: 448, 49
+  size: 258, 69
+  orig: 480, 80
+  offset: 112, 11
+  index: -1
+超稀有卡/card_s_00025
+  rotate: false
+  xy: 710, 140
+  size: 258, 69
+  orig: 480, 80
+  offset: 112, 11
+  index: -1
+超稀有卡/card_s_00026
+  rotate: false
+  xy: 710, 67
+  size: 258, 69
+  orig: 480, 80
+  offset: 112, 11
+  index: -1
+超稀有卡/card_s_00027
+  rotate: false
+  xy: 972, 57
+  size: 258, 69
+  orig: 480, 80
+  offset: 112, 11
+  index: -1
+超稀有卡/card_s_00028
+  rotate: false
+  xy: 1263, 693
+  size: 260, 70
+  orig: 480, 80
+  offset: 111, 10
+  index: -1
+超稀有卡/card_s_00029
+  rotate: false
+  xy: 1246, 323
+  size: 260, 69
+  orig: 480, 80
+  offset: 111, 10
+  index: -1
+超稀有卡/card_s_00034
+  rotate: false
+  xy: 1527, 543
+  size: 273, 69
+  orig: 480, 80
+  offset: 98, 10
+  index: -1
+超稀有卡/card_s_00035
+  rotate: false
+  xy: 775, 289
+  size: 263, 70
+  orig: 480, 80
+  offset: 108, 9
+  index: -1
+超稀有卡/card_s_00036
+  rotate: false
+  xy: 1262, 617
+  size: 261, 72
+  orig: 480, 80
+  offset: 110, 8
+  index: -1
+超稀有卡/card_s_00037
+  rotate: false
+  xy: 774, 213
+  size: 263, 72
+  orig: 480, 80
+  offset: 108, 8
+  index: -1
+超稀有卡/card_s_00038
+  rotate: false
+  xy: 1515, 395
+  size: 260, 71
+  orig: 480, 80
+  offset: 111, 9
+  index: -1
+超稀有卡/card_s_00039
+  rotate: false
+  xy: 1263, 767
+  size: 260, 72
+  orig: 480, 80
+  offset: 111, 8
+  index: -1
+超稀有卡/card_s_00040
+  rotate: false
+  xy: 1510, 319
+  size: 260, 72
+  orig: 480, 80
+  offset: 111, 8
+  index: -1
+超稀有卡/card_s_00041
+  rotate: false
+  xy: 1233, 249
+  size: 260, 70
+  orig: 480, 80
+  offset: 111, 9
+  index: -1
+超稀有卡/card_s_00042
+  rotate: false
+  xy: 1250, 470
+  size: 262, 70
+  orig: 480, 80
+  offset: 111, 9
+  index: -1
+超稀有卡/card_s_00043
+  rotate: false
+  xy: 1250, 396
+  size: 261, 70
+  orig: 480, 80
+  offset: 111, 9
+  index: -1
+超稀有卡/card_s_00044
+  rotate: false
+  xy: 1497, 246
+  size: 260, 69
+  orig: 480, 80
+  offset: 111, 10
+  index: -1
+超稀有卡/card_s_00045
+  rotate: false
+  xy: 1227, 176
+  size: 260, 69
+  orig: 480, 80
+  offset: 111, 10
+  index: -1
+超稀有卡/card_s_00057
+  rotate: false
+  xy: 1491, 173
+  size: 260, 69
+  orig: 480, 80
+  offset: 111, 10
+  index: -1
+超稀有卡/card_s_00058
+  rotate: false
+  xy: 1390, 100
+  size: 258, 69
+  orig: 480, 80
+  offset: 113, 10
+  index: -1
+超稀有卡/card_s_00059
+  rotate: false
+  xy: 1390, 27
+  size: 258, 69
+  orig: 480, 80
+  offset: 114, 10
+  index: -1
+超稀有卡/card_s_00060
+  rotate: false
+  xy: 1652, 10
+  size: 256, 69
+  orig: 480, 80
+  offset: 116, 10
+  index: -1
+超稀有卡/card_s_00061
+  rotate: true
+  xy: 1877, 895
+  size: 256, 69
+  orig: 480, 80
+  offset: 116, 10
+  index: -1
+超稀有卡/card_s_00062
+  rotate: false
+  xy: 1774, 300
+  size: 255, 69
+  orig: 480, 80
+  offset: 114, 10
+  index: -1
+超稀有卡/card_s_00063
+  rotate: true
+  xy: 1950, 895
+  size: 256, 69
+  orig: 480, 80
+  offset: 108, 10
+  index: -1
+超稀有卡/card_s_00064
+  rotate: false
+  xy: 1652, 83
+  size: 258, 69
+  orig: 480, 80
+  offset: 98, 10
+  index: -1
+超稀有卡/card_s_00065
+  rotate: false
+  xy: 1516, 470
+  size: 262, 69
+  orig: 480, 80
+  offset: 83, 10
+  index: -1
+超稀有卡/card_s_00066
+  rotate: false
+  xy: 843, 509
+  size: 270, 69
+  orig: 480, 80
+  offset: 62, 10
+  index: -1
+超稀有卡/card_s_00067
+  rotate: false
+  xy: 493, 341
+  size: 278, 69
+  orig: 480, 80
+  offset: 38, 10
+  index: -1
+超稀有卡/card_s_00068
+  rotate: false
+  xy: 493, 414
+  size: 287, 69
+  orig: 480, 80
+  offset: 11, 10
+  index: -1
+超稀有卡/card_s_00069
+  rotate: false
+  xy: 1527, 687
+  size: 277, 69
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00070
+  rotate: false
+  xy: 1782, 455
+  size: 243, 69
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00071
+  rotate: false
+  xy: 1805, 606
+  size: 210, 69
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00072
+  rotate: false
+  xy: 1041, 211
+  size: 182, 63
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00073
+  rotate: false
+  xy: 1847, 828
+  size: 159, 63
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00074
+  rotate: false
+  xy: 1880, 1262
+  size: 131, 63
+  orig: 480, 80
+  offset: 0, 10
+  index: -1
+超稀有卡/card_s_00075
+  rotate: false
+  xy: 1879, 1155
+  size: 104, 44
+  orig: 480, 80
+  offset: 0, 11
+  index: -1
+超稀有卡/card_s_00076
+  rotate: true
+  xy: 2015, 1328
+  size: 81, 14
+  orig: 480, 80
+  offset: 0, 23
+  index: -1
+超超稀有卡/card_ss_00004
+  rotate: false
+  xy: 1880, 1203
+  size: 113, 55
+  orig: 480, 80
+  offset: 367, 16
+  index: -1
+超超稀有卡/card_ss_00005
+  rotate: false
+  xy: 1117, 508
+  size: 129, 70
+  orig: 480, 80
+  offset: 351, 10
+  index: -1
+超超稀有卡/card_ss_00006
+  rotate: false
+  xy: 1234, 97
+  size: 152, 75
+  orig: 480, 80
+  offset: 328, 5
+  index: -1
+超超稀有卡/card_ss_00007
+  rotate: false
+  xy: 1055, 356
+  size: 187, 77
+  orig: 480, 80
+  offset: 293, 3
+  index: -1
+超超稀有卡/card_ss_00008
+  rotate: false
+  xy: 972, 130
+  size: 208, 77
+  orig: 480, 80
+  offset: 272, 3
+  index: -1
+超超稀有卡/card_ss_00009
+  rotate: false
+  xy: 1808, 679
+  size: 221, 77
+  orig: 480, 80
+  offset: 259, 3
+  index: -1
+超超稀有卡/card_ss_00010
+  rotate: false
+  xy: 1779, 373
+  size: 248, 78
+  orig: 480, 80
+  offset: 232, 2
+  index: -1
+超超稀有卡/card_ss_00011
+  rotate: false
+  xy: 493, 487
+  size: 280, 78
+  orig: 480, 80
+  offset: 200, 2
+  index: -1
+超超稀有卡/card_ss_00012
+  rotate: false
+  xy: 1527, 760
+  size: 314, 78
+  orig: 480, 80
+  offset: 166, 2
+  index: -1
+超超稀有卡/card_ss_00013
+  rotate: false
+  xy: 505, 569
+  size: 334, 78
+  orig: 480, 80
+  offset: 146, 2
+  index: -1
+超超稀有卡/card_ss_00014
+  rotate: false
+  xy: 918, 1329
+  size: 350, 80
+  orig: 480, 80
+  offset: 130, 0
+  index: -1
+超超稀有卡/card_ss_00015
+  rotate: false
+  xy: 1272, 1329
+  size: 350, 80
+  orig: 480, 80
+  offset: 115, 0
+  index: -1
+超超稀有卡/card_ss_00016
+  rotate: true
+  xy: 170, 581
+  size: 347, 80
+  orig: 480, 80
+  offset: 104, 0
+  index: -1
+超超稀有卡/card_ss_00017
+  rotate: true
+  xy: 254, 600
+  size: 344, 80
+  orig: 480, 80
+  offset: 96, 0
+  index: -1
+超超稀有卡/card_ss_00018
+  rotate: false
+  xy: 1626, 1329
+  size: 349, 80
+  orig: 480, 80
+  offset: 84, 0
+  index: -1
+超超稀有卡/card_ss_00019
+  rotate: true
+  xy: 4, 151
+  size: 355, 80
+  orig: 480, 80
+  offset: 74, 0
+  index: -1
+超超稀有卡/card_ss_00020
+  rotate: true
+  xy: 254, 948
+  size: 377, 80
+  orig: 480, 80
+  offset: 51, 0
+  index: -1
+超超稀有卡/card_ss_00021
+  rotate: true
+  xy: 170, 932
+  size: 393, 80
+  orig: 480, 80
+  offset: 44, 0
+  index: -1
+超超稀有卡/card_ss_00022
+  rotate: true
+  xy: 86, 887
+  size: 438, 80
+  orig: 480, 80
+  offset: 23, 0
+  index: -1
+超超稀有卡/card_ss_00023
+  rotate: false
+  xy: 4, 1329
+  size: 453, 80
+  orig: 480, 80
+  offset: 16, 0
+  index: -1
+超超稀有卡/card_ss_00024
+  rotate: true
+  xy: 4, 870
+  size: 455, 78
+  orig: 480, 80
+  offset: 17, 2
+  index: -1
+超超稀有卡/card_ss_00025
+  rotate: false
+  xy: 1534, 996
+  size: 337, 80
+  orig: 480, 80
+  offset: 91, 0
+  index: -1
+超超稀有卡/card_ss_00026
+  rotate: false
+  xy: 461, 1331
+  size: 453, 78
+  orig: 480, 80
+  offset: 21, 2
+  index: -1
+超超稀有卡/card_ss_00027
+  rotate: true
+  xy: 841, 654
+  size: 337, 78
+  orig: 480, 80
+  offset: 91, 2
+  index: -1
+超超稀有卡/card_ss_00028
+  rotate: true
+  xy: 171, 237
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00029
+  rotate: true
+  xy: 254, 256
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00030
+  rotate: false
+  xy: 848, 1246
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00031
+  rotate: false
+  xy: 848, 1163
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00032
+  rotate: false
+  xy: 1192, 1246
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00033
+  rotate: false
+  xy: 848, 1080
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00034
+  rotate: true
+  xy: 338, 616
+  size: 345, 79
+  orig: 480, 80
+  offset: 83, 1
+  index: -1
+超超稀有卡/card_ss_00035
+  rotate: true
+  xy: 421, 981
+  size: 344, 79
+  orig: 480, 80
+  offset: 84, 1
+  index: -1
+超超稀有卡/card_ss_00036
+  rotate: false
+  xy: 1192, 1163
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00037
+  rotate: true
+  xy: 421, 633
+  size: 344, 80
+  orig: 480, 80
+  offset: 84, 0
+  index: -1
+超超稀有卡/card_ss_00038
+  rotate: false
+  xy: 504, 1247
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00039
+  rotate: false
+  xy: 504, 1163
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00040
+  rotate: false
+  xy: 504, 1079
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00041
+  rotate: false
+  xy: 504, 995
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00042
+  rotate: true
+  xy: 505, 651
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00043
+  rotate: true
+  xy: 589, 651
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00044
+  rotate: true
+  xy: 673, 651
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00045
+  rotate: true
+  xy: 757, 651
+  size: 340, 80
+  orig: 480, 80
+  offset: 88, 0
+  index: -1
+超超稀有卡/card_ss_00046
+  rotate: false
+  xy: 1536, 1246
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00047
+  rotate: false
+  xy: 848, 997
+  size: 340, 79
+  orig: 480, 80
+  offset: 88, 1
+  index: -1
+超超稀有卡/card_ss_00057
+  rotate: false
+  xy: 1192, 1080
+  size: 339, 79
+  orig: 480, 80
+  offset: 89, 1
+  index: -1
+超超稀有卡/card_ss_00058
+  rotate: false
+  xy: 1192, 997
+  size: 338, 79
+  orig: 480, 80
+  offset: 90, 1
+  index: -1
+超超稀有卡/card_ss_00059
+  rotate: false
+  xy: 923, 914
+  size: 337, 79
+  orig: 480, 80
+  offset: 92, 1
+  index: -1
+超超稀有卡/card_ss_00060
+  rotate: false
+  xy: 923, 831
+  size: 336, 79
+  orig: 480, 80
+  offset: 93, 1
+  index: -1
+超超稀有卡/card_ss_00061
+  rotate: false
+  xy: 923, 665
+  size: 335, 79
+  orig: 480, 80
+  offset: 94, 1
+  index: -1
+超超稀有卡/card_ss_00062
+  rotate: false
+  xy: 923, 582
+  size: 335, 79
+  orig: 480, 80
+  offset: 91, 1
+  index: -1
+超超稀有卡/card_ss_00063
+  rotate: false
+  xy: 923, 748
+  size: 336, 79
+  orig: 480, 80
+  offset: 86, 1
+  index: -1
+超超稀有卡/card_ss_00064
+  rotate: false
+  xy: 1535, 1080
+  size: 338, 79
+  orig: 480, 80
+  offset: 76, 1
+  index: -1
+超超稀有卡/card_ss_00065
+  rotate: true
+  xy: 88, 184
+  size: 345, 79
+  orig: 480, 80
+  offset: 59, 1
+  index: -1
+超超稀有卡/card_ss_00066
+  rotate: true
+  xy: 87, 533
+  size: 350, 79
+  orig: 480, 80
+  offset: 41, 1
+  index: -1
+超超稀有卡/card_ss_00067
+  rotate: true
+  xy: 4, 510
+  size: 356, 79
+  orig: 480, 80
+  offset: 19, 1
+  index: -1
+超超稀有卡/card_ss_00068
+  rotate: true
+  xy: 338, 965
+  size: 360, 79
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00069
+  rotate: false
+  xy: 1536, 1163
+  size: 339, 79
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00070
+  rotate: false
+  xy: 1527, 842
+  size: 316, 79
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00071
+  rotate: true
+  xy: 410, 319
+  size: 293, 79
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00072
+  rotate: false
+  xy: 1264, 916
+  size: 259, 77
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00073
+  rotate: false
+  xy: 1804, 528
+  size: 225, 74
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00074
+  rotate: false
+  xy: 1042, 278
+  size: 187, 74
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00075
+  rotate: true
+  xy: 88, 4
+  size: 176, 70
+  orig: 480, 80
+  offset: 0, 1
+  index: -1
+超超稀有卡/card_ss_00076
+  rotate: false
+  xy: 710, 11
+  size: 155, 52
+  orig: 480, 80
+  offset: 0, 2
+  index: -1
+超超稀有卡/card_ss_00077
+  rotate: false
+  xy: 1234, 58
+  size: 133, 35
+  orig: 480, 80
+  offset: 0, 4
+  index: -1
+超超稀有卡/card_ss_00078
+  rotate: false
+  xy: 448, 16
+  size: 116, 29
+  orig: 480, 80
+  offset: 0, 6
+  index: -1
+超超稀有卡/card_ss_00079
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超稀有卡/card_s_00000
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超稀有卡/card_s_00001
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超稀有卡/card_s_00002
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超稀有卡/card_s_00003
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超超稀有卡/card_ss_00000
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超超稀有卡/card_ss_00001
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超超稀有卡/card_ss_00002
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+超超稀有卡/card_ss_00003
+  rotate: false
+  xy: 1774, 390
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

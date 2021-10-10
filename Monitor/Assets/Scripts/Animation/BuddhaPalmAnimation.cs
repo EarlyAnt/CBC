@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 雪花动画
 /// </summary>
-public class BuddhaPalmAnimation : BasetAnimation
+public class BuddhaPalmAnimation : BaseAnimation
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField, Range(1f, 3f)]
