@@ -50,6 +50,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.1+5"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.1"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -57,6 +64,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.3"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -78,6 +92,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.1.2"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -247,6 +268,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.3"
+  qiniu_flutter_sdk:
+    dependency: "direct main"
+    description:
+      name: qiniu_flutter_sdk
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.0"
+  qiniu_sdk_base:
+    dependency: transitive
+    description:
+      name: qiniu_sdk_base
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.2"
   shared_preferences:
     dependency: "direct main"
     description:

@@ -1,10 +1,19 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:console/data/command_data.dart';
 import 'package:console/data/player_data.dart';
 import 'package:console/ui_component/pop_button.dart';
+import 'package:console/utils/dio_util.dart';
+import 'package:console/utils/uint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qiniu_flutter_sdk/qiniu_flutter_sdk.dart';
 
 import '../plugins/udp/udp.dart';
+import 'select_file.dart';
 
 class GameSettingView extends StatefulWidget {
   final String? player;
@@ -16,10 +25,13 @@ class GameSettingView extends StatefulWidget {
 }
 
 class GameSettingViewState extends State<GameSettingView> {
+  GameSettingViewState() : storage = Storage();
+
   final double _spacing = 10;
   final GlobalKey<PopButtonState> _weakButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
+  final Storage storage;
   TextEditingController? _nameController;
   TextEditingController? _healthController;
   String? _avatarPath;
@@ -27,6 +39,11 @@ class GameSettingViewState extends State<GameSettingView> {
   String? _message;
   int? _dataLength;
   PlayerData? _playerData;
+  PutController? _putController;
+  int partSize = 4;
+  File? _selectedFile;
+  String? _token;
+  String? _key;
 
   @override
   void initState() {
@@ -76,8 +93,7 @@ class GameSettingViewState extends State<GameSettingView> {
 
   Widget _playerInfo() {
     return Row(children: [
-      Image.asset(_avatarPath ?? "assets/images/ui/avatar_1.jpg",
-          width: 32, height: 32),
+      SelectImage(onSelectedFile),
       Padding(
         padding: EdgeInsets.only(left: _spacing),
         child: Container(
@@ -285,5 +301,109 @@ class GameSettingViewState extends State<GameSettingView> {
       _aidButtonKey.currentState?.reset();
       _effectButtonKey.currentState?.reset();
     });
+  }
+
+  void onSelectedFile(File file) {
+    print('选中文件: ${file.path}');
+    print('文件尺寸：${humanizeFileSize(file.lengthSync().toDouble())}');
+
+    setState(() {
+      print('设置 selectedFile');
+      _selectedFile = file;
+      uploadFile(file.path.substring(file.path.lastIndexOf('/') + 1));
+    });
+  }
+
+  Future uploadFile(String filePath) async {
+    try {
+      Map body = {};
+      // body["filepath"] = "aaaa.txt";
+      body["filepath"] = filePath;
+
+      DioUtils.postHttp(
+        'https://collector.kayou.gululu.com/api/qn/token',
+        parameters: body,
+        onSuccess: (data) {
+          debugPrint("<><main.getToken>success: $data");
+          Map jsonObject = json.decode(data.toString());
+          debugPrint("****  token: ${jsonObject['data']['token']}");
+          debugPrint("****  key: ${jsonObject['data']['key']}");
+          debugPrint("****  url: ${jsonObject['data']['url']}");
+          _key = jsonObject['data']['key'];
+          _token = jsonObject['data']['token'];
+          startUpload();
+        },
+        onError: (errorText) {
+          debugPrint("<><main.getToken>error: $errorText");
+        },
+      );
+    } catch (e) {
+      debugPrint("<><main.getToken>exception: $e");
+    }
+  }
+
+  void startUpload() {
+    print('创建 PutController');
+    _putController = PutController();
+
+    if (_token == null || _token == '') {
+      print('token 不能为空');
+      return;
+    }
+
+    if (_selectedFile == null) {
+      print('请选择文件');
+      return;
+    }
+
+    print('开始上传文件');
+    debugPrint('key: $_key, token: $_token');
+    storage.putFile(
+      _selectedFile!,
+      _token!,
+      options: PutOptions(
+        key: _key,
+        partSize: partSize,
+        controller: _putController,
+      ),
+    )
+      ..then((PutResponse response) {
+        print('上传已完成: 原始响应数据: ${jsonEncode(response.rawData)}');
+        print('------------------------');
+      })
+      ..catchError((dynamic error) {
+        if (error is StorageError) {
+          switch (error.type) {
+            case StorageErrorType.CONNECT_TIMEOUT:
+              print('发生错误: 连接超时');
+              break;
+            case StorageErrorType.SEND_TIMEOUT:
+              print('发生错误: 发送数据超时');
+              break;
+            case StorageErrorType.RECEIVE_TIMEOUT:
+              print('发生错误: 响应数据超时');
+              break;
+            case StorageErrorType.RESPONSE:
+              print('发生错误: ${error.message}');
+              break;
+            case StorageErrorType.CANCEL:
+              print('发生错误: 请求取消');
+              break;
+            case StorageErrorType.UNKNOWN:
+              print('发生错误: 未知错误');
+              break;
+            case StorageErrorType.NO_AVAILABLE_HOST:
+              print('发生错误: 无可用 Host');
+              break;
+            case StorageErrorType.IN_PROGRESS:
+              print('发生错误: 已在队列中');
+              break;
+          }
+        } else {
+          print('发生错误: ${error.toString()}');
+        }
+
+        print('------------------------');
+      });
   }
 }
