@@ -136,7 +136,7 @@ class DioUtils {
         baseUrl: "http://poetry.huhustory.com/",
       );
 
-      dio = new Dio(options);
+      dio = Dio(options);
     }
 
     return dio!;

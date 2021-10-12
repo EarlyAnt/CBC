@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../data/command_data.dart';
-import '../ui_component/pop_button.dart';
 
 class TextToggle extends StatefulWidget {
   final List<ButtonData> buttons;
@@ -105,8 +104,7 @@ class TExtButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.green,
+    return SizedBox(
       width: width,
       height: height,
       child: TextButton(

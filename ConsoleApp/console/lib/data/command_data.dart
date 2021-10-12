@@ -27,6 +27,10 @@ class CommandUtil {
     return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"$gameEvent\"}}";
   }
 
+  static String buildAvatarCommand(String url, String player) {
+    return "{\"Tag\":\"avatar\",\"Data\":{\"Url\":\"$url\",\"DataOwner\":\"$player\"}}";
+  }
+
   static String buildAudioCommand(String audio) {
     return "{\"Tag\":\"audio\",\"Data\":{\"EffectFile\":\"$audio\"}}";
   }

@@ -3,16 +3,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:console/data/command_data.dart';
-import 'package:console/data/player_data.dart';
-import 'package:console/ui_component/pop_button.dart';
-import 'package:console/utils/dio_util.dart';
-import 'package:console/utils/uint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qiniu_flutter_sdk/qiniu_flutter_sdk.dart';
 
-import '../plugins/udp/udp.dart';
+import '/data/command_data.dart';
+import '/data/player_data.dart';
+import '/ui_component/pop_button.dart';
+import '/utils/dio_util.dart';
+import '/utils/uint.dart';
+
+import '/plugins/udp/udp.dart';
 import 'select_file.dart';
 
 class GameSettingView extends StatefulWidget {
@@ -32,18 +33,12 @@ class GameSettingViewState extends State<GameSettingView> {
   final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
   final Storage storage;
+  final int partSize = 4;
+  late final UDP? _sender;
+  PutController? _putController;
   TextEditingController? _nameController;
   TextEditingController? _healthController;
-  String? _avatarPath;
-  UDP? _sender;
-  String? _message;
-  int? _dataLength;
   PlayerData? _playerData;
-  PutController? _putController;
-  int partSize = 4;
-  File? _selectedFile;
-  String? _token;
-  String? _key;
 
   @override
   void initState() {
@@ -286,10 +281,10 @@ class GameSettingViewState extends State<GameSettingView> {
   }
 
   void _sendStringMessage(String? message) async {
-    _message = message;
-    debugPrint("execute command: $message");
-    _dataLength = await _sender?.send(
+    int? dataLength = await _sender?.send(
         message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
+
+    debugPrint("execute command: $message, length: $dataLength");
   }
 
   void reset() {
@@ -308,17 +303,14 @@ class GameSettingViewState extends State<GameSettingView> {
     print('文件尺寸：${humanizeFileSize(file.lengthSync().toDouble())}');
 
     setState(() {
-      print('设置 selectedFile');
-      _selectedFile = file;
-      uploadFile(file.path.substring(file.path.lastIndexOf('/') + 1));
+      uploadFile(file);
     });
   }
 
-  Future uploadFile(String filePath) async {
+  Future uploadFile(File file) async {
     try {
       Map body = {};
-      // body["filepath"] = "aaaa.txt";
-      body["filepath"] = filePath;
+      body["filepath"] = file.path.substring(file.path.lastIndexOf('/') + 1);
 
       DioUtils.postHttp(
         'https://collector.kayou.gululu.com/api/qn/token',
@@ -326,12 +318,15 @@ class GameSettingViewState extends State<GameSettingView> {
         onSuccess: (data) {
           debugPrint("<><main.getToken>success: $data");
           Map jsonObject = json.decode(data.toString());
-          debugPrint("****  token: ${jsonObject['data']['token']}");
-          debugPrint("****  key: ${jsonObject['data']['key']}");
-          debugPrint("****  url: ${jsonObject['data']['url']}");
-          _key = jsonObject['data']['key'];
-          _token = jsonObject['data']['token'];
-          startUpload();
+          // debugPrint("****  token: ${jsonObject['data']['token']}");
+          // debugPrint("****  key: ${jsonObject['data']['key']}");
+          // debugPrint("****  url: ${jsonObject['data']['url']}");
+          startUpload(
+            jsonObject['data']['token'],
+            jsonObject['data']['key'],
+            jsonObject['data']['url'],
+            file,
+          );
         },
         onError: (errorText) {
           debugPrint("<><main.getToken>error: $errorText");
@@ -342,34 +337,34 @@ class GameSettingViewState extends State<GameSettingView> {
     }
   }
 
-  void startUpload() {
+  void startUpload(String token, String key, String url, File? file) {
     print('创建 PutController');
     _putController = PutController();
 
-    if (_token == null || _token == '') {
+    if (token.isEmpty) {
       print('token 不能为空');
       return;
     }
 
-    if (_selectedFile == null) {
+    if (file == null) {
       print('请选择文件');
       return;
     }
 
     print('开始上传文件');
-    debugPrint('key: $_key, token: $_token');
+    debugPrint('url: $url, token: $token');
     storage.putFile(
-      _selectedFile!,
-      _token!,
-      options: PutOptions(
-        key: _key,
-        partSize: partSize,
-        controller: _putController,
-      ),
+      file,
+      token,
+      options:
+          PutOptions(key: key, partSize: partSize, controller: _putController),
     )
       ..then((PutResponse response) {
         print('上传已完成: 原始响应数据: ${jsonEncode(response.rawData)}');
         print('------------------------');
+        _sendStringMessage(CommandUtil.buildAvatarCommand(
+            file.path.substring(file.path.lastIndexOf('/') + 1),
+            widget.player!));
       })
       ..catchError((dynamic error) {
         if (error is StorageError) {

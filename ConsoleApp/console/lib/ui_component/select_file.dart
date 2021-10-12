@@ -6,7 +6,7 @@ typedef OnSelected = void Function(File file);
 
 class SelectImage extends StatefulWidget {
   final OnSelected onSelected;
-  const SelectImage(this.onSelected);
+  const SelectImage(this.onSelected, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -18,7 +18,8 @@ class SelectImageState extends State<SelectImage> {
   String? _avatarPath;
 
   void openSelectFileWindow() async {
-    final fileResult = await FilePicker.platform.pickFiles();
+    final fileResult =
+        await FilePicker.platform.pickFiles(type: FileType.image);
     if (fileResult != null && fileResult.paths.first != null) {
       final path = fileResult.paths.first;
       widget.onSelected(File(path!));

@@ -14,8 +14,6 @@ public class MonitorView : MonoBehaviourExtension
     [SerializeField]
     private DataReceiver messageReceiver;
     [SerializeField]
-    private DataReceiver rawDataReceiver;
-    [SerializeField]
     private AnimationPlayer animationPlayer;
     [SerializeField]
     private PlayerPanel leftPlayerPanel;
@@ -37,7 +35,6 @@ public class MonitorView : MonoBehaviourExtension
     private void Start()
     {
         this.messageReceiver.ReceiveDataAction = this.OnReceiveData;
-        this.rawDataReceiver.ReceiveRawDataAction = this.OnReceiveRawData;
     }
     private void Update()
     {
@@ -49,7 +46,6 @@ public class MonitorView : MonoBehaviourExtension
     }
     private void OnDestroy()
     {
-
     }
     /************************************************自 定 义 方 法************************************************/
     //当接收到数据时
@@ -143,31 +139,17 @@ public class MonitorView : MonoBehaviourExtension
                     break;
                 case NetDataTags.AVATAR:
                     AvatarData avatarData = this.GetGameData<AvatarData>(netData.Data);
-                    string[] stringArray = avatarData.DataString.Split(',');
-                    List<byte> byteArray = new List<byte>();
-                    for (int i = 0; i < stringArray.Length; i++)
+                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(avatarData.Url, (avatar) =>
                     {
-                        byteArray.Add(byte.Parse(stringArray[i]));
-                    }
-                    Texture2D texture = new Texture2D(512, 512);
-                    texture.LoadImage(byteArray.ToArray());
-                    //this.image.texture = texture;
+                        if (avatarData.DataOwner == DataOwners.LEFT)
+                            this.leftPlayerPanel.SetAvatar(avatar);
+                        else if (avatarData.DataOwner == DataOwners.RIGHT)
+                            this.rightPlayerPanel.SetAvatar(avatar);
+                    }, (failureInfo) =>
+                    {
+                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                    }));
                     break;
-            }
-        });
-    }
-    //当接收到原始数据时
-    private void OnReceiveRawData(byte[] byteDatas)
-    {
-        this.actions.Enqueue(() =>
-        {
-            if (byteDatas != null && byteDatas.Length > 0)
-            {
-                int width = 1080;
-                int height = 1920;
-                Texture2D texture = new Texture2D(width, height);
-                texture.LoadImage(byteDatas);
-                //this.image.texture = texture;
             }
         });
     }
@@ -254,6 +236,7 @@ public class PlayerPanel
     /// <param name="avatar"></param>
     public void SetAvatar(Sprite avatar)
     {
+        this.avatarBox.sprite = avatar;
     }
     /// <summary>
     /// 设置姓名

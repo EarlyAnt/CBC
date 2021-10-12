@@ -283,14 +283,14 @@ public class CardData : CommandData
 /// </summary>
 public class AvatarData : CommandData
 {
-    public string DataString { get; set; }
+    public string Url { get; set; }
     /// <summary>
     /// 数据转成字符串形式
     /// </summary>
     /// <returns>返回自描述信息</returns>
     public override string ToString()
     {
-        return string.Format("{0}: {1}", this.GetType().Name, this.DataString);
+        return string.Format("{0}: {1}", this.GetType().Name, this.Url);
     }
 }
 #endregion

@@ -41,8 +41,6 @@ class _ConsoleViewState extends State<ConsoleView> {
   final GlobalKey<GameSettingViewState> _rightGameSettingViewKey = GlobalKey();
   Size? _screenSize;
   UDP? _sender;
-  String? _message;
-  int? _dataLength;
 
   @override
   void initState() {
@@ -173,10 +171,10 @@ class _ConsoleViewState extends State<ConsoleView> {
   }
 
   void _sendStringMessage(String? message) async {
-    _message = message;
-    debugPrint("execute command: $message");
-    _dataLength = await _sender?.send(
+    int? dataLength = await _sender?.send(
         message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
+
+    debugPrint("execute command: $message, length: $dataLength");
   }
 }
 
