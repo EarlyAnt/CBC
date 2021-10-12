@@ -9,6 +9,7 @@ import 'package:qiniu_flutter_sdk/qiniu_flutter_sdk.dart';
 
 import '/data/command_data.dart';
 import '/data/player_data.dart';
+import '/data/session.dart';
 import '/ui_component/pop_button.dart';
 import '/utils/dio_util.dart';
 import '/utils/uint.dart';
@@ -18,22 +19,26 @@ import 'select_file.dart';
 
 class GameSettingView extends StatefulWidget {
   final String? player;
+  final Function(String)? onNameChanged;
+  final Function(String)? onAvatarChanged;
 
-  const GameSettingView({Key? key, this.player}) : super(key: key);
+  const GameSettingView(
+      {Key? key, this.player, this.onNameChanged, this.onAvatarChanged})
+      : super(key: key);
 
   @override
   GameSettingViewState createState() => GameSettingViewState();
 }
 
 class GameSettingViewState extends State<GameSettingView> {
-  GameSettingViewState() : storage = Storage();
+  GameSettingViewState() : _storage = Storage();
 
   final double _spacing = 10;
   final GlobalKey<PopButtonState> _weakButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
-  final Storage storage;
-  final int partSize = 4;
+  final Storage _storage;
+  final int _partSize = 4;
   late final UDP? _sender;
   PutController? _putController;
   TextEditingController? _nameController;
@@ -109,6 +114,7 @@ class GameSettingViewState extends State<GameSettingView> {
                 ),
                 onChanged: (value) {
                   _playerData!.name = value;
+                  widget.onNameChanged?.call(value);
                 })),
       ),
       Padding(
@@ -303,8 +309,12 @@ class GameSettingViewState extends State<GameSettingView> {
     print('文件尺寸：${humanizeFileSize(file.lengthSync().toDouble())}');
 
     setState(() {
-      uploadFile(file);
+      widget.onAvatarChanged
+          ?.call(file.path.substring(file.path.lastIndexOf('/') + 1));
     });
+    if (gameEvent == GameEvent.start) {
+      uploadFile(file);
+    }
   }
 
   Future uploadFile(File file) async {
@@ -353,11 +363,11 @@ class GameSettingViewState extends State<GameSettingView> {
 
     print('开始上传文件');
     debugPrint('url: $url, token: $token');
-    storage.putFile(
+    _storage.putFile(
       file,
       token,
       options:
-          PutOptions(key: key, partSize: partSize, controller: _putController),
+          PutOptions(key: key, partSize: _partSize, controller: _putController),
     )
       ..then((PutResponse response) {
         print('上传已完成: 原始响应数据: ${jsonEncode(response.rawData)}');

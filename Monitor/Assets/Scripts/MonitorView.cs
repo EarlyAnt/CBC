@@ -76,6 +76,34 @@ public class MonitorView : MonoBehaviourExtension
                                 this.EndGame();
                                 this.StartGame();
                             }
+                            PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
+                            if (playerInfo != null)
+                            {
+                                this.leftPlayerPanel.SetName(playerInfo.LeftName);
+                                this.rightPlayerPanel.SetName(playerInfo.RightName);
+
+                                if (!string.IsNullOrEmpty(playerInfo.LeftAvatar))
+                                {
+                                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.LeftAvatar, (avatar) =>
+                                    {
+                                        this.leftPlayerPanel.SetAvatar(avatar);
+                                    }, (failureInfo) =>
+                                    {
+                                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                                    }));
+                                }
+
+                                if (!string.IsNullOrEmpty(playerInfo.RightAvatar))
+                                {
+                                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.RightAvatar, (avatar) =>
+                                    {
+                                        this.rightPlayerPanel.SetAvatar(avatar);
+                                    }, (failureInfo) =>
+                                    {
+                                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                                    }));
+                                }
+                            }
                             break;
                         case GameEvents.End:
                             this.EndGame();
@@ -139,16 +167,19 @@ public class MonitorView : MonoBehaviourExtension
                     break;
                 case NetDataTags.AVATAR:
                     AvatarData avatarData = this.GetGameData<AvatarData>(netData.Data);
-                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(avatarData.Url, (avatar) =>
+                    if (!string.IsNullOrEmpty(avatarData.Url))
                     {
-                        if (avatarData.DataOwner == DataOwners.LEFT)
-                            this.leftPlayerPanel.SetAvatar(avatar);
-                        else if (avatarData.DataOwner == DataOwners.RIGHT)
-                            this.rightPlayerPanel.SetAvatar(avatar);
-                    }, (failureInfo) =>
-                    {
-                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                    }));
+                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(avatarData.Url, (avatar) =>
+                        {
+                            if (avatarData.DataOwner == DataOwners.LEFT)
+                                this.leftPlayerPanel.SetAvatar(avatar);
+                            else if (avatarData.DataOwner == DataOwners.RIGHT)
+                                this.rightPlayerPanel.SetAvatar(avatar);
+                        }, (failureInfo) =>
+                        {
+                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                        }));
+                    }
                     break;
             }
         });

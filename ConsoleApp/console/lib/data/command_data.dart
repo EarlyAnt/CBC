@@ -23,8 +23,17 @@ class CommandUtil {
     return "{\"Tag\":\"effect\",\"Data\":{\"Light\":$light,\"DataOwner\":\"$player\"}}";
   }
 
-  static String buildGameEventCommand(GameEvent gameEvent) {
-    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"$gameEvent\"}}";
+  static String buildStartGameCommand(String leftName, String rightName,
+      String leftAvatar, String rightAvatar) {
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.start}\",\"Parameter\":{\"leftName\":\"$leftName\",\"rightName\":\"$rightName\",\"leftAvatar\":\"$leftAvatar\",\"rightAvatar\":\"$rightAvatar\"}}}";
+  }
+
+  static String buildPauseGameCommand() {
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.pause}}\"}}";
+  }
+
+  static String buildStopGameCommand() {
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.end}}\"}}";
   }
 
   static String buildAvatarCommand(String url, String player) {

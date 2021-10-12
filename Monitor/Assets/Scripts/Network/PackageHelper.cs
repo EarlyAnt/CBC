@@ -149,6 +149,8 @@ public class CommandData : BaseData
 public class EventData : CommandData
 {
     public string GameEventString { get; set; }
+    public object Parameter { get; set; }
+
     public GameEvents GameEvent
     {
         get
@@ -292,6 +294,17 @@ public class AvatarData : CommandData
     {
         return string.Format("{0}: {1}", this.GetType().Name, this.Url);
     }
+}
+
+/// <summary>
+/// 玩家信息
+/// </summary>
+public class PlayerInfo
+{
+    public string LeftName { get; set; }
+    public string RightName { get; set; }
+    public string LeftAvatar { get; set; }
+    public string RightAvatar { get; set; }
 }
 #endregion
 

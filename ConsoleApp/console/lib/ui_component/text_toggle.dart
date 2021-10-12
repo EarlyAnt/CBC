@@ -35,7 +35,7 @@ class TextToggleState extends State<TextToggle> {
   @override
   void initState() {
     super.initState();
-    refresh();
+    refresh(noticeValueChange: true);
   }
 
   @override
@@ -71,13 +71,16 @@ class TextToggleState extends State<TextToggle> {
     }
   }
 
-  void refresh() {
+  void refresh({bool noticeValueChange = false}) {
     _selectedValue = widget.buttons.isNotEmpty &&
             widget.defaultButtonIndex >= 0 &&
             widget.defaultButtonIndex < widget.buttons.length
         ? widget.buttons[widget.defaultButtonIndex].value
         : GameEvent.end;
-    _onValueChanged();
+
+    if (noticeValueChange) {
+      _onValueChanged();
+    }
   }
 }
 

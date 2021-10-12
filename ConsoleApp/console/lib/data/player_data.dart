@@ -17,7 +17,7 @@ class PlayerData {
       required this.effect});
 
   static PlayerData get empty => PlayerData(
-      name: "未设置",
+      name: '',
       health: 10000,
       cardCount: 40,
       hurt: 0,

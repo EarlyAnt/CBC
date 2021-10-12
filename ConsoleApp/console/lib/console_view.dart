@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:console/ui_component/toast.dart';
 import 'package:flutter/material.dart';
 
 import 'data/command_data.dart';
@@ -39,6 +42,8 @@ class _ConsoleViewState extends State<ConsoleView> {
   ];
   final GlobalKey<GameSettingViewState> _leftGameSettingViewKey = GlobalKey();
   final GlobalKey<GameSettingViewState> _rightGameSettingViewKey = GlobalKey();
+  final GlobalKey<TextToggleState> _gameEventToggleKey = GlobalKey();
+  String? _leftName, _rightName, _leftAvatar, _rightAvatar;
   Size? _screenSize;
   UDP? _sender;
 
@@ -85,13 +90,35 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _gameEventButton() {
     return TextToggle(_buttonDatas, 60, 30, (gameEvent) {
-      if (gameEvent == GameEvent.end) {
-        _leftGameSettingViewKey.currentState?.reset();
-        _rightGameSettingViewKey.currentState?.reset();
-      }
+      gameEvent = gameEvent;
+      switch (gameEvent) {
+        case GameEvent.start:
+          if (_leftName == null ||
+              _leftName!.isEmpty ||
+              _rightName == null ||
+              _rightName!.isEmpty) {
+            MessageBox.show('请先设置玩家姓名');
+            _gameEventToggleKey.currentState?.refresh();
+            return;
+          }
 
-      _sendStringMessage(CommandUtil.buildGameEventCommand(gameEvent));
-    }, spacing: 5, defaultButtonIndex: 2);
+          _sendStringMessage(CommandUtil.buildStartGameCommand(
+            _leftName ?? '',
+            _rightName ?? '',
+            _leftAvatar ?? '',
+            _rightAvatar ?? '',
+          ));
+          break;
+        case GameEvent.pause:
+          _sendStringMessage(CommandUtil.buildPauseGameCommand());
+          break;
+        case GameEvent.end:
+          _sendStringMessage(CommandUtil.buildStopGameCommand());
+          _leftGameSettingViewKey.currentState?.reset();
+          _rightGameSettingViewKey.currentState?.reset();
+          break;
+      }
+    }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);
   }
 
   Widget _gameSettingButton() {
@@ -154,12 +181,28 @@ class _ConsoleViewState extends State<ConsoleView> {
             Expanded(
                 flex: 1,
                 child: GameSettingView(
-                    player: "left", key: _leftGameSettingViewKey)),
+                  player: "left",
+                  key: _leftGameSettingViewKey,
+                  onNameChanged: (name) {
+                    _leftName = name;
+                  },
+                  onAvatarChanged: (avatarFileName) {
+                    _leftAvatar = avatarFileName;
+                  },
+                )),
             const SizedBox(width: 10),
             Expanded(
                 flex: 1,
                 child: GameSettingView(
-                    player: "right", key: _rightGameSettingViewKey)),
+                  player: "right",
+                  key: _rightGameSettingViewKey,
+                  onNameChanged: (name) {
+                    _rightName = name;
+                  },
+                  onAvatarChanged: (avatarFileName) {
+                    _rightAvatar = avatarFileName;
+                  },
+                )),
           ],
         ),
       ),
@@ -172,7 +215,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   void _sendStringMessage(String? message) async {
     int? dataLength = await _sender?.send(
-        message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
+        utf8.encode(message!), Endpoint.broadcast(port: const Port(1000)));
 
     debugPrint("execute command: $message, length: $dataLength");
   }
