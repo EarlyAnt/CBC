@@ -4,6 +4,7 @@ import 'package:console/ui_component/toast.dart';
 import 'package:flutter/material.dart';
 
 import 'data/command_data.dart';
+import 'data/session.dart';
 import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
 import 'ui_component/text_toggle.dart';
@@ -90,7 +91,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _gameEventButton() {
     return TextToggle(_buttonDatas, 60, 30, (gameEvent) {
-      gameEvent = gameEvent;
+      currentGameEvent = gameEvent;
       switch (gameEvent) {
         case GameEvent.start:
           if (_leftName == null ||
@@ -114,8 +115,12 @@ class _ConsoleViewState extends State<ConsoleView> {
           break;
         case GameEvent.end:
           _sendStringMessage(CommandUtil.buildStopGameCommand());
-          _leftGameSettingViewKey.currentState?.reset();
-          _rightGameSettingViewKey.currentState?.reset();
+          // _leftName = "";
+          // _rightName = "";
+          // _leftAvatar = "";
+          // _rightAvatar = "";
+          // _leftGameSettingViewKey.currentState?.reset();
+          // _rightGameSettingViewKey.currentState?.reset();
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);

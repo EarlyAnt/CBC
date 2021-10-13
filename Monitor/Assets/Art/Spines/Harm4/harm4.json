@@ -1,0 +1,101 @@
+{
+"skeleton": {
+	"hash": "ip4hwuGP6sXBdN+/G7sW6rEk/Rs",
+	"spine": "3.8.83",
+	"x": -960.15,
+	"y": -539.12,
+	"width": 1920,
+	"height": 1080,
+	"images": "../../伤害牌四张/",
+	"audio": "E:/工作/对外合作/卡游/伤害牌四张"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 240.72, "x": -123.47, "y": -559.4 },
+	{ "name": "harm_r", "parent": "bone", "x": 609.82, "y": 559.67 },
+	{ "name": "harm_b", "parent": "bone", "x": -365.09, "y": 531.59 }
+],
+"slots": [
+	{ "name": "harm_b", "bone": "harm_b" },
+	{ "name": "harm_r", "bone": "harm_r" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"harm_b": {
+				"harm_b": { "x": 21.41, "y": 28.69, "width": 986, "height": 1080 }
+			},
+			"harm_r": {
+				"harm_r": { "x": -20.51, "y": 0.61, "width": 986, "height": 1080 }
+			}
+		}
+	}
+],
+"animations": {
+	"harm4_b": {
+		"slots": {
+			"harm_b": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.6667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 1.1667, "color": "ffffff00" },
+					{ "time": 1.3333, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.5, "color": "ffffffff" },
+					{ "time": 1.6667, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffff00" },
+					{ "time": 2, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2.1667, "color": "ffffffff" },
+					{ "time": 2.3333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 2.5, "color": "ffffff00" },
+					{ "time": 2.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "harm_b" }
+				]
+			}
+		}
+	},
+	"harm4_r": {
+		"slots": {
+			"harm_b": {
+				"color": [
+					{ "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": null }
+				]
+			},
+			"harm_r": {
+				"color": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.6667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 1.1667, "color": "ffffff00" },
+					{ "time": 1.3333, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 1.5, "color": "ffffffff" },
+					{ "time": 1.6667, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 1.8333, "color": "ffffff00" },
+					{ "time": 2, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 2.1667, "color": "ffffffff" },
+					{ "time": 2.3333, "color": "ffffff00", "curve": "stepped" },
+					{ "time": 2.5, "color": "ffffff00" },
+					{ "time": 2.6667, "color": "ffffffff" }
+				],
+				"attachment": [
+					{ "name": "harm_r" }
+				]
+			}
+		}
+	}
+}
+}

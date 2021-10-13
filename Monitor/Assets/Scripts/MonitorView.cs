@@ -59,157 +59,44 @@ public class MonitorView : MonoBehaviourExtension
             switch (netData.Tag)
             {
                 case NetDataTags.AUDIO:
-                    AudioEffect audioEffect = this.GetGameData<AudioEffect>(netData.Data);
-                    this.animationPlayer.Play(audioEffect.EffectFile);
+                    this.HandleAudio(netData);
                     break;
                 case NetDataTags.ANIMATION:
-                    AnimationEffect animationEffect = this.GetGameData<AnimationEffect>(netData.Data);
-                    this.animationPlayer.Play(animationEffect.EffectFile);
+                    this.HandleAnimation(netData);
                     break;
                 case NetDataTags.EVENT:
-                    EventData eventData = this.GetGameData<EventData>(netData.Data);
-                    switch (eventData.GameEvent)
-                    {
-                        case GameEvents.Start:
-                            if (this.gameEvent == GameEvents.End)
-                            {
-                                this.EndGame();
-                                this.StartGame();
-                            }
-                            PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
-                            if (playerInfo != null)
-                            {
-                                this.leftPlayerPanel.SetName(playerInfo.LeftName);
-                                this.rightPlayerPanel.SetName(playerInfo.RightName);
-
-                                if (!string.IsNullOrEmpty(playerInfo.LeftAvatar))
-                                {
-                                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.LeftAvatar, (avatar) =>
-                                    {
-                                        this.leftPlayerPanel.SetAvatar(avatar);
-                                    }, (failureInfo) =>
-                                    {
-                                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                                    }));
-                                }
-
-                                if (!string.IsNullOrEmpty(playerInfo.RightAvatar))
-                                {
-                                    this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.RightAvatar, (avatar) =>
-                                    {
-                                        this.rightPlayerPanel.SetAvatar(avatar);
-                                    }, (failureInfo) =>
-                                    {
-                                        Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                                    }));
-                                }
-                            }
-                            break;
-                        case GameEvents.End:
-                            this.EndGame();
-                            break;
-                    }
-                    this.gameEvent = eventData.GameEvent;
+                    this.HandleGameEvent(netData);
                     break;
                 case NetDataTags.HURT:
-                    HurtData hurtData = this.GetGameData<HurtData>(netData.Data);
-                    if (hurtData.DataOwner == DataOwners.LEFT)
-                    {
-                        System.Action setHurtAction = () => this.leftPlayerPanel.SetHurtCount(hurtData.Value);
-                        if (this.leftPlayerPanel.HurtCount < hurtData.Value)
-                            this.animationPlayer.Play("cutcardleft", setHurtAction);
-                        else
-                            setHurtAction();
-                    }
-                    else if (hurtData.DataOwner == DataOwners.RIGHT)
-                    {
-                        System.Action setHurtAction = () => this.rightPlayerPanel.SetHurtCount(hurtData.Value);
-                        if (this.rightPlayerPanel.HurtCount < hurtData.Value)
-                            this.animationPlayer.Play("cutcardright", setHurtAction);
-                        else
-                            setHurtAction();
-                    }
+                    this.HandleHurt(netData);
                     break;
                 case NetDataTags.WEAK:
-                    WeakData weakData = this.GetGameData<WeakData>(netData.Data);
-                    if (weakData.DataOwner == DataOwners.LEFT)
-                        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, weakData.Light);
-                    else if (weakData.DataOwner == DataOwners.RIGHT)
-                        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, weakData.Light);
+                    this.HandleWeak(netData);
                     break;
                 case NetDataTags.AID:
-                    AidData aidData = this.GetGameData<AidData>(netData.Data);
-                    if (aidData.DataOwner == DataOwners.LEFT)
-                        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, aidData.Light);
-                    else if (aidData.DataOwner == DataOwners.RIGHT)
-                        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, aidData.Light);
+                    this.HandleAid(netData);
                     break;
                 case NetDataTags.EFFECT:
-                    EffectsData effectsData = this.GetGameData<EffectsData>(netData.Data);
-                    if (effectsData.DataOwner == DataOwners.LEFT)
-                        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, effectsData.Light);
-                    else if (effectsData.DataOwner == DataOwners.RIGHT)
-                        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, effectsData.Light);
+                    this.HandleEffect(netData);
                     break;
                 case NetDataTags.CARD:
-                    CardData cardData = this.GetGameData<CardData>(netData.Data);
-                    if (cardData.DataOwner == DataOwners.LEFT)
-                        this.leftPlayerPanel.SetCardCount(cardData.Value);
-                    else if (cardData.DataOwner == DataOwners.RIGHT)
-                        this.rightPlayerPanel.SetCardCount(cardData.Value);
+                    this.HandleCardCount(netData);
                     break;
                 case NetDataTags.HEALTH:
-                    HealthData healthData = this.GetGameData<HealthData>(netData.Data);
-                    if (healthData.DataOwner == DataOwners.LEFT)
-                        this.leftStatusPanel.SetHealth(healthData.Value);
-                    else if (healthData.DataOwner == DataOwners.RIGHT)
-                        this.rightStatusPanel.SetHealth(healthData.Value);
+                    this.HandleHealth(netData);
                     break;
                 case NetDataTags.AVATAR:
-                    AvatarData avatarData = this.GetGameData<AvatarData>(netData.Data);
-                    if (!string.IsNullOrEmpty(avatarData.Url))
-                    {
-                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(avatarData.Url, (avatar) =>
-                        {
-                            if (avatarData.DataOwner == DataOwners.LEFT)
-                                this.leftPlayerPanel.SetAvatar(avatar);
-                            else if (avatarData.DataOwner == DataOwners.RIGHT)
-                                this.rightPlayerPanel.SetAvatar(avatar);
-                        }, (failureInfo) =>
-                        {
-                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                        }));
-                    }
+                    this.HandleAvatarName(netData);
                     break;
             }
         });
     }
-    //开始游戏
-    private void StartGame()
+    //获取游戏数据对象
+    private T GetGameData<T>(object jsonData)
     {
-        this.leftSeconds = this.gameDuration * 60;
-        this.InvokeRepeating("RefreshTimer", 0, 1);
-        this.animationPlayer.Play("gamestart");
-    }
-    //结束游戏
-    private void EndGame()
-    {
-        this.CancelInvoke("RefreshTimer");
-        this.leftSeconds = 0;
-        this.timer.text = "00:00";
-        this.leftPlayerPanel.SetCardCount(40);
-        this.leftPlayerPanel.SetHurtCount(0);
-        this.leftStatusPanel.SetHealth(0);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
-
-        this.rightPlayerPanel.SetCardCount(40);
-        this.rightPlayerPanel.SetHurtCount(0);
-        this.rightStatusPanel.SetHealth(0);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+        string dataString = JsonUtil.Json2String(jsonData);
+        T gameData = JsonUtil.String2Json<T>(dataString);
+        return gameData;
     }
     //刷新计时器
     private void RefreshTimer()
@@ -222,6 +109,9 @@ public class MonitorView : MonoBehaviourExtension
                 int minute = this.leftSeconds / 60;
                 int second = this.leftSeconds - (minute > 0 ? minute * 60 : 0);
                 this.timer.text = string.Format("{0:d2}:{1:d2}", minute, second);
+
+                if (this.leftSeconds <= 30)
+                    this.animationPlayer.Play("countdown");
             }
             else
             {
@@ -229,12 +119,223 @@ public class MonitorView : MonoBehaviourExtension
             }
         }
     }
-    //获取游戏数据对象
-    private T GetGameData<T>(object jsonData)
+    //处理游戏事件
+    private void HandleGameEvent(NetData netData)
     {
-        string dataString = JsonUtil.Json2String(jsonData);
-        T gameData = JsonUtil.String2Json<T>(dataString);
-        return gameData;
+        EventData eventData = this.GetGameData<EventData>(netData.Data);
+        switch (eventData.GameEvent)
+        {
+            case GameEvents.Start:
+                PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
+                if (playerInfo != null)
+                {
+                    Sprite leftAvatar = null, rightAvatar = null;
+                    if (!string.IsNullOrEmpty(playerInfo.LeftAvatar))
+                    {
+                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.LeftAvatar, (avatar) =>
+                        {
+                            leftAvatar = avatar;
+                        }, (failureInfo) =>
+                        {
+                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                        }));
+                    }
+
+                    if (!string.IsNullOrEmpty(playerInfo.RightAvatar))
+                    {
+                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.RightAvatar, (avatar) =>
+                        {
+                            rightAvatar = avatar;
+                        }, (failureInfo) =>
+                        {
+                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                        }));
+                    }
+
+                    if (this.gameEvent == GameEvents.End)
+                    {
+                        this.DelayInvoke(() =>
+                        {
+                            this.EndGame();
+                            this.StartGame(playerInfo.LeftName, playerInfo.RightName, leftAvatar, rightAvatar);
+
+                            this.leftPlayerPanel.SetName(playerInfo.LeftName);
+                            this.rightPlayerPanel.SetName(playerInfo.RightName);
+                            this.leftPlayerPanel.SetAvatar(leftAvatar);
+                            this.rightPlayerPanel.SetAvatar(rightAvatar);
+                        }, 1f);
+                    }
+                }
+                break;
+            case GameEvents.End:
+                this.EndGame();
+                break;
+        }
+        this.gameEvent = eventData.GameEvent;
+    }
+    //开始游戏
+    private void StartGame(string leftPlayerName, string rightPlayerName, Sprite leftPlayerAvatar, Sprite rightPlayerAvatar)
+    {
+        this.leftSeconds = this.gameDuration * 60;
+        this.InvokeRepeating("RefreshTimer", 0, 1);
+        GameStartAnimation animation = this.animationPlayer.Play("gamestart") as GameStartAnimation;
+        if (animation != null)
+        {
+            animation.SetPlayerData(leftPlayerName, rightPlayerName, leftPlayerAvatar, rightPlayerAvatar);
+            animation.Play();
+        }
+    }
+    //结束游戏
+    private void EndGame()
+    {
+        this.CancelInvoke("RefreshTimer");
+        this.leftSeconds = 0;
+        this.timer.text = "00:00";
+
+        this.leftPlayerPanel.SetAvatar(null);
+        this.leftPlayerPanel.SetName("蓝方玩家");
+        this.leftPlayerPanel.SetCardCount(40);
+        this.leftPlayerPanel.SetHurtCount(0);
+        this.leftStatusPanel.SetHealth(0);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+
+        this.rightPlayerPanel.SetAvatar(null);
+        this.rightPlayerPanel.SetName("红方玩家");
+        this.rightPlayerPanel.SetCardCount(40);
+        this.rightPlayerPanel.SetHurtCount(0);
+        this.rightStatusPanel.SetHealth(0);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+    }
+    //处理音效
+    private void HandleAudio(NetData netData)
+    {
+        AudioEffect audioEffect = this.GetGameData<AudioEffect>(netData.Data);
+        this.animationPlayer.Play(audioEffect.EffectFile);
+    }
+    //处理动画
+    private void HandleAnimation(NetData netData)
+    {
+        AnimationEffect animationEffect = this.GetGameData<AnimationEffect>(netData.Data);
+        this.animationPlayer.Play(animationEffect.EffectFile);
+    }
+    //处理伤害值
+    private void HandleHurt(NetData netData)
+    {
+        HurtData hurtData = this.GetGameData<HurtData>(netData.Data);
+        if (hurtData.DataOwner == DataOwners.LEFT)
+        {
+            System.Action setHurtAction = () => this.leftPlayerPanel.SetHurtCount(hurtData.Value);
+            if (this.leftPlayerPanel.HurtCount < hurtData.Value)
+            {
+                this.animationPlayer.Play("cutcardleft", () =>
+                {
+                    setHurtAction();
+                    if (hurtData.Value == 4)
+                        this.animationPlayer.Play("harm4left");
+                });
+            }
+            else
+            {
+                setHurtAction();
+            }
+        }
+        else if (hurtData.DataOwner == DataOwners.RIGHT)
+        {
+            System.Action setHurtAction = () => this.rightPlayerPanel.SetHurtCount(hurtData.Value);
+            if (this.rightPlayerPanel.HurtCount < hurtData.Value)
+            {
+                this.animationPlayer.Play("cutcardright", () =>
+                {
+                    setHurtAction();
+                    if (hurtData.Value == 4)
+                        this.animationPlayer.Play("harm4right");
+                });
+            }
+            else
+            {
+                setHurtAction();
+            }
+        }
+    }
+    //处理虚弱状态
+    private void HandleWeak(NetData netData)
+    {
+        WeakData weakData = this.GetGameData<WeakData>(netData.Data);
+        if (weakData.DataOwner == DataOwners.LEFT)
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, weakData.Light);
+        else if (weakData.DataOwner == DataOwners.RIGHT)
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, weakData.Light);
+    }
+    //处理援助状态
+    private void HandleAid(NetData netData)
+    {
+        AidData aidData = this.GetGameData<AidData>(netData.Data);
+        if (aidData.DataOwner == DataOwners.LEFT)
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, aidData.Light);
+        else if (aidData.DataOwner == DataOwners.RIGHT)
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, aidData.Light);
+    }
+    //处理效果状态
+    private void HandleEffect(NetData netData)
+    {
+        EffectsData effectsData = this.GetGameData<EffectsData>(netData.Data);
+        if (effectsData.DataOwner == DataOwners.LEFT)
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, effectsData.Light);
+        else if (effectsData.DataOwner == DataOwners.RIGHT)
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, effectsData.Light);
+    }
+    //处理卡片数量
+    private void HandleCardCount(NetData netData)
+    {
+        CardData cardData = this.GetGameData<CardData>(netData.Data);
+        if (cardData.DataOwner == DataOwners.LEFT)
+        {
+            this.leftPlayerPanel.SetCardCount(cardData.Value);
+            if (cardData.Value <= 5)
+                this.animationPlayer.Play("cardtipsleft");
+        }
+        else if (cardData.DataOwner == DataOwners.RIGHT)
+        {
+            this.rightPlayerPanel.SetCardCount(cardData.Value);
+            if (cardData.Value <= 5)
+                this.animationPlayer.Play("cardtipsright");
+        }
+    }
+    //处理战斗力
+    private void HandleHealth(NetData netData)
+    {
+        HealthData healthData = this.GetGameData<HealthData>(netData.Data);
+        if (healthData.DataOwner == DataOwners.LEFT)
+            this.leftStatusPanel.SetHealth(healthData.Value);
+        else if (healthData.DataOwner == DataOwners.RIGHT)
+            this.rightStatusPanel.SetHealth(healthData.Value);
+    }
+    //处理头像
+    private void HandleAvatarName(NetData netData)
+    {
+        AvatarNameData avatarNameData = this.GetGameData<AvatarNameData>(netData.Data);
+        if (avatarNameData.DataOwner == DataOwners.LEFT)
+            this.leftPlayerPanel.SetName(avatarNameData.Name);
+        else if (avatarNameData.DataOwner == DataOwners.RIGHT)
+            this.rightPlayerPanel.SetName(avatarNameData.Name);
+
+        if (!string.IsNullOrEmpty(avatarNameData.AvatarUrl))
+        {
+            this.StartCoroutine(ResourceUtils.Instance.LoadTexture(avatarNameData.AvatarUrl, (avatar) =>
+            {
+                if (avatarNameData.DataOwner == DataOwners.LEFT)
+                    this.leftPlayerPanel.SetAvatar(avatar);
+                else if (avatarNameData.DataOwner == DataOwners.RIGHT)
+                    this.rightPlayerPanel.SetAvatar(avatar);
+            }, (failureInfo) =>
+            {
+                Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+            }));
+        }
     }
 }
 
@@ -267,7 +368,7 @@ public class PlayerPanel
     /// <param name="avatar"></param>
     public void SetAvatar(Sprite avatar)
     {
-        this.avatarBox.sprite = avatar;
+        this.avatarBox.sprite = avatar != null ? avatar : Resources.Load<Sprite>("Images/profile");
     }
     /// <summary>
     /// 设置姓名

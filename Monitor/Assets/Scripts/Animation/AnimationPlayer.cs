@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -19,16 +20,26 @@ public class AnimationPlayer : MonoBehaviourExtension
         animationInfos.Add("gamestart", new AnimationInfo() { Animation = "Prefabs/GameStart" });
         animationInfos.Add("cutcardleft", new AnimationInfo() { Animation = "Prefabs/CutCardLeft" });
         animationInfos.Add("cutcardright", new AnimationInfo() { Animation = "Prefabs/CutCardRight" });
+        animationInfos.Add("countdown", new AnimationInfo() { Animation = "Prefabs/CountDown" });
+        animationInfos.Add("harm4left", new AnimationInfo() { Animation = "Prefabs/Harm4Left" });
+        animationInfos.Add("harm4right", new AnimationInfo() { Animation = "Prefabs/Harm4Right" });
+        animationInfos.Add("cardtipsleft", new AnimationInfo() { Animation = "Prefabs/CardTipsLeft" });
+        animationInfos.Add("cardtipsright", new AnimationInfo() { Animation = "Prefabs/CardTipsRight" });
         animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardS" });
         animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardSS" });
         animationInfos.Add("guzhang", new AnimationInfo() { Audio = "Audios/guzhang2" });
         animationInfos.Add("huanhu", new AnimationInfo() { Audio = "Audios/huanhu" });
     }
     /************************************************自 定 义 方 法************************************************/
-    public void Play(string animationName, System.Action callback = null)
+    public BaseAnimation Play(string animationName, System.Action callback = null, bool single = true)
     {
+        BaseAnimation baseAnimation = null;
+
         if (!this.animationInfos.ContainsKey(animationName))
-            return;
+            return null;
+
+        if (single && this.IsPlaying(animationName))
+            return null;
 
         AnimationInfo animationInfo = this.animationInfos[animationName];
         if (!string.IsNullOrEmpty(animationInfo.Audio))
@@ -46,17 +57,25 @@ public class AnimationPlayer : MonoBehaviourExtension
             gameObject.transform.localPosition = Vector3.zero;
             gameObject.transform.localRotation = Quaternion.identity;
 
-            if (callback != null)
+            baseAnimation = gameObject.GetComponent<BaseAnimation>();
+            if (callback != null && baseAnimation != null)
             {
-                BaseAnimation baseAnimation = gameObject.GetComponent<BaseAnimation>();
-                if (baseAnimation != null)
-                    baseAnimation.Complete = () =>
-                    {
-                        print("animation complete");
-                        callback();
-                    };
+                baseAnimation.Complete = callback;
             }
         }
+
+        return baseAnimation;
+    }
+
+    public bool IsPlaying(string animationName)
+    {
+        if (!this.animationInfos.ContainsKey(animationName))
+            return false;
+
+        string prefabName = this.animationInfos[animationName].Animation.Replace("Prefabs/", "");
+        BaseAnimation[] animations = GameObject.FindObjectsOfType<BaseAnimation>();
+        bool existed = animations != null && animations.Length > 0 && animations.ToList().Exists(t => t.name.Contains(prefabName));
+        return existed;
     }
 }
 

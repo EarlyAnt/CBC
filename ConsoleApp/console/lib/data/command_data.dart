@@ -29,15 +29,16 @@ class CommandUtil {
   }
 
   static String buildPauseGameCommand() {
-    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.pause}}\"}}";
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.pause}\"}}";
   }
 
   static String buildStopGameCommand() {
-    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.end}}\"}}";
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.end}\"}}";
   }
 
-  static String buildAvatarCommand(String url, String player) {
-    return "{\"Tag\":\"avatar\",\"Data\":{\"Url\":\"$url\",\"DataOwner\":\"$player\"}}";
+  static String buildAvatarNameCommand(
+      String name, String avatarUrl, String player) {
+    return "{\"Tag\":\"avatar\",\"Data\":{\"Name\": \"$name\",\"AvatarUrl\":\"$avatarUrl\",\"DataOwner\":\"$player\"}}";
   }
 
   static String buildAudioCommand(String audio) {

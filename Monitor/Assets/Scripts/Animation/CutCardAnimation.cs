@@ -23,7 +23,8 @@ public class CutCardAnimation : BaseAnimation
     private void Start()
     {
         this.Initialize();
-        this.Play();
+        if (this.autoPlay)
+            this.Play();
     }
     private void Update()
     {

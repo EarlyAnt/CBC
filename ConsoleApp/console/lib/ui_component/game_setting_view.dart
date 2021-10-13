@@ -34,6 +34,7 @@ class GameSettingViewState extends State<GameSettingView> {
   GameSettingViewState() : _storage = Storage();
 
   final double _spacing = 10;
+  final GlobalKey<SelectImageState> _selectedImageKey = GlobalKey();
   final GlobalKey<PopButtonState> _weakButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
@@ -44,6 +45,10 @@ class GameSettingViewState extends State<GameSettingView> {
   TextEditingController? _nameController;
   TextEditingController? _healthController;
   PlayerData? _playerData;
+  File? _selectedFile;
+  String get _fileName => _selectedFile != null
+      ? _selectedFile!.path.substring(_selectedFile!.path.lastIndexOf('/') + 1)
+      : "";
 
   @override
   void initState() {
@@ -93,7 +98,7 @@ class GameSettingViewState extends State<GameSettingView> {
 
   Widget _playerInfo() {
     return Row(children: [
-      SelectImage(onSelectedFile),
+      SelectImage(onSelectedFile, key: _selectedImageKey),
       Padding(
         padding: EdgeInsets.only(left: _spacing),
         child: Container(
@@ -119,7 +124,13 @@ class GameSettingViewState extends State<GameSettingView> {
       ),
       Padding(
           padding: EdgeInsets.only(left: _spacing),
-          child: TextButton(child: const Text("设定"), onPressed: () {})),
+          child: TextButton(
+              child: const Text("设定"),
+              onPressed: () {
+                if (currentGameEvent == GameEvent.start) {
+                  uploadFile();
+                }
+              })),
     ]);
   }
 
@@ -288,7 +299,7 @@ class GameSettingViewState extends State<GameSettingView> {
 
   void _sendStringMessage(String? message) async {
     int? dataLength = await _sender?.send(
-        message!.codeUnits, Endpoint.broadcast(port: const Port(1000)));
+        utf8.encode(message!), Endpoint.broadcast(port: const Port(1000)));
 
     debugPrint("execute command: $message, length: $dataLength");
   }
@@ -298,6 +309,7 @@ class GameSettingViewState extends State<GameSettingView> {
       _playerData = PlayerData.empty;
       _nameController?.text = _playerData!.name;
       _healthController?.text = _playerData!.health.toString();
+      _selectedImageKey.currentState?.reset();
       _weakButtonKey.currentState?.reset();
       _aidButtonKey.currentState?.reset();
       _effectButtonKey.currentState?.reset();
@@ -305,22 +317,24 @@ class GameSettingViewState extends State<GameSettingView> {
   }
 
   void onSelectedFile(File file) {
+    _selectedFile = file;
     print('选中文件: ${file.path}');
     print('文件尺寸：${humanizeFileSize(file.lengthSync().toDouble())}');
 
     setState(() {
-      widget.onAvatarChanged
-          ?.call(file.path.substring(file.path.lastIndexOf('/') + 1));
+      widget.onAvatarChanged?.call(_fileName);
     });
-    if (gameEvent == GameEvent.start) {
-      uploadFile(file);
-    }
   }
 
-  Future uploadFile(File file) async {
+  Future uploadFile() async {
+    if (_selectedFile == null) {
+      print('请选择文件');
+      return;
+    }
+
     try {
       Map body = {};
-      body["filepath"] = file.path.substring(file.path.lastIndexOf('/') + 1);
+      body["filepath"] = _fileName;
 
       DioUtils.postHttp(
         'https://collector.kayou.gululu.com/api/qn/token',
@@ -335,7 +349,7 @@ class GameSettingViewState extends State<GameSettingView> {
             jsonObject['data']['token'],
             jsonObject['data']['key'],
             jsonObject['data']['url'],
-            file,
+            _selectedFile,
           );
         },
         onError: (errorText) {
@@ -372,9 +386,8 @@ class GameSettingViewState extends State<GameSettingView> {
       ..then((PutResponse response) {
         print('上传已完成: 原始响应数据: ${jsonEncode(response.rawData)}');
         print('------------------------');
-        _sendStringMessage(CommandUtil.buildAvatarCommand(
-            file.path.substring(file.path.lastIndexOf('/') + 1),
-            widget.player!));
+        _sendStringMessage(CommandUtil.buildAvatarNameCommand(
+            _nameController!.text, _fileName, widget.player!));
       })
       ..catchError((dynamic error) {
         if (error is StorageError) {

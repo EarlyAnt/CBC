@@ -17,7 +17,7 @@ class SelectImage extends StatefulWidget {
 class SelectImageState extends State<SelectImage> {
   String? _avatarPath;
 
-  void openSelectFileWindow() async {
+  void _openSelectFileWindow() async {
     final fileResult =
         await FilePicker.platform.pickFiles(type: FileType.image);
     if (fileResult != null && fileResult.paths.first != null) {
@@ -29,13 +29,16 @@ class SelectImageState extends State<SelectImage> {
     }
   }
 
+  void reset() {
+    _avatarPath = null;
+  }
+
   Widget get selectButton {
     return IconButton(
         icon: _avatarPath == null
-            ? Image.asset("assets/images/ui/avatar_1.jpg",
-                width: 32, height: 32)
+            ? Image.asset("assets/images/ui/profile.png", width: 32, height: 32)
             : Image.file(File(_avatarPath!), width: 32, height: 32),
-        onPressed: openSelectFileWindow);
+        onPressed: _openSelectFileWindow);
   }
 
   @override

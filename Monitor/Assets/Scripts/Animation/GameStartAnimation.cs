@@ -25,42 +25,17 @@ public class GameStartAnimation : BaseAnimation
     private float delayShowPlayer = 0.3f;
     [SerializeField, Range(1f, 5f)]
     private float animationDuration = 3f;
-    private Vector3 originLeftPosition;
-    private Vector3 originRightPosition;
     /************************************************Unity方法与事件***********************************************/
     private void Start()
     {
-        this.originLeftPosition = this.leftPlayer.Transform.position;
-        this.originRightPosition = this.rightPlayer.Transform.position;
-
-        this.Initialize();
-        this.Play();
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            this.Initialize();
-            this.Play();
-        }
     }
     /************************************************自 定 义 方 法************************************************/
-    private void Initialize()
+    public void SetPlayerData(string leftPlayerName, string rightPlayerName, Sprite leftPlayerAvatar, Sprite rightPlayerAvatar)
     {
-        if (this.spine != null && this.spine.AnimationState != null)
-            this.spine.AnimationState.ClearTracks();
-        this.audioPlayer.volume = 0;
-        this.leftPlayer.Transform.position = this.originLeftPosition;
-        this.rightPlayer.Transform.position = this.originRightPosition;
-        this.rootObject.SetActive(false);
-    }
-
-    public void SetPlayerData(string leftPlayerAvatar, string leftPlayerName, string rightPlayerAvatar, string rightPlayerName)
-    {
-        this.leftPlayer.SetAvatar(leftPlayerAvatar);
         this.leftPlayer.SetName(leftPlayerName);
-        this.rightPlayer.SetAvatar(rightPlayerAvatar);
         this.rightPlayer.SetName(rightPlayerName);
+        this.leftPlayer.SetAvatar(leftPlayerAvatar ? leftPlayerAvatar : Resources.Load<Sprite>("Images/profile"));
+        this.rightPlayer.SetAvatar(rightPlayerAvatar ? rightPlayerAvatar : Resources.Load<Sprite>("Images/profile"));
     }
 
     public void Play()
@@ -78,7 +53,6 @@ public class GameStartAnimation : BaseAnimation
         {
             this.audioPlayer.DOFade(0f, 0.5f).onComplete = () =>
             {
-                //this.rootObject.SetActive(false);
                 GameObject.Destroy(this.gameObject);
             };
         }, this.animationDuration - 0.75f);
@@ -100,20 +74,14 @@ public class PlayerBox
     private float duration = 0.5f;
     public Transform Transform { get { return this.transform; } }
 
-    public void SetAvatar(string avatarPath)
+    public void SetAvatar(Sprite avatar)
     {
-        if (!string.IsNullOrEmpty(avatarPath))
-        {
-            this.avatar.sprite = Resources.Load<Sprite>(avatarPath);
-        }
+        this.avatar.sprite = avatar;
     }
 
     public void SetName(string name)
     {
-        if (!string.IsNullOrEmpty(name))
-        {
-            this.name.text = name;
-        }
+        this.name.text = name;
     }
 
     public void MoveToDestination()

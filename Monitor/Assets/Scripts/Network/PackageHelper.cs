@@ -281,18 +281,19 @@ public class CardData : CommandData
 }
 
 /// <summary>
-/// 头像数据
+/// 头像名字数据
 /// </summary>
-public class AvatarData : CommandData
+public class AvatarNameData : CommandData
 {
-    public string Url { get; set; }
+    public String Name { get; set; }
+    public string AvatarUrl { get; set; }
     /// <summary>
     /// 数据转成字符串形式
     /// </summary>
     /// <returns>返回自描述信息</returns>
     public override string ToString()
     {
-        return string.Format("{0}: {1}", this.GetType().Name, this.Url);
+        return string.Format("{0}: {1}, {2}", this.GetType().Name, this.Name, this.AvatarUrl);
     }
 }
 

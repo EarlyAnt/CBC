@@ -1,0 +1,13 @@
+
+countdown.png
+size: 488,278
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+warn
+  rotate: false
+  xy: 4, 4
+  size: 480, 270
+  orig: 480, 270
+  offset: 0, 0
+  index: -1
