@@ -53,6 +53,7 @@ public class GameStartAnimation : BaseAnimation
         {
             this.audioPlayer.DOFade(0f, 0.5f).onComplete = () =>
             {
+                this.OnComplete();
                 GameObject.Destroy(this.gameObject);
             };
         }, this.animationDuration - 0.75f);

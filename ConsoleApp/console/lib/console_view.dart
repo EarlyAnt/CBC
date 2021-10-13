@@ -115,12 +115,12 @@ class _ConsoleViewState extends State<ConsoleView> {
           break;
         case GameEvent.end:
           _sendStringMessage(CommandUtil.buildStopGameCommand());
-          // _leftName = "";
-          // _rightName = "";
-          // _leftAvatar = "";
-          // _rightAvatar = "";
-          // _leftGameSettingViewKey.currentState?.reset();
-          // _rightGameSettingViewKey.currentState?.reset();
+          _leftName = "";
+          _rightName = "";
+          _leftAvatar = "";
+          _rightAvatar = "";
+          _leftGameSettingViewKey.currentState?.reset();
+          _rightGameSettingViewKey.currentState?.reset();
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);

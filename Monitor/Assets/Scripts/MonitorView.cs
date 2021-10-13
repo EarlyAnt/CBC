@@ -126,34 +126,38 @@ public class MonitorView : MonoBehaviourExtension
         switch (eventData.GameEvent)
         {
             case GameEvents.Start:
-                PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
-                if (playerInfo != null)
+                if (this.gameEvent == GameEvents.Pause)
                 {
-                    Sprite leftAvatar = null, rightAvatar = null;
-                    if (!string.IsNullOrEmpty(playerInfo.LeftAvatar))
+                    this.gameEvent = eventData.GameEvent;
+                }
+                else
+                {
+                    PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
+                    if (playerInfo != null)
                     {
-                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.LeftAvatar, (avatar) =>
+                        Sprite leftAvatar = null, rightAvatar = null;
+                        if (!string.IsNullOrEmpty(playerInfo.LeftAvatar))
                         {
-                            leftAvatar = avatar;
-                        }, (failureInfo) =>
-                        {
-                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                        }));
-                    }
+                            this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.LeftAvatar, (avatar) =>
+                            {
+                                leftAvatar = avatar;
+                            }, (failureInfo) =>
+                            {
+                                Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                            }));
+                        }
 
-                    if (!string.IsNullOrEmpty(playerInfo.RightAvatar))
-                    {
-                        this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.RightAvatar, (avatar) =>
+                        if (!string.IsNullOrEmpty(playerInfo.RightAvatar))
                         {
-                            rightAvatar = avatar;
-                        }, (failureInfo) =>
-                        {
-                            Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
-                        }));
-                    }
+                            this.StartCoroutine(ResourceUtils.Instance.LoadTexture(playerInfo.RightAvatar, (avatar) =>
+                            {
+                                rightAvatar = avatar;
+                            }, (failureInfo) =>
+                            {
+                                Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
+                            }));
+                        }
 
-                    if (this.gameEvent == GameEvents.End)
-                    {
                         this.DelayInvoke(() =>
                         {
                             this.EndGame();
@@ -163,22 +167,27 @@ public class MonitorView : MonoBehaviourExtension
                             this.rightPlayerPanel.SetName(playerInfo.RightName);
                             this.leftPlayerPanel.SetAvatar(leftAvatar);
                             this.rightPlayerPanel.SetAvatar(rightAvatar);
+                            this.gameEvent = eventData.GameEvent;
                         }, 1f);
                     }
                 }
                 break;
+            case GameEvents.Pause:
+                this.gameEvent = eventData.GameEvent;
+                break;
             case GameEvents.End:
+                this.gameEvent = eventData.GameEvent;
                 this.EndGame();
                 break;
         }
-        this.gameEvent = eventData.GameEvent;
     }
     //开始游戏
     private void StartGame(string leftPlayerName, string rightPlayerName, Sprite leftPlayerAvatar, Sprite rightPlayerAvatar)
     {
         this.leftSeconds = this.gameDuration * 60;
-        this.InvokeRepeating("RefreshTimer", 0, 1);
-        GameStartAnimation animation = this.animationPlayer.Play("gamestart") as GameStartAnimation;
+
+        GameStartAnimation animation = this.animationPlayer.Play("gamestart",
+            () => this.InvokeRepeating("RefreshTimer", 0, 1)) as GameStartAnimation;
         if (animation != null)
         {
             animation.SetPlayerData(leftPlayerName, rightPlayerName, leftPlayerAvatar, rightPlayerAvatar);
