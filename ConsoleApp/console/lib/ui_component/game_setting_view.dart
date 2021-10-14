@@ -70,10 +70,10 @@ class GameSettingViewState extends State<GameSettingView> {
 
   @override
   Widget build(BuildContext context) {
-    return _consolePanel();
+    return _consolePanel(context);
   }
 
-  Widget _consolePanel() {
+  Widget _consolePanel(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -88,8 +88,8 @@ class GameSettingViewState extends State<GameSettingView> {
             _playerInfo(),
             _playerHealth(),
             _playerStatus(),
-            _cardStatus(),
-            _hurtStatus(),
+            _cardStatus(context),
+            _hurtStatus(context),
           ],
         ),
       ),
@@ -112,7 +112,8 @@ class GameSettingViewState extends State<GameSettingView> {
                 controller: _nameController,
                 maxLength: 10,
                 maxLines: 1,
-                showCursor: false,
+                showCursor: true,
+                // keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                   counterText: '',
@@ -147,10 +148,11 @@ class GameSettingViewState extends State<GameSettingView> {
                 border: Border.all(color: Colors.grey, width: 2),
                 borderRadius: const BorderRadius.all(Radius.circular(4)),
               ),
-              child: TextFormField(
+              child: TextField(
                 controller: _healthController,
                 maxLines: 1,
-                showCursor: false,
+                showCursor: true,
+                // keyboardType: TextInputType.number,
                 decoration: const InputDecoration(border: InputBorder.none),
                 inputFormatters: [
                   FilteringTextInputFormatter(RegExp("[0-9]"), //限制只允许输入数字
@@ -221,7 +223,12 @@ class GameSettingViewState extends State<GameSettingView> {
     );
   }
 
-  Widget _cardStatus() {
+  Widget _cardStatus(BuildContext context) {
+    ButtonStyle? buttonStyle = Theme.of(context)
+        .textButtonTheme
+        .style
+        ?.copyWith(minimumSize: MaterialStateProperty.all(const Size(30, 5)));
+
     return Row(
       children: [
         const Text("当前牌库"),
@@ -229,34 +236,48 @@ class GameSettingViewState extends State<GameSettingView> {
             padding: EdgeInsets.only(left: _spacing),
             child: Text("${_playerData!.cardCount}")),
         Padding(
-            padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(
-                child: const Text("+"),
-                onPressed: () {
-                  setState(() {
-                    _playerData!.cardCount += 1;
-                  });
-                  _sendStringMessage(CommandUtil.buildCardCommand(
-                      _playerData!.cardCount, widget.player!));
-                })),
+          padding: EdgeInsets.only(left: _spacing),
+          child: TextButton(
+              style: buttonStyle,
+              child: const Text("+"),
+              onPressed: () {
+                setState(() {
+                  _playerData!.cardCount += 1;
+                });
+              }),
+        ),
         Padding(
-            padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(
-                child: const Text("-"),
-                onPressed: () {
-                  if (_playerData!.cardCount > 0) {
-                    setState(() {
-                      _playerData!.cardCount -= 1;
-                    });
-                    _sendStringMessage(CommandUtil.buildCardCommand(
-                        _playerData!.cardCount, widget.player!));
-                  }
-                })),
+          padding: const EdgeInsets.only(left: 0),
+          child: TextButton(
+              style: buttonStyle,
+              child: const Text("-"),
+              onPressed: () {
+                if (_playerData!.cardCount > 0) {
+                  setState(() {
+                    _playerData!.cardCount -= 1;
+                  });
+                }
+              }),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: _spacing),
+          child: TextButton(
+              child: const Text("设定"),
+              onPressed: () {
+                _sendStringMessage(CommandUtil.buildCardCommand(
+                    _playerData!.cardCount, widget.player!));
+              }),
+        ),
       ],
     );
   }
 
-  Widget _hurtStatus() {
+  Widget _hurtStatus(BuildContext context) {
+    ButtonStyle? buttonStyle = Theme.of(context)
+        .textButtonTheme
+        .style
+        ?.copyWith(minimumSize: MaterialStateProperty.all(const Size(30, 5)));
+
     return Row(
       children: [
         const Text("当前伤害区"),
@@ -264,31 +285,40 @@ class GameSettingViewState extends State<GameSettingView> {
             padding: EdgeInsets.only(left: _spacing),
             child: Text("${_playerData!.hurt}")),
         Padding(
-            padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(
-                child: const Text("+"),
-                onPressed: () {
-                  if (_playerData!.hurt < 5) {
-                    setState(() {
-                      _playerData!.hurt += 1;
-                    });
-                    _sendStringMessage(CommandUtil.buildHurtCommand(
-                        _playerData!.hurt, widget.player!));
-                  }
-                })),
+          padding: EdgeInsets.only(left: _spacing),
+          child: TextButton(
+              style: buttonStyle,
+              child: const Text("+"),
+              onPressed: () {
+                if (_playerData!.hurt < 5) {
+                  setState(() {
+                    _playerData!.hurt += 1;
+                  });
+                }
+              }),
+        ),
         Padding(
-            padding: EdgeInsets.only(left: _spacing),
-            child: TextButton(
-                child: const Text("-"),
-                onPressed: () {
-                  if (_playerData!.hurt > 0) {
-                    setState(() {
-                      _playerData!.hurt -= 1;
-                    });
-                    _sendStringMessage(CommandUtil.buildHurtCommand(
-                        _playerData!.hurt, widget.player!));
-                  }
-                })),
+          padding: const EdgeInsets.only(left: 0),
+          child: TextButton(
+              style: buttonStyle,
+              child: const Text("-"),
+              onPressed: () {
+                if (_playerData!.hurt > 0) {
+                  setState(() {
+                    _playerData!.hurt -= 1;
+                  });
+                }
+              }),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: _spacing),
+          child: TextButton(
+              child: const Text("设定"),
+              onPressed: () {
+                _sendStringMessage(CommandUtil.buildHurtCommand(
+                    _playerData!.hurt, widget.player!));
+              }),
+        ),
       ],
     );
   }

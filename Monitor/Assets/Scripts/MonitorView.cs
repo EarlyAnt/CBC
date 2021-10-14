@@ -126,11 +126,7 @@ public class MonitorView : MonoBehaviourExtension
         switch (eventData.GameEvent)
         {
             case GameEvents.Start:
-                if (this.gameEvent == GameEvents.Pause)
-                {
-                    this.gameEvent = eventData.GameEvent;
-                }
-                else
+                if (this.gameEvent == GameEvents.End)
                 {
                     PlayerInfo playerInfo = JsonUtil.String2Json<PlayerInfo>(eventData.Parameter.ToString());
                     if (playerInfo != null)
@@ -170,6 +166,10 @@ public class MonitorView : MonoBehaviourExtension
                             this.gameEvent = eventData.GameEvent;
                         }, 1f);
                     }
+                }
+                else
+                {
+                    this.gameEvent = eventData.GameEvent;
                 }
                 break;
             case GameEvents.Pause:

@@ -72,7 +72,11 @@ public class AnimationPlayer : MonoBehaviourExtension
         if (!this.animationInfos.ContainsKey(animationName))
             return false;
 
-        string prefabName = this.animationInfos[animationName].Animation.Replace("Prefabs/", "");
+        string prefabName = this.animationInfos[animationName].Animation;
+        if (string.IsNullOrEmpty(prefabName))
+            return false;
+
+        prefabName = prefabName.Replace("Prefabs/", "");
         BaseAnimation[] animations = GameObject.FindObjectsOfType<BaseAnimation>();
         bool existed = animations != null && animations.Length > 0 && animations.ToList().Exists(t => t.name.Contains(prefabName));
         return existed;

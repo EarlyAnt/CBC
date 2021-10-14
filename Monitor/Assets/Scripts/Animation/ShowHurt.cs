@@ -17,8 +17,6 @@ public class ShowHurt : MonoBehaviourExtension
     {
         if (this.imageBox == null)
             this.imageBox = this.GetComponent<Image>();
-
-        this.imageBox.DOFade(0f, 0f);
     }
     /************************************************自 定 义 方 法************************************************/
     public void Play()
@@ -29,7 +27,7 @@ public class ShowHurt : MonoBehaviourExtension
         sequence.Append(this.imageBox.DOFade(1f, this.duration));
         sequence.Append(this.imageBox.DOFade(0f, this.duration));
         sequence.Append(this.imageBox.DOFade(1f, this.duration));
-		sequence.Append(this.imageBox.DOFade(0f, this.duration));
+        sequence.Append(this.imageBox.DOFade(0f, this.duration));
         sequence.Append(this.imageBox.DOFade(1f, this.duration));
     }
 }
