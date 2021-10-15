@@ -12,6 +12,7 @@ class SplashScreenView extends StatefulWidget {
 
 class _SplashScreenViewState extends State<SplashScreenView>
     with SingleTickerProviderStateMixin {
+  final String _version = "1.1.0";
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _fadeOver = false;
@@ -70,7 +71,7 @@ class _SplashScreenViewState extends State<SplashScreenView>
               child: Visibility(
                 visible: _fadeOver,
                 child: Text(
-                  "v0.0.1",
+                  _version,
                   style: TextStyle(fontSize: 10, color: Colors.grey.shade500),
                 ),
               ),
