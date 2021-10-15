@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 雪花控制器
+/// 伤害点数标记闪烁控制器
 /// </summary>
 public class ShowHurt : MonoBehaviourExtension
 {

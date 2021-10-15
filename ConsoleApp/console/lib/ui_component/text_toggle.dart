@@ -35,7 +35,7 @@ class TextToggleState extends State<TextToggle> {
   @override
   void initState() {
     super.initState();
-    refresh(noticeValueChange: true);
+    refresh(noticeValueChange: false);
   }
 
   @override

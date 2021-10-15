@@ -48,7 +48,7 @@ public class GeneralAnimation : BaseAnimation
             this.audioPlayer.volume = 0;
     }
     //播放动画
-    public void Play()
+    private void Play()
     {
         if (this.exitTrigger == ExitTriggers.Once)
             this.PlayOnce();

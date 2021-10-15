@@ -30,6 +30,7 @@ public class MonitorView : MonoBehaviourExtension
     private int leftSeconds = 0;
     private GameEvents gameEvent = GameEvents.End;
     private Queue<System.Action> actions = new Queue<System.Action>();
+    public System.Action<int> OnTimer { get; set; }
     #endregion
     /************************************************Unity方法与事件***********************************************/
     private void Start()
@@ -110,8 +111,11 @@ public class MonitorView : MonoBehaviourExtension
                 int second = this.leftSeconds - (minute > 0 ? minute * 60 : 0);
                 this.timer.text = string.Format("{0:d2}:{1:d2}", minute, second);
 
-                if (this.leftSeconds <= 30)
+                if (this.leftSeconds == 31)
                     this.animationPlayer.Play("countdown");
+
+                if (this.OnTimer != null)
+                    this.OnTimer(this.leftSeconds);
             }
             else
             {

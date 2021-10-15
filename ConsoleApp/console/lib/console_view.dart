@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:console/ui_component/toast.dart';
@@ -47,6 +48,8 @@ class _ConsoleViewState extends State<ConsoleView> {
   String? _leftName, _rightName, _leftAvatar, _rightAvatar;
   Size? _screenSize;
   UDP? _sender;
+  Timer? _timer;
+  int? _leftSeconds;
 
   @override
   void initState() {
@@ -86,7 +89,13 @@ class _ConsoleViewState extends State<ConsoleView> {
   }
 
   Widget _timerLabel() {
-    return const Text("14:30", style: TextStyle(color: Colors.black));
+    _leftSeconds = _leftSeconds ?? 0;
+    int minute = _leftSeconds! ~/ 60;
+    int second = minute > 0 ? _leftSeconds! - minute * 60 : _leftSeconds!;
+
+    return Text(
+        "${minute.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}",
+        style: const TextStyle(color: Colors.black));
   }
 
   Widget _gameEventButton() {
@@ -109,6 +118,8 @@ class _ConsoleViewState extends State<ConsoleView> {
             _leftAvatar ?? '',
             _rightAvatar ?? '',
           ));
+
+          _startTimer();
           break;
         case GameEvent.pause:
           _sendStringMessage(CommandUtil.buildPauseGameCommand());
@@ -121,6 +132,8 @@ class _ConsoleViewState extends State<ConsoleView> {
           _rightAvatar = "";
           _leftGameSettingViewKey.currentState?.reset();
           _rightGameSettingViewKey.currentState?.reset();
+
+          _stopTimer();
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);
@@ -223,6 +236,28 @@ class _ConsoleViewState extends State<ConsoleView> {
         utf8.encode(message!), Endpoint.broadcast(port: const Port(1000)));
 
     debugPrint("execute command: $message, length: $dataLength");
+  }
+
+  void _startTimer() {
+    Future.delayed(const Duration(seconds: 4), () {
+      _stopTimer();
+      _leftSeconds = 15 * 60;
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (currentGameEvent == GameEvent.start) {
+          setState(() {
+            _leftSeconds = _leftSeconds! - 1;
+          });
+        }
+      });
+    });
+  }
+
+  void _stopTimer() {
+    setState(() {
+      _leftSeconds = 0;
+    });
+
+    _timer?.cancel();
   }
 }
 
