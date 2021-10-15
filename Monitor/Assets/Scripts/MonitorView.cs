@@ -247,7 +247,7 @@ public class MonitorView : MonoBehaviourExtension
                 this.animationPlayer.Play("cutcardleft", () =>
                 {
                     setHurtAction();
-                    if (hurtData.Value == 4)
+                    if (hurtData.Value >= 4)
                         this.animationPlayer.Play("harm4left");
                 });
             }
@@ -264,7 +264,7 @@ public class MonitorView : MonoBehaviourExtension
                 this.animationPlayer.Play("cutcardright", () =>
                 {
                     setHurtAction();
-                    if (hurtData.Value == 4)
+                    if (hurtData.Value >= 4)
                         this.animationPlayer.Play("harm4right");
                 });
             }
