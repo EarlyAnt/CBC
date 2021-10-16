@@ -43,7 +43,7 @@ public class DataReceiver : MonoBehaviour
     }
     /************************************************自 定 义 方 法************************************************/
     //初始化
-    void Initialize()
+    private void Initialize()
     {
         //初始化网络连接
         this.LocalIP = NetHelper.GetLocalIPv4();
@@ -61,7 +61,7 @@ public class DataReceiver : MonoBehaviour
                                       ref this.remoteEndPoint, new AsyncCallback(this.ReceiveData), stateObject);
     }
     //异步接收数据
-    void ReceiveData(IAsyncResult result)
+    private void ReceiveData(IAsyncResult result)
     {
         try
         {
@@ -71,10 +71,7 @@ public class DataReceiver : MonoBehaviour
             //if (((IPEndPoint)this.remoteEndPoint).Address.Equals(this.localEndPoint.Address) ||
             //    ((IPEndPoint)this.remoteEndPoint).Address.Equals(IPAddress.Broadcast)) return;
             byte[] bytes = ((StateObject)result.AsyncState).Buffer;
-            string receiveData = Encoding.Default.GetString(bytes, 0, dataLength);
-            print(string.Format("{0}->receive data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
-            this.OnReceiveData(receiveData);
-            this.OnReceiveData(bytes);
+            this.OnReceiveData(bytes, dataLength);
         }
         catch (ObjectDisposedException) { }
         catch (Exception ex)
@@ -90,20 +87,34 @@ public class DataReceiver : MonoBehaviour
             }
         }
     }
-    //解析定位数据
-    void OnReceiveData(string dataString)
-    {
-        if (this.ReceiveDataAction != null)
-        {
-            this.ReceiveDataAction(dataString);
-        }
-    }
-    //解析定位数据
-    void OnReceiveData(byte[] byteDatas)
+    //解析数据
+    private void OnReceiveData(byte[] byteDatas, int dataLength)
     {
         if (this.ReceiveRawDataAction != null)
         {
-            this.ReceiveRawDataAction(byteDatas);
+            try
+            {
+                this.ReceiveRawDataAction(byteDatas);
+                print(string.Format("{0}->receive raw data: {1} bytes", DateTime.Now.ToyyyyMMddHHmmssfff(), byteDatas.Length));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(raw data): ", ex.Message);
+            }
+        }
+
+        if (this.ReceiveDataAction != null)
+        {
+            try
+            {
+                string receiveData = Encoding.Default.GetString(byteDatas, 0, dataLength);
+                this.ReceiveDataAction(receiveData);
+                print(string.Format("{0}->receive text data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(text data): ", ex.Message);
+            }
         }
     }
 }

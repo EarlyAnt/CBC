@@ -70,6 +70,7 @@ public enum GameEvents
 /// </summary>
 public static class NetDataTags
 {
+    public const string HEARTBEAT = "heartbeat";
     public const string EVENT = "event";
     public const string AUDIO = "audio";
     public const string ANIMATION = "animation";
@@ -103,6 +104,24 @@ public class NetData
 /// </summary>
 public abstract class BaseData
 {
+}
+
+/// <summary>
+/// 心跳数据
+/// </summary>
+public class Heartbeat
+{
+    public GameEvents GameEvent { get; set; }
+    public int LeftSeconds { get; set; }
+
+    /// <summary>
+    /// 数据转成字符串形式
+    /// </summary>
+    /// <returns>返回自描述信息</returns>
+    public override string ToString()
+    {
+        return string.Format("{0}: {1}, {2}", this.GetType().Name, this.GameEvent, this.LeftSeconds);
+    }
 }
 
 /// <summary>

@@ -1,5 +1,6 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:console/ui_component/toast.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'data/session.dart';
 import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
 import 'ui_component/text_toggle.dart';
+import 'utils/state_monitor.dart';
 
 class ConsoleView extends StatefulWidget {
   const ConsoleView({Key? key}) : super(key: key);
@@ -45,16 +47,26 @@ class _ConsoleViewState extends State<ConsoleView> {
   final GlobalKey<GameSettingViewState> _leftGameSettingViewKey = GlobalKey();
   final GlobalKey<GameSettingViewState> _rightGameSettingViewKey = GlobalKey();
   final GlobalKey<TextToggleState> _gameEventToggleKey = GlobalKey();
+  StateMonitor? _stateMonitor;
   String? _leftName, _rightName, _leftAvatar, _rightAvatar;
   Size? _screenSize;
   UDP? _sender;
-  Timer? _timer;
   int? _leftSeconds;
+  bool? _connected;
 
   @override
   void initState() {
     super.initState();
     _inititialize();
+
+    _stateMonitor = StateMonitor(onStateChanged: _onConnectStateChanged);
+    _stateMonitor?.startTimer();
+  }
+
+  @override
+  void dispose() {
+    _stateMonitor?.stopTimer();
+    super.dispose();
   }
 
   @override
@@ -75,17 +87,40 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _titleBar() {
     return Padding(
-        padding: const EdgeInsets.only(top: 5, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            _timerLabel(),
-            const SizedBox(width: 20),
-            _gameEventButton(),
-            const SizedBox(width: 5),
-            _gameSettingButton(),
-          ],
-        ));
+      padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Text('网络连接'),
+              const SizedBox(width: 5),
+              _statusBar(),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              _timerLabel(),
+              const SizedBox(width: 20),
+              _gameEventButton(),
+              const SizedBox(width: 5),
+              _gameSettingButton(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statusBar() {
+    return ClipOval(
+        child: Image.asset('assets/images/ui/square_bg.png',
+            width: 12,
+            height: 12,
+            color: (_connected ?? false) ? Colors.green : Colors.red));
   }
 
   Widget _timerLabel() {
@@ -118,8 +153,6 @@ class _ConsoleViewState extends State<ConsoleView> {
             _leftAvatar ?? '',
             _rightAvatar ?? '',
           ));
-
-          _startTimer();
           break;
         case GameEvent.pause:
           _sendStringMessage(CommandUtil.buildPauseGameCommand());
@@ -132,8 +165,6 @@ class _ConsoleViewState extends State<ConsoleView> {
           _rightAvatar = "";
           _leftGameSettingViewKey.currentState?.reset();
           _rightGameSettingViewKey.currentState?.reset();
-
-          _stopTimer();
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);
@@ -229,6 +260,20 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   void _inititialize() async {
     _sender = await UDP.bind(Endpoint.any(port: const Port(2000)));
+
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 4000)
+        .then((RawDatagramSocket udpSocket) {
+      udpSocket.forEach((RawSocketEvent event) {
+        if (event == RawSocketEvent.read) {
+          Datagram? dg = udpSocket.receive();
+          if (dg != null) {
+            _onReceiveData(dg.data);
+          } else {
+            debugPrint("receive data error: datagram is null");
+          }
+        }
+      });
+    });
   }
 
   void _sendStringMessage(String? message) async {
@@ -238,26 +283,35 @@ class _ConsoleViewState extends State<ConsoleView> {
     debugPrint("execute command: $message, length: $dataLength");
   }
 
-  void _startTimer() {
-    Future.delayed(const Duration(seconds: 4), () {
-      _stopTimer();
-      _leftSeconds = 15 * 60;
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (currentGameEvent == GameEvent.start) {
-          setState(() {
-            _leftSeconds = _leftSeconds! - 1;
-          });
+  void _onReceiveData(Uint8List data) {
+    try {
+      String dataString = String.fromCharCodes(data);
+      // debugPrint('receive message: $dataString');
+
+      Map heartbeat = json.decode(dataString);
+      if (heartbeat.containsKey("GameEvent")) {
+        _stateMonitor?.registerHeartbeat();
+
+        if (heartbeat["GameEvent"] == GameEvent.start.index &&
+            heartbeat.containsKey("LeftSeconds")) {
+          int leftSeconds = heartbeat["LeftSeconds"];
+          if (leftSeconds != _leftSeconds) {
+            _leftSeconds = heartbeat["LeftSeconds"];
+            debugPrint("sync left seconds: $_leftSeconds");
+            setState(() {});
+          }
+          return;
         }
-      });
-    });
+      }
+    } catch (ex) {
+      debugPrint("receive data error: $ex");
+    }
   }
 
-  void _stopTimer() {
+  void _onConnectStateChanged(bool connected) {
     setState(() {
-      _leftSeconds = 0;
+      _connected = connected;
     });
-
-    _timer?.cancel();
   }
 }
 

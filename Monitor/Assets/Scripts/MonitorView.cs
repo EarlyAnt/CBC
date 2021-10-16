@@ -12,7 +12,9 @@ public class MonitorView : MonoBehaviourExtension
     [SerializeField]
     private Text timer;
     [SerializeField]
-    private DataReceiver messageReceiver;
+    private DataSender sender;
+    [SerializeField]
+    private DataReceiver receiver;
     [SerializeField]
     private AnimationPlayer animationPlayer;
     [SerializeField]
@@ -35,7 +37,8 @@ public class MonitorView : MonoBehaviourExtension
     /************************************************Unity方法与事件***********************************************/
     private void Start()
     {
-        this.messageReceiver.ReceiveDataAction = this.OnReceiveData;
+        this.receiver.ReceiveDataAction = this.OnReceiveData;
+        this.InvokeRepeating("Heartbeat", 0f, 0.05f);
     }
     private void Update()
     {
@@ -47,8 +50,16 @@ public class MonitorView : MonoBehaviourExtension
     }
     private void OnDestroy()
     {
+        this.CancelInvoke("Heartbeat");
     }
     /************************************************自 定 义 方 法************************************************/
+    //发送心跳包
+    private void Heartbeat()
+    {
+        string heartbeatString = JsonUtil.Json2String(new Heartbeat() { GameEvent = this.gameEvent, LeftSeconds = this.leftSeconds });
+        this.sender.SendData(heartbeatString);
+        //Debug.LogFormat("{0}->heartbeat: {1}", System.DateTime.Now.ToString("HH:mm:ss:fff"), heartbeatString);
+    }
     //当接收到数据时
     private void OnReceiveData(string dataString)
     {
