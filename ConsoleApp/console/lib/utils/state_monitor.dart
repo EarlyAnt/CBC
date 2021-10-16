@@ -5,25 +5,33 @@ import 'package:flutter/material.dart';
 class StateMonitor {
   StateMonitor({required this.onStateChanged});
 
-  final Function(bool)? onStateChanged;
+  final Function(ConnectStatus)? onStateChanged;
   final int _interval = 500;
   Timer? _timer;
   DateTime? _lastHeartbeat;
-  bool? _connected;
-  bool get connnected => _connected ?? false;
+  ConnectStatus? _connectStatus;
+  ConnectStatus get connectStatus => _connectStatus ?? ConnectStatus.unconnect;
 
   void startTimer() {
     stopTimer();
     _timer = Timer.periodic(Duration(milliseconds: _interval), (timer) {
       Duration? diff = DateTime.now().difference(_lastHeartbeat!);
-      bool connected = diff.inMilliseconds <= 200;
+      ConnectStatus connected = ConnectStatus.unconnect;
+      if (diff.inMilliseconds <= 50) {
+        connected = ConnectStatus.best;
+      } else if (diff.inMilliseconds <= 100) {
+        connected = ConnectStatus.better;
+      } else if (diff.inMilliseconds <= 200) {
+        connected = ConnectStatus.connect;
+      }
+
       debugPrint(
           'connected: $connected, lastHeartbeat: $_lastHeartbeat, diff in milliSeconds: ${diff.inMilliseconds}');
 
-      if (connected != _connected && onStateChanged != null) {
+      if (connected != _connectStatus && onStateChanged != null) {
         onStateChanged?.call(connected);
       }
-      _connected = connected;
+      _connectStatus = connected;
     });
   }
 
@@ -36,3 +44,5 @@ class StateMonitor {
     _lastHeartbeat = DateTime.now();
   }
 }
+
+enum ConnectStatus { unconnect, connect, better, best }

@@ -128,7 +128,8 @@ class TExtButton extends StatelessWidget {
                 selected ? color.withAlpha(150) : Colors.transparent),
           ),
           child: Text(text,
-              style: TextStyle(color: selected ? Colors.white : Colors.black)),
+              style:
+                  TextStyle(color: selected ? Colors.white : Colors.white60)),
           onPressed: () {
             onPressed(value);
             debugPrint("button[$text] press down: $selected");

@@ -52,7 +52,7 @@ class _ConsoleViewState extends State<ConsoleView> {
   Size? _screenSize;
   UDP? _sender;
   int? _leftSeconds;
-  bool? _connected;
+  ConnectStatus? _connectStatus;
 
   @override
   void initState() {
@@ -86,41 +86,64 @@ class _ConsoleViewState extends State<ConsoleView> {
   }
 
   Widget _titleBar() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 5, left: 20, right: 20),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text('网络连接'),
-              const SizedBox(width: 5),
-              _statusBar(),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              _timerLabel(),
-              const SizedBox(width: 20),
-              _gameEventButton(),
-              const SizedBox(width: 5),
-              _gameSettingButton(),
-            ],
-          ),
-        ],
-      ),
-    );
+    return Stack(children: [
+      Container(
+          width: double.infinity,
+          height: 50,
+          color: Colors.black.withAlpha(150)),
+      Padding(
+        padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text('网络连接',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 5),
+                _statusBar(),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                _timerLabel(),
+                const SizedBox(width: 20),
+                _gameEventButton(),
+                const SizedBox(width: 5),
+                _gameSettingButton(),
+              ],
+            ),
+          ],
+        ),
+      )
+    ]);
   }
 
   Widget _statusBar() {
-    return ClipOval(
-        child: Image.asset('assets/images/ui/square_bg.png',
-            width: 12,
-            height: 12,
-            color: (_connected ?? false) ? Colors.green : Colors.red));
+    Color color = Colors.grey;
+    String iconPath = 'assets/images/ui/wifi1.png';
+    switch (_connectStatus ?? ConnectStatus.unconnect) {
+      case ConnectStatus.unconnect:
+        break;
+      case ConnectStatus.connect:
+        color = Colors.red;
+        iconPath = 'assets/images/ui/wifi2.png';
+        break;
+      case ConnectStatus.better:
+        color = Colors.yellow[700]!;
+        iconPath = 'assets/images/ui/wifi3.png';
+        break;
+      case ConnectStatus.best:
+        color = Colors.green;
+        iconPath = 'assets/images/ui/wifi4.png';
+        break;
+    }
+
+    return Image.asset(iconPath, width: 14, height: 14, color: color);
   }
 
   Widget _timerLabel() {
@@ -130,7 +153,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
     return Text(
         "${minute.toString().padLeft(2, '0')}:${second.toString().padLeft(2, '0')}",
-        style: const TextStyle(color: Colors.black));
+        style: const TextStyle(color: Colors.white));
   }
 
   Widget _gameEventButton() {
@@ -181,11 +204,11 @@ class _ConsoleViewState extends State<ConsoleView> {
         padding: const EdgeInsets.only(top: 0),
         child: Column(
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _effectZoneLabel())
-            ]),
+            // Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            //   Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 20),
+            //       child: _effectZoneLabel())
+            // ]),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
               child: SizedBox(
@@ -193,7 +216,6 @@ class _ConsoleViewState extends State<ConsoleView> {
                 child: GridView.builder(
                     itemCount: _effectButtonDatas.length,
                     shrinkWrap: true,
-                    // physics: BouncingScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 10,
@@ -308,9 +330,9 @@ class _ConsoleViewState extends State<ConsoleView> {
     }
   }
 
-  void _onConnectStateChanged(bool connected) {
+  void _onConnectStateChanged(ConnectStatus connectStatus) {
     setState(() {
-      _connected = connected;
+      _connectStatus = connectStatus;
     });
   }
 }
