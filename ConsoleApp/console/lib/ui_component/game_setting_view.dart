@@ -128,9 +128,7 @@ class GameSettingViewState extends State<GameSettingView> {
           child: TextButton(
               child: const Text("设定"),
               onPressed: () {
-                if (currentGameEvent == GameEvent.start) {
-                  uploadFile();
-                }
+                uploadFile();
               })),
     ]);
   }
