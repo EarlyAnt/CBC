@@ -1,4 +1,5 @@
-﻿using HLSoft.Framework.Util;
+﻿using HLSoft.Framework.Log4U;
+using HLSoft.Framework.Util;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -25,6 +26,7 @@ public class DataReceiver : MonoBehaviour
     private IPEndPoint localEndPoint = null;                        //本地地址端口号
     private EndPoint remoteEndPoint = null;                         //远程地址端口号
     private StateObject stateObject = null;                         //异步通信数据
+    private SimpleLog log = new SimpleLog("debug.txt");
     /************************************************Unity方法与事件***********************************************/
     void Start()
     {
@@ -99,7 +101,8 @@ public class DataReceiver : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(raw data): ", ex.Message);
+                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(raw data): {0}", ex.Message);
+                this.log.WriteLine(string.Format("<><DataReceiver.OnReceiveData>Error(raw data): {0}", ex.Message));
             }
         }
 
@@ -110,10 +113,12 @@ public class DataReceiver : MonoBehaviour
                 string receiveData = Encoding.Default.GetString(byteDatas, 0, dataLength);
                 this.ReceiveDataAction(receiveData);
                 print(string.Format("{0}->receive text data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
+                this.log.WriteLine(string.Format("{0}->receive text data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
             }
             catch (Exception ex)
             {
-                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(text data): ", ex.Message);
+                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(text data): {0}", ex.Message);
+                this.log.WriteLine(string.Format("<><DataReceiver.OnReceiveData>Error(text data): {0}", ex.Message));
             }
         }
     }

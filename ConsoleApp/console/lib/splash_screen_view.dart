@@ -12,7 +12,7 @@ class SplashScreenView extends StatefulWidget {
 
 class _SplashScreenViewState extends State<SplashScreenView>
     with SingleTickerProviderStateMixin {
-  final String _version = "1.2.0";
+  final String _version = "1.3.0";
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _fadeOver = false;
@@ -21,7 +21,7 @@ class _SplashScreenViewState extends State<SplashScreenView>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 3000));
+        vsync: this, duration: const Duration(milliseconds: 1000));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {

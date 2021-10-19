@@ -25,8 +25,8 @@ class StateMonitor {
         connected = ConnectStatus.connect;
       }
 
-      debugPrint(
-          'connected: $connected, lastHeartbeat: $_lastHeartbeat, diff in milliSeconds: ${diff.inMilliseconds}');
+      // debugPrint(
+      //     'connected: $connected, lastHeartbeat: $_lastHeartbeat, diff in milliSeconds: ${diff.inMilliseconds}');
 
       if (connected != _connectStatus && onStateChanged != null) {
         onStateChanged?.call(connected);

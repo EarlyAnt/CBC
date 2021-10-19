@@ -71,18 +71,21 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   @override
   Widget build(BuildContext context) {
-    _screenSize = MediaQuery.of(context).size;
+    var mediaData = MediaQuery.of(context);
+    _screenSize = mediaData.size;
 
-    return Scaffold(
-      body: Stack(children: [
-        // Image.asset("assets/images/ui/title_bar.png"),
-        Column(children: [
+    return SingleChildScrollView(
+        child: SizedBox.fromSize(
+      size: Size.fromHeight(
+          mediaData.size.height + mediaData.viewInsets.bottom / 2),
+      child: Scaffold(
+        body: Column(children: [
           _titleBar(),
           _effectButtonGroup(),
           _consoleZone(),
         ]),
-      ]),
-    );
+      ),
+    ));
   }
 
   Widget _titleBar() {
@@ -90,7 +93,7 @@ class _ConsoleViewState extends State<ConsoleView> {
       Container(
           width: double.infinity,
           height: 50,
-          color: Colors.black.withAlpha(150)),
+          color: Colors.black.withAlpha(220)),
       Padding(
         padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
         child: Row(
@@ -124,7 +127,7 @@ class _ConsoleViewState extends State<ConsoleView> {
   }
 
   Widget _statusBar() {
-    Color color = Colors.grey;
+    Color color = Colors.white;
     String iconPath = 'assets/images/ui/wifi1.png';
     switch (_connectStatus ?? ConnectStatus.unconnect) {
       case ConnectStatus.unconnect:
@@ -261,7 +264,14 @@ class _ConsoleViewState extends State<ConsoleView> {
                     _leftAvatar = avatarFileName;
                   },
                 )),
-            const SizedBox(width: 10),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.arrow_upward, size: 10, color: Colors.orange),
+                SizedBox(height: 30),
+                Icon(Icons.arrow_downward, size: 10, color: Colors.orange),
+              ],
+            ),
             Expanded(
                 flex: 1,
                 child: GameSettingView(
