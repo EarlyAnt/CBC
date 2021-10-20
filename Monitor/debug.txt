@@ -1,0 +1,444 @@
+
+2021-10-20 10:34:58:762: 2021-10-20 10:34:58:762->receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 10:34:58:766: receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 10:35:23:099: 2021-10-20 10:35:23:098->receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 10:35:23:101: receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 10:35:31:409: 2021-10-20 10:35:31:401->receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 10:35:31:411: receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 10:36:10:684: 2021-10-20 10:36:10:683->receive text data: {"Tag":"card","Data":{"Value":35,"DataOwner":"left"}}
+
+2021-10-20 10:36:10:687: receive text data: {"Tag":"card","Data":{"Value":35,"DataOwner":"left"}}
+
+2021-10-20 10:36:13:342: 2021-10-20 10:36:13:341->receive text data: {"Tag":"card","Data":{"Value":34,"DataOwner":"right"}}
+
+2021-10-20 10:36:13:346: receive text data: {"Tag":"card","Data":{"Value":34,"DataOwner":"right"}}
+
+2021-10-20 10:36:15:903: 2021-10-20 10:36:15:902->receive text data: {"Tag":"card","Data":{"Value":36,"DataOwner":"right"}}
+
+2021-10-20 10:36:15:907: receive text data: {"Tag":"card","Data":{"Value":36,"DataOwner":"right"}}
+
+2021-10-20 10:36:18:795: 2021-10-20 10:36:18:794->receive text data: {"Tag":"hurt","Data":{"Value":2,"DataOwner":"left"}}
+
+2021-10-20 10:36:18:799: receive text data: {"Tag":"hurt","Data":{"Value":2,"DataOwner":"left"}}
+
+2021-10-20 10:36:19:125: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:19:129: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:23:034: 2021-10-20 10:36:23:033->receive text data: {"Tag":"hurt","Data":{"Value":2,"DataOwner":"right"}}
+
+2021-10-20 10:36:23:038: receive text data: {"Tag":"hurt","Data":{"Value":2,"DataOwner":"right"}}
+
+2021-10-20 10:36:23:078: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:23:079: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:27:784: 2021-10-20 10:36:27:783->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 10:36:27:785: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 10:36:28:695: 2021-10-20 10:36:28:694->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 10:36:28:697: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 10:36:32:072: 2021-10-20 10:36:32:071->receive text data: {"Tag":"audio","Data":{"EffectFile":"huanhu"}}
+
+2021-10-20 10:36:32:073: receive text data: {"Tag":"audio","Data":{"EffectFile":"huanhu"}}
+
+2021-10-20 10:36:33:914: 2021-10-20 10:36:33:913->receive text data: {"Tag":"audio","Data":{"EffectFile":"guzhang"}}
+
+2021-10-20 10:36:33:916: receive text data: {"Tag":"audio","Data":{"EffectFile":"guzhang"}}
+
+2021-10-20 10:36:38:024: 2021-10-20 10:36:38:022->receive text data: {"Tag":"animation","Data":{"EffectFile":"cr"}}
+
+2021-10-20 10:36:38:029: receive text data: {"Tag":"animation","Data":{"EffectFile":"cr"}}
+
+2021-10-20 10:36:38:050: PlayOneShot was called with a null AudioClip.
+
+2021-10-20 10:36:38:053: PlayOneShot was called with a null AudioClip.
+
+2021-10-20 10:36:38:299: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:38:301: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:43:022: 2021-10-20 10:36:43:021->receive text data: {"Tag":"animation","Data":{"EffectFile":"ur"}}
+
+2021-10-20 10:36:43:024: receive text data: {"Tag":"animation","Data":{"EffectFile":"ur"}}
+
+2021-10-20 10:36:43:035: PlayOneShot was called with a null AudioClip.
+
+2021-10-20 10:36:43:037: PlayOneShot was called with a null AudioClip.
+
+2021-10-20 10:36:43:046: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:36:43:047: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:38:24:290: vs_Atlas :: Imported with 3 material
+
+2021-10-20 10:38:24:291: vs_Atlas :: Imported with 3 material
+
+2021-10-20 10:38:24:299: Changes to 'Assets/Art/Spines/GameStart/vs.json' or atlas detected. Clearing SkeletonDataAsset: Assets/Art/Spines/GameStart/vs_SkeletonData.asset
+
+2021-10-20 10:38:24:300: Changes to 'Assets/Art/Spines/GameStart/vs.json' or atlas detected. Clearing SkeletonDataAsset: Assets/Art/Spines/GameStart/vs_SkeletonData.asset
+
+2021-10-20 10:38:33:457: 2021-10-20 10:38:33:440->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:38:33:459: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:38:41:738: 2021-10-20 10:38:41:737->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"去","rightName":"玩","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:38:41:739: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"去","rightName":"玩","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:38:43:002: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:38:43:003: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:39:31:675: 2021-10-20 10:39:31:673->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:39:31:680: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:40:13:828: 2021-10-20 10:40:13:828->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:40:13:830: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:40:52:616: 2021-10-20 10:40:52:615->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"2","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:40:52:617: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"2","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:40:53:638: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:40:53:640: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:47:40:539: 2021-10-20 10:47:40:523->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:47:40:543: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:47:50:946: 2021-10-20 10:47:50:945->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.pause"}}
+
+2021-10-20 10:47:50:948: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.pause"}}
+
+2021-10-20 10:47:51:986: 2021-10-20 10:47:51:986->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"1","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:47:51:988: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"1","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:47:55:368: 2021-10-20 10:47:55:367->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:47:55:371: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 10:48:00:178: 2021-10-20 10:48:00:177->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"1","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:48:00:180: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"1","rightName":"1","leftAvatar":"","rightAvatar":""}}}
+
+2021-10-20 10:48:01:185: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 10:48:01:186: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:50:46:408: 2021-10-20 11:50:46:355->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 11:50:46:422: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 11:50:46:696: 2021-10-20 11:50:46:695->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 11:50:46:698: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 11:50:59:246: 2021-10-20 11:50:59:245->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:50:59:248: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:15:210: 2021-10-20 11:51:15:209->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:15:214: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:27:853: 2021-10-20 11:51:27:852->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:27:900: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:32:914: 2021-10-20 11:51:32:913->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:32:916: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:33:119: 2021-10-20 11:51:33:118->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:33:122: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:33:932: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:51:33:933: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:51:41:296: 2021-10-20 11:51:41:295->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:41:300: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:51:46:421: 2021-10-20 11:51:46:421->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:46:423: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:52:971: 2021-10-20 11:51:52:970->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:51:52:974: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:08:115: 2021-10-20 11:52:08:115->receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:08:119: receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:10:265: 2021-10-20 11:52:10:264->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:10:268: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:11:275: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:11:277: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:16:404: 2021-10-20 11:52:16:404->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:16:406: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:21:625: 2021-10-20 11:52:21:623->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:21:627: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:23:160: 2021-10-20 11:52:23:159->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:23:165: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:24:170: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:24:172: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:28:381: 2021-10-20 11:52:28:380->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:28:383: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:32:165: 2021-10-20 11:52:32:164->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:32:168: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:33:172: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:33:174: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:34:620: 2021-10-20 11:52:34:619->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:34:624: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:52:40:556: 2021-10-20 11:52:40:555->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:40:559: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 11:52:41:558: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:41:560: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:47:003: 2021-10-20 11:52:47:002->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 11:52:47:007: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"left"}}
+
+2021-10-20 11:52:47:514: 2021-10-20 11:52:47:513->receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 11:52:47:516: receive text data: {"Tag":"health","Data":{"Value":10000,"DataOwner":"right"}}
+
+2021-10-20 11:52:48:232: 2021-10-20 11:52:48:231->receive text data: {"Tag":"effect","Data":{"Light":true,"DataOwner":"right"}}
+
+2021-10-20 11:52:48:237: receive text data: {"Tag":"effect","Data":{"Light":true,"DataOwner":"right"}}
+
+2021-10-20 11:52:48:742: 2021-10-20 11:52:48:741->receive text data: {"Tag":"aid","Data":{"Light":true,"DataOwner":"right"}}
+
+2021-10-20 11:52:48:770: receive text data: {"Tag":"aid","Data":{"Light":true,"DataOwner":"right"}}
+
+2021-10-20 11:52:49:152: 2021-10-20 11:52:49:152->receive text data: {"Tag":"aid","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:49:154: receive text data: {"Tag":"aid","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:49:668: 2021-10-20 11:52:49:666->receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 11:52:49:669: receive text data: {"Tag":"weak","Data":{"Light":false,"DataOwner":"left"}}
+
+2021-10-20 11:52:50:082: 2021-10-20 11:52:50:081->receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:50:087: receive text data: {"Tag":"weak","Data":{"Light":true,"DataOwner":"left"}}
+
+2021-10-20 11:52:52:750: 2021-10-20 11:52:52:749->receive text data: {"Tag":"card","Data":{"Value":40,"DataOwner":"right"}}
+
+2021-10-20 11:52:52:752: receive text data: {"Tag":"card","Data":{"Value":40,"DataOwner":"right"}}
+
+2021-10-20 11:52:53:156: 2021-10-20 11:52:53:155->receive text data: {"Tag":"card","Data":{"Value":40,"DataOwner":"left"}}
+
+2021-10-20 11:52:53:159: receive text data: {"Tag":"card","Data":{"Value":40,"DataOwner":"left"}}
+
+2021-10-20 11:52:54:166: 2021-10-20 11:52:54:165->receive text data: {"Tag":"hurt","Data":{"Value":0,"DataOwner":"right"}}
+
+2021-10-20 11:52:54:167: receive text data: {"Tag":"hurt","Data":{"Value":0,"DataOwner":"right"}}
+
+2021-10-20 11:52:57:856: 2021-10-20 11:52:57:855->receive text data: {"Tag":"hurt","Data":{"Value":1,"DataOwner":"left"}}
+
+2021-10-20 11:52:57:859: receive text data: {"Tag":"hurt","Data":{"Value":1,"DataOwner":"left"}}
+
+2021-10-20 11:52:58:050: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:58:051: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:58:177: 2021-10-20 11:52:58:177->receive text data: {"Tag":"hurt","Data":{"Value":1,"DataOwner":"right"}}
+
+2021-10-20 11:52:58:179: receive text data: {"Tag":"hurt","Data":{"Value":1,"DataOwner":"right"}}
+
+2021-10-20 11:52:58:190: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:52:58:192: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 11:53:03:958: 2021-10-20 11:53:03:958->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:53:03:960: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:54:56:046: 2021-10-20 11:54:56:045->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:54:56:049: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:55:38:209: 2021-10-20 11:55:38:209->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:55:38:212: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:55:53:762: 2021-10-20 11:55:53:761->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:55:53:764: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:56:55:631: 2021-10-20 11:56:55:629->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:56:55:632: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:57:21:472: 2021-10-20 11:57:21:461->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:57:21:474: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:57:38:858: 2021-10-20 11:57:38:858->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:57:38:860: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:58:06:795: 2021-10-20 11:58:06:794->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:58:06:797: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:16:698: 2021-10-20 11:59:16:697->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:16:700: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:39:612: 2021-10-20 11:59:39:611->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:39:614: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:43:604: 2021-10-20 11:59:43:602->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 11:59:43:607: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:14:406: 2021-10-20 12:00:14:405->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:14:410: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:21:160: 2021-10-20 12:00:21:159->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:21:161: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:25:559: 2021-10-20 12:00:25:558->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:25:563: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:40:382: 2021-10-20 12:00:40:380->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:40:385: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:44:597: 2021-10-20 12:00:44:597->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:44:600: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:58:922: 2021-10-20 12:00:58:921->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:00:58:926: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:01:31:257: 2021-10-20 12:01:31:257->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:31:259: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:32:247: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:01:32:249: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:01:38:922: 2021-10-20 12:01:38:922->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:01:38:923: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:01:45:086: 2021-10-20 12:01:45:085->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:45:088: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:46:093: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:01:46:095: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:01:50:598: 2021-10-20 12:01:50:598->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:01:50:601: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:01:54:497: 2021-10-20 12:01:54:496->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:54:501: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:01:55:496: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:01:55:498: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:02:51:818: 2021-10-20 12:02:51:816->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:02:51:820: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:02:57:768: 2021-10-20 12:02:57:766->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"樱木","rightName":"仙道","leftAvatar":"TB2Q7aGdFXXXXc8XXXXXXXXXXXX_!!44473404405-12-17-.jpg","rightAvatar":"133a1fdc853a3918431ce47a2bbc284b05-13-45-.jpg"}}}
+
+2021-10-20 12:02:57:774: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"樱木","rightName":"仙道","leftAvatar":"TB2Q7aGdFXXXXc8XXXXXXXXXXXX_!!44473404405-12-17-.jpg","rightAvatar":"133a1fdc853a3918431ce47a2bbc284b05-13-45-.jpg"}}}
+
+2021-10-20 12:02:58:809: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:02:58:811: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:03:05:505: 2021-10-20 12:03:05:504->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:03:05:506: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:03:07:590: 2021-10-20 12:03:07:578->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"樱木","rightName":"仙道","leftAvatar":"TB2Q7aGdFXXXXc8XXXXXXXXXXXX_!!44473404405-12-17-.jpg","rightAvatar":"133a1fdc853a3918431ce47a2bbc284b05-13-45-.jpg"}}}
+
+2021-10-20 12:03:07:591: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"樱木","rightName":"仙道","leftAvatar":"TB2Q7aGdFXXXXc8XXXXXXXXXXXX_!!44473404405-12-17-.jpg","rightAvatar":"133a1fdc853a3918431ce47a2bbc284b05-13-45-.jpg"}}}
+
+2021-10-20 12:03:08:569: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:03:08:572: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:13:18:840: 2021-10-20 12:13:18:822->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:13:18:842: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:13:19:844: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:13:19:845: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:13:24:830: 2021-10-20 12:13:24:830->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:13:24:833: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:13:29:232: 2021-10-20 12:13:29:231->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:13:29:235: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:13:32:303: 2021-10-20 12:13:32:302->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:13:32:306: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.start","Parameter":{"leftName":"毛晓彤","rightName":"白冰","leftAvatar":"mmexport1634028307293.jpg","rightAvatar":"mmexport1634028305540.jpg"}}}
+
+2021-10-20 12:13:33:311: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:13:33:314: Parent of RectTransform is being set with parent property. Consider using the SetParent method instead, with the worldPositionStays argument set to false. This will retain local orientation and scale rather than world orientation and scale, which can prevent common UI scaling issues.
+
+2021-10-20 12:13:39:879: 2021-10-20 12:13:39:876->receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}
+
+2021-10-20 12:13:39:881: receive text data: {"Tag":"event","Data":{"GameEventString":"GameEvent.end"}}

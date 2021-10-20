@@ -1,8 +1,7 @@
-﻿using HLSoft.Framework.Util;
+﻿using EarlyAnt.Framework.Util;
 using System;
 using System.Collections.Generic;
-using System.Text;
-//using LitJson;
+
 
 /// <summary>
 /// 数据封包解包工具

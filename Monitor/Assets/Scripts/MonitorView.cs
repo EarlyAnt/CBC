@@ -29,6 +29,7 @@ public class MonitorView : MonoBehaviourExtension
     private int gameDuration = 20;
     #endregion
     #region 其他变量
+    private Logger logger = Logger.GetInstance();
     private int leftSeconds = 0;
     private GameEvents gameEvent = GameEvents.End;
     private Queue<System.Action> actions = new Queue<System.Action>();
@@ -39,6 +40,9 @@ public class MonitorView : MonoBehaviourExtension
     {
         this.receiver.ReceiveDataAction = this.OnReceiveData;
         this.InvokeRepeating("Heartbeat", 0f, 0.05f);
+
+        Application.logMessageReceived += OnCatchUnhandledLog;
+        Application.logMessageReceivedThreaded += OnCatchUnhandledLog;
     }
     private void Update()
     {
@@ -51,6 +55,8 @@ public class MonitorView : MonoBehaviourExtension
     private void OnDestroy()
     {
         this.CancelInvoke("Heartbeat");
+        Application.logMessageReceived -= OnCatchUnhandledLog;
+        Application.logMessageReceivedThreaded -= OnCatchUnhandledLog;
     }
     /************************************************自 定 义 方 法************************************************/
     //发送心跳包
@@ -359,6 +365,22 @@ public class MonitorView : MonoBehaviourExtension
             {
                 Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
             }));
+        }
+    }
+    //当收到未处理的日志时
+    private void OnCatchUnhandledLog(string condition, string stackTrace, LogType type)
+    {
+        switch (type)
+        {
+            case LogType.Log:
+                this.logger.Debug(condition);
+                break;
+            case LogType.Error:
+            case LogType.Exception:
+            case LogType.Warning:
+            case LogType.Assert:
+                this.logger.Error(condition);
+                break;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using HLSoft.Framework.Util;
+﻿using EarlyAnt.Framework.Util;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -12,15 +12,16 @@ public class DataSender : MonoBehaviourExtension
 {
     /************************************************属性与变量命名************************************************/
     [SerializeField]
-    private int localPort;           //本机端口号
+    private int localPort;                              //本机端口号
     [SerializeField]
-    private int remotePort;          //远程端口号
-    private IPEndPoint localEndPoint = null;    //本地地址端口号
-    private EndPoint remoteEndPoint = null;     //远程地址端口号
-    public bool Initialized { get; private set; }                    //是否已初始化
-    public Action InitializedAction;             //初始化委托
-    public Action<string> SendDataAction;       //发送数据委托
-    public Socket Channel { get; private set; } //套接字通道
+    private int remotePort;                             //远程端口号
+    private IPEndPoint localEndPoint = null;            //本地地址端口号
+    private EndPoint remoteEndPoint = null;             //远程地址端口号
+    public bool Initialized { get; private set; }       //是否已初始化
+    public Action InitializedAction;                    //初始化委托
+    public Action<string> SendDataAction;               //发送数据委托
+    public Socket Channel { get; private set; }         //套接字通道
+    private Logger logger = Logger.GetInstance();       //日志记录工具
     /************************************************Unity方法与事件***********************************************/
     void Start()
     {
@@ -68,7 +69,8 @@ public class DataSender : MonoBehaviourExtension
         }
         catch (Exception ex)
         {
-            print(string.Format("<><DataSender.Initialize>发送数据发生错误: {0}", ex.ToString()));
+            print(string.Format("send data error: {0}", ex.Message));
+            this.logger.Error(string.Format("send data error: {0}", ex.Message));
         }
     }
     //当发送数据时

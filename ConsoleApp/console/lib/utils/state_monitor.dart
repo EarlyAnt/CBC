@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-
 class StateMonitor {
   StateMonitor({required this.onStateChanged});
 

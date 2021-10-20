@@ -9,7 +9,6 @@ import 'package:qiniu_flutter_sdk/qiniu_flutter_sdk.dart';
 
 import '/data/command_data.dart';
 import '/data/player_data.dart';
-import '/data/session.dart';
 import '/ui_component/pop_button.dart';
 import '/utils/dio_util.dart';
 import '/utils/uint.dart';
@@ -38,6 +37,8 @@ class GameSettingViewState extends State<GameSettingView> {
   final GlobalKey<PopButtonState> _weakButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _aidButtonKey = GlobalKey();
   final GlobalKey<PopButtonState> _effectButtonKey = GlobalKey();
+  final FocusNode _nameFocusNode = FocusNode();
+  final FocusNode _healthFocusNode = FocusNode();
   final Storage _storage;
   final int _partSize = 4;
   late final UDP? _sender;
@@ -110,6 +111,7 @@ class GameSettingViewState extends State<GameSettingView> {
             ),
             child: TextField(
                 controller: _nameController,
+                focusNode: _nameFocusNode,
                 maxLength: 10,
                 maxLines: 1,
                 showCursor: true,
@@ -129,6 +131,7 @@ class GameSettingViewState extends State<GameSettingView> {
               child: const Text("设定"),
               onPressed: () {
                 uploadFile();
+                _nameFocusNode.unfocus();
               })),
     ]);
   }
@@ -148,6 +151,7 @@ class GameSettingViewState extends State<GameSettingView> {
               ),
               child: TextField(
                 controller: _healthController,
+                focusNode: _healthFocusNode,
                 maxLines: 1,
                 showCursor: true,
                 // keyboardType: TextInputType.number,
@@ -172,6 +176,7 @@ class GameSettingViewState extends State<GameSettingView> {
                 onPressed: () {
                   _sendStringMessage(CommandUtil.buildHealthCommand(
                       _playerData!.health, widget.player!));
+                  _healthFocusNode.unfocus();
                 })),
       ],
     );
@@ -342,6 +347,11 @@ class GameSettingViewState extends State<GameSettingView> {
       _aidButtonKey.currentState?.reset();
       _effectButtonKey.currentState?.reset();
     });
+  }
+
+  void unfocus() {
+    _nameFocusNode.unfocus();
+    _healthFocusNode.unfocus();
   }
 
   void onSelectedFile(File file) {

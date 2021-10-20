@@ -1,5 +1,5 @@
-﻿using HLSoft.Framework.Log4U;
-using HLSoft.Framework.Util;
+﻿using EarlyAnt.Framework.Log4U;
+using EarlyAnt.Framework.Util;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -26,7 +26,7 @@ public class DataReceiver : MonoBehaviour
     private IPEndPoint localEndPoint = null;                        //本地地址端口号
     private EndPoint remoteEndPoint = null;                         //远程地址端口号
     private StateObject stateObject = null;                         //异步通信数据
-    private SimpleLog log = new SimpleLog("debug.txt");
+    private Logger logger = Logger.GetInstance();                   //日志记录工具
     /************************************************Unity方法与事件***********************************************/
     void Start()
     {
@@ -98,11 +98,12 @@ public class DataReceiver : MonoBehaviour
             {
                 this.ReceiveRawDataAction(byteDatas);
                 print(string.Format("{0}->receive raw data: {1} bytes", DateTime.Now.ToyyyyMMddHHmmssfff(), byteDatas.Length));
+                this.logger.Debug(string.Format("receive raw data: {0} bytes", byteDatas.Length));
             }
             catch (Exception ex)
             {
-                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(raw data): {0}", ex.Message);
-                this.log.WriteLine(string.Format("<><DataReceiver.OnReceiveData>Error(raw data): {0}", ex.Message));
+                Debug.LogErrorFormat("receive data error(raw data): {0}", ex.Message);
+                this.logger.Error(string.Format("receive data error(raw data): {0}", ex.Message));
             }
         }
 
@@ -113,12 +114,12 @@ public class DataReceiver : MonoBehaviour
                 string receiveData = Encoding.Default.GetString(byteDatas, 0, dataLength);
                 this.ReceiveDataAction(receiveData);
                 print(string.Format("{0}->receive text data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
-                this.log.WriteLine(string.Format("{0}->receive text data: {1}", DateTime.Now.ToyyyyMMddHHmmssfff(), receiveData));
+                this.logger.Debug(string.Format("receive text data: {0}", receiveData));
             }
             catch (Exception ex)
             {
-                Debug.LogErrorFormat("<><DataReceiver.OnReceiveData>Error(text data): {0}", ex.Message);
-                this.log.WriteLine(string.Format("<><DataReceiver.OnReceiveData>Error(text data): {0}", ex.Message));
+                Debug.LogErrorFormat("receive data error(text data): {0}", ex.Message);
+                this.logger.Error(string.Format("receive data error(text data): {0}", ex.Message));
             }
         }
     }

@@ -274,11 +274,11 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Assets/3rd-Party/LitJson/Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="HLSoft.Framework.Log4U">
-      <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Assets/Plugins/HLSoft.Framework.Log4U.dll</HintPath>
+    <Reference Include="EarlyAnt.Framework.Log4U">
+      <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Assets/Plugins/EarlyAnt.Framework.Log4U.dll</HintPath>
     </Reference>
-    <Reference Include="HLSoft.Framework.Util">
-      <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Assets/Plugins/HLSoft.Framework.Util.dll</HintPath>
+    <Reference Include="EarlyAnt.Framework.Util">
+      <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Assets/Plugins/EarlyAnt.Framework.Util.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>D:/Workspace/UnityHank/CBC/Monitor/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>

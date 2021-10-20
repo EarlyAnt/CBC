@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:console/ui_component/toast.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import 'data/command_data.dart';
 import 'data/session.dart';
 import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
+import 'ui_component/status_bar.dart';
 import 'ui_component/text_toggle.dart';
 import 'utils/state_monitor.dart';
 
@@ -47,12 +49,12 @@ class _ConsoleViewState extends State<ConsoleView> {
   final GlobalKey<GameSettingViewState> _leftGameSettingViewKey = GlobalKey();
   final GlobalKey<GameSettingViewState> _rightGameSettingViewKey = GlobalKey();
   final GlobalKey<TextToggleState> _gameEventToggleKey = GlobalKey();
+  final GlobalKey<StatusBarState> _statusBarKey = GlobalKey();
   StateMonitor? _stateMonitor;
   String? _leftName, _rightName, _leftAvatar, _rightAvatar;
   Size? _screenSize;
   UDP? _sender;
   int? _leftSeconds;
-  ConnectStatus? _connectStatus;
 
   @override
   void initState() {
@@ -107,7 +109,7 @@ class _ConsoleViewState extends State<ConsoleView> {
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 const SizedBox(width: 5),
-                _statusBar(),
+                StatusBar(key: _statusBarKey),
               ],
             ),
             Row(
@@ -126,29 +128,6 @@ class _ConsoleViewState extends State<ConsoleView> {
     ]);
   }
 
-  Widget _statusBar() {
-    Color color = Colors.white;
-    String iconPath = 'assets/images/ui/wifi1.png';
-    switch (_connectStatus ?? ConnectStatus.unconnect) {
-      case ConnectStatus.unconnect:
-        break;
-      case ConnectStatus.connect:
-        color = Colors.red;
-        iconPath = 'assets/images/ui/wifi2.png';
-        break;
-      case ConnectStatus.better:
-        color = Colors.yellow[700]!;
-        iconPath = 'assets/images/ui/wifi3.png';
-        break;
-      case ConnectStatus.best:
-        color = Colors.green;
-        iconPath = 'assets/images/ui/wifi4.png';
-        break;
-    }
-
-    return Image.asset(iconPath, width: 14, height: 14, color: color);
-  }
-
   Widget _timerLabel() {
     _leftSeconds = _leftSeconds ?? 0;
     int minute = _leftSeconds! ~/ 60;
@@ -162,6 +141,9 @@ class _ConsoleViewState extends State<ConsoleView> {
   Widget _gameEventButton() {
     return TextToggle(_buttonDatas, 60, 30, (gameEvent) {
       currentGameEvent = gameEvent;
+      _leftGameSettingViewKey.currentState?.unfocus();
+      _rightGameSettingViewKey.currentState?.unfocus();
+
       switch (gameEvent) {
         case GameEvent.start:
           if (_leftName == null ||
@@ -185,12 +167,7 @@ class _ConsoleViewState extends State<ConsoleView> {
           break;
         case GameEvent.end:
           _sendStringMessage(CommandUtil.buildStopGameCommand());
-          _leftName = "";
-          _rightName = "";
-          _leftAvatar = "";
-          _rightAvatar = "";
-          _leftGameSettingViewKey.currentState?.reset();
-          _rightGameSettingViewKey.currentState?.reset();
+          _endGame();
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);
@@ -204,38 +181,24 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   Widget _effectButtonGroup() {
     return Padding(
-        padding: const EdgeInsets.only(top: 0),
-        child: Column(
-          children: [
-            // Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            //   Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 20),
-            //       child: _effectZoneLabel())
-            // ]),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-              child: SizedBox(
-                height: _screenSize!.height * 0.12,
-                child: GridView.builder(
-                    itemCount: _effectButtonDatas.length,
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 10,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 2),
-                    itemBuilder: (context, index) {
-                      return _effectButton(_effectButtonDatas[index]);
-                    }),
-              ),
-            ),
-          ],
-        ));
-  }
-
-  Widget _effectZoneLabel() {
-    return const Text("特效区");
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+      child: Container(
+        // color: Colors.amber,
+        alignment: Alignment.centerLeft,
+        height: _screenSize!.height * 0.1,
+        child: GridView.builder(
+            itemCount: _effectButtonDatas.length,
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 10,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 10,
+                childAspectRatio: 2),
+            itemBuilder: (context, index) {
+              return _effectButton(_effectButtonDatas[index]);
+            }),
+      ),
+    );
   }
 
   Widget _effectButton(EffectButtonData effectButtonData) {
@@ -308,6 +271,37 @@ class _ConsoleViewState extends State<ConsoleView> {
     });
   }
 
+  void _endGame() {
+    Size screenSize = MediaQuery.of(context).size;
+
+    AwesomeDialog(
+      context: context,
+      width: screenSize.width * 0.5,
+      dialogType: DialogType.QUESTION,
+      headerAnimationLoop: false,
+      animType: AnimType.BOTTOMSLIDE,
+      // title: '确认',
+      desc: '需要清空页面数据吗？',
+      btnOkText: '是',
+      // btnOkColor: Colors.grey[300],
+      btnCancelText: '否',
+      // btnCancelColor: Colors.greenAccent[400],
+      buttonsTextStyle: const TextStyle(color: Colors.black),
+      showCloseIcon: false,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        _leftName = "";
+        _rightName = "";
+        _leftAvatar = "";
+        _rightAvatar = "";
+        _leftGameSettingViewKey.currentState?.reset();
+        _rightGameSettingViewKey.currentState?.reset();
+      },
+    ).show();
+  }
+
   void _sendStringMessage(String? message) async {
     int? dataLength = await _sender?.send(
         utf8.encode(message!), Endpoint.broadcast(port: const Port(1000)));
@@ -342,7 +336,7 @@ class _ConsoleViewState extends State<ConsoleView> {
 
   void _onConnectStateChanged(ConnectStatus connectStatus) {
     setState(() {
-      _connectStatus = connectStatus;
+      _statusBarKey.currentState?.setStatus(connectStatus);
     });
   }
 }
