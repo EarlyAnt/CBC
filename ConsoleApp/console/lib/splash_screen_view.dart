@@ -12,7 +12,7 @@ class SplashScreenView extends StatefulWidget {
 
 class _SplashScreenViewState extends State<SplashScreenView>
     with SingleTickerProviderStateMixin {
-  final String _version = "1.3.0";
+  final String _version = "1.4.0";
   late AnimationController _controller;
   late Animation<double> _animation;
   bool _fadeOver = false;
