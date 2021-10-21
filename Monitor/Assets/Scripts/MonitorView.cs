@@ -256,9 +256,27 @@ public class MonitorView : MonoBehaviourExtension
     private void HandleHurt(NetData netData)
     {
         HurtData hurtData = this.GetGameData<HurtData>(netData.Data);
+        System.Action clearStatusAction = () =>
+        {
+            this.leftStatusPanel.SetHealth(0);
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+            this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+
+            this.rightStatusPanel.SetHealth(0);
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+            this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+        };
+
         if (hurtData.DataOwner == DataOwners.LEFT)
         {
-            System.Action setHurtAction = () => this.leftPlayerPanel.SetHurtCount(hurtData.Value);
+            System.Action setHurtAction = () =>
+            {
+                this.leftPlayerPanel.SetHurtCount(hurtData.Value);
+                clearStatusAction();
+            };
+
             if (this.leftPlayerPanel.HurtCount < hurtData.Value)
             {
                 this.animationPlayer.Play("cutcardleft", () =>
@@ -275,7 +293,12 @@ public class MonitorView : MonoBehaviourExtension
         }
         else if (hurtData.DataOwner == DataOwners.RIGHT)
         {
-            System.Action setHurtAction = () => this.rightPlayerPanel.SetHurtCount(hurtData.Value);
+            System.Action setHurtAction = () =>
+            {
+                this.rightPlayerPanel.SetHurtCount(hurtData.Value);
+                clearStatusAction();
+            };
+
             if (this.rightPlayerPanel.HurtCount < hurtData.Value)
             {
                 this.animationPlayer.Play("cutcardright", () =>

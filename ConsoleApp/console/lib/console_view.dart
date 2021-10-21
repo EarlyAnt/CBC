@@ -226,6 +226,10 @@ class _ConsoleViewState extends State<ConsoleView> {
                   onAvatarChanged: (avatarFileName) {
                     _leftAvatar = avatarFileName;
                   },
+                  onHurt: () {
+                    _leftGameSettingViewKey.currentState?.newRound();
+                    _rightGameSettingViewKey.currentState?.newRound();
+                  },
                 )),
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -245,6 +249,10 @@ class _ConsoleViewState extends State<ConsoleView> {
                   },
                   onAvatarChanged: (avatarFileName) {
                     _rightAvatar = avatarFileName;
+                  },
+                  onHurt: () {
+                    _leftGameSettingViewKey.currentState?.newRound();
+                    _rightGameSettingViewKey.currentState?.newRound();
                   },
                 )),
           ],

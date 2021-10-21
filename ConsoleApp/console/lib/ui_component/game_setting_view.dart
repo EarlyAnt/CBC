@@ -20,9 +20,14 @@ class GameSettingView extends StatefulWidget {
   final String? player;
   final Function(String)? onNameChanged;
   final Function(String)? onAvatarChanged;
+  final VoidCallback? onHurt;
 
   const GameSettingView(
-      {Key? key, this.player, this.onNameChanged, this.onAvatarChanged})
+      {Key? key,
+      this.player,
+      this.onNameChanged,
+      this.onAvatarChanged,
+      this.onHurt})
       : super(key: key);
 
   @override
@@ -59,6 +64,12 @@ class GameSettingViewState extends State<GameSettingView> {
     _nameController?.text = _playerData!.name;
     _healthController = TextEditingController();
     _healthController?.text = _playerData!.health.toString();
+
+    _healthFocusNode.addListener(() {
+      if (_healthFocusNode.hasFocus) {
+        _healthController?.text = "";
+      }
+    });
     _initSocket();
   }
 
@@ -154,7 +165,7 @@ class GameSettingViewState extends State<GameSettingView> {
                 focusNode: _healthFocusNode,
                 maxLines: 1,
                 showCursor: true,
-                // keyboardType: TextInputType.number,
+                keyboardType: TextInputType.number,
                 decoration: const InputDecoration(border: InputBorder.none),
                 inputFormatters: [
                   FilteringTextInputFormatter(RegExp("[0-9]"), //限制只允许输入数字
@@ -320,6 +331,7 @@ class GameSettingViewState extends State<GameSettingView> {
               onPressed: () {
                 _sendStringMessage(CommandUtil.buildHurtCommand(
                     _playerData!.hurt, widget.player!));
+                widget.onHurt?.call();
               }),
         ),
       ],
@@ -347,6 +359,13 @@ class GameSettingViewState extends State<GameSettingView> {
       _aidButtonKey.currentState?.reset();
       _effectButtonKey.currentState?.reset();
     });
+  }
+
+  void newRound() {
+    _weakButtonKey.currentState?.reset();
+    _aidButtonKey.currentState?.reset();
+    _effectButtonKey.currentState?.reset();
+    _healthController?.text = "";
   }
 
   void unfocus() {
