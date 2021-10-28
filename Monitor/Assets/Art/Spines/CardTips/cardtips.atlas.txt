@@ -1,20 +1,20 @@
 
 cardtips.png
-size: 314,29
+size: 1218,90
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 card_nor
   rotate: false
   xy: 4, 4
-  size: 151, 21
-  orig: 151, 21
+  size: 603, 82
+  orig: 603, 82
   offset: 0, 0
   index: -1
 cardtxt_warn
   rotate: false
-  xy: 159, 4
-  size: 151, 21
-  orig: 151, 21
+  xy: 611, 4
+  size: 603, 82
+  orig: 603, 82
   offset: 0, 0
   index: -1

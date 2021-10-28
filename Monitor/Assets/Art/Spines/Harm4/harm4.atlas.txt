@@ -1,20 +1,20 @@
 
 harm4.png
-size: 504,278
+size: 1974,1088
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 harm_b
   rotate: false
   xy: 4, 4
-  size: 246, 270
-  orig: 247, 270
+  size: 981, 1080
+  orig: 986, 1080
   offset: 0, 0
   index: -1
 harm_r
   rotate: false
-  xy: 254, 4
-  size: 246, 270
-  orig: 247, 270
-  offset: 1, 0
+  xy: 989, 4
+  size: 981, 1080
+  orig: 986, 1080
+  offset: 5, 0
   index: -1

@@ -1,14 +1,5 @@
 {
-"skeleton": {
-	"hash": "ip4hwuGP6sXBdN+/G7sW6rEk/Rs",
-	"spine": "3.8.83",
-	"x": -960.15,
-	"y": -539.12,
-	"width": 1920,
-	"height": 1080,
-	"images": "../../伤害牌四张/",
-	"audio": "E:/工作/对外合作/卡游/伤害牌四张"
-},
+"skeleton": { "hash": "ip4hwuGP6sXBdN+/G7sW6rEk/Rs", "spine": "3.8.83", "images": "../../伤害牌四张/", "audio": "E:/工作/对外合作/卡游/伤害牌四张" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "bone", "parent": "root", "length": 240.72, "x": -123.47, "y": -559.4 },
