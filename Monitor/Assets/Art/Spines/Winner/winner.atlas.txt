@@ -1,0 +1,118 @@
+
+winner.png
+size: 1928,1948
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ribbon1
+  rotate: false
+  xy: 462, 79
+  size: 18, 21
+  orig: 18, 21
+  offset: 0, 0
+  index: -1
+Ribbon10
+  rotate: false
+  xy: 328, 72
+  size: 66, 56
+  orig: 67, 57
+  offset: 0, 1
+  index: -1
+Ribbon11
+  rotate: false
+  xy: 398, 77
+  size: 60, 51
+  orig: 60, 51
+  offset: 0, 0
+  index: -1
+Ribbon2
+  rotate: true
+  xy: 173, 70
+  size: 58, 74
+  orig: 58, 74
+  offset: 0, 0
+  index: -1
+Ribbon3
+  rotate: true
+  xy: 462, 104
+  size: 24, 69
+  orig: 24, 69
+  offset: 0, 0
+  index: -1
+Ribbon4
+  rotate: false
+  xy: 251, 60
+  size: 73, 68
+  orig: 74, 75
+  offset: 0, 6
+  index: -1
+Ribbon5
+  rotate: false
+  xy: 82, 72
+  size: 87, 56
+  orig: 88, 56
+  offset: 0, 0
+  index: -1
+Ribbon6
+  rotate: false
+  xy: 4, 51
+  size: 74, 77
+  orig: 75, 77
+  offset: 1, 0
+  index: -1
+Ribbon7
+  rotate: false
+  xy: 568, 104
+  size: 22, 24
+  orig: 22, 25
+  offset: 0, 1
+  index: -1
+Ribbon8
+  rotate: true
+  xy: 535, 100
+  size: 28, 29
+  orig: 29, 29
+  offset: 1, 0
+  index: -1
+Ribbon9
+  rotate: true
+  xy: 4, 4
+  size: 43, 60
+  orig: 48, 63
+  offset: 4, 1
+  index: -1
+board
+  rotate: false
+  xy: 4, 328
+  size: 1920, 532
+  orig: 1920, 532
+  offset: 0, 0
+  index: -1
+loser
+  rotate: false
+  xy: 922, 129
+  size: 792, 195
+  orig: 792, 201
+  offset: 0, 6
+  index: -1
+mask
+  rotate: false
+  xy: 4, 864
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+vs
+  rotate: true
+  xy: 1718, 9
+  size: 315, 194
+  orig: 323, 194
+  offset: 8, 0
+  index: -1
+winner
+  rotate: false
+  xy: 4, 132
+  size: 914, 192
+  orig: 914, 201
+  offset: 0, 6
+  index: -1

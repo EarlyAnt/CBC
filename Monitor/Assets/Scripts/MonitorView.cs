@@ -195,6 +195,14 @@ public class MonitorView : MonoBehaviourExtension
                 break;
             case GameEvents.Pause:
                 this.gameEvent = eventData.GameEvent;
+                GameOverAnimation animation = this.animationPlayer.Play("gameoverleft",
+                    () => this.InvokeRepeating("RefreshTimer", 0, 1)) as GameOverAnimation;
+                if (animation != null)
+                {
+                    animation.SetPlayerData(this.leftPlayerPanel.GetName(), this.rightPlayerPanel.GetName(),
+                                            this.leftPlayerPanel.GetAvatar(), this.rightPlayerPanel.GetAvatar());
+                    animation.Play();
+                }
                 break;
             case GameEvents.End:
                 this.gameEvent = eventData.GameEvent;
@@ -222,23 +230,25 @@ public class MonitorView : MonoBehaviourExtension
         this.leftSeconds = 0;
         this.timer.text = "00:00";
 
-        this.leftPlayerPanel.SetAvatar(null);
-        this.leftPlayerPanel.SetName("蓝方玩家");
-        this.leftPlayerPanel.SetCardCount(40);
-        this.leftPlayerPanel.SetHurtCount(0);
-        this.leftStatusPanel.SetHealth(0);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+        //this.leftPlayerPanel.SetAvatar(null);
+        //this.leftPlayerPanel.SetName("蓝方玩家");
+        //this.leftPlayerPanel.SetCardCount(40);
+        //this.leftPlayerPanel.SetHurtCount(0);
+        //this.leftStatusPanel.SetHealth(0);
+        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
 
-        this.rightPlayerPanel.SetAvatar(null);
-        this.rightPlayerPanel.SetName("红方玩家");
-        this.rightPlayerPanel.SetCardCount(40);
-        this.rightPlayerPanel.SetHurtCount(0);
-        this.rightStatusPanel.SetHealth(0);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+        //this.rightPlayerPanel.SetAvatar(null);
+        //this.rightPlayerPanel.SetName("红方玩家");
+        //this.rightPlayerPanel.SetCardCount(40);
+        //this.rightPlayerPanel.SetHurtCount(0);
+        //this.rightStatusPanel.SetHealth(0);
+        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+
+        this.animationPlayer.Stop(typeof(GameOverAnimation));
     }
     //处理音效
     private void HandleAudio(NetData netData)
@@ -440,12 +450,28 @@ public class PlayerPanel
         this.avatarBox.sprite = avatar != null ? avatar : Resources.Load<Sprite>("Images/profile");
     }
     /// <summary>
+    /// 获取头像
+    /// </summary>
+    /// <returns></returns>
+    public Sprite GetAvatar()
+    {
+        return this.avatarBox.sprite;
+    }
+    /// <summary>
     /// 设置姓名
     /// </summary>
     /// <param name="name"></param>
     public void SetName(string name)
     {
         this.nameBox.text = name;
+    }
+    /// <summary>
+    /// 获取名字
+    /// </summary>
+    /// <returns></returns>
+    public string GetName()
+    {
+        return this.nameBox.text;
     }
     /// <summary>
     /// 设置卡牌数量

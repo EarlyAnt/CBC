@@ -17,20 +17,23 @@ public class AnimationPlayer : MonoBehaviourExtension
     private void Start()
     {
         animationInfos = new Dictionary<string, AnimationInfo>();
-        animationInfos.Add("gamestart", new AnimationInfo() { Animation = "Prefabs/GameStart" });
-        animationInfos.Add("cutcardleft", new AnimationInfo() { Animation = "Prefabs/CutCardLeft" });
-        animationInfos.Add("cutcardright", new AnimationInfo() { Animation = "Prefabs/CutCardRight" });
-        animationInfos.Add("countdown", new AnimationInfo() { Animation = "Prefabs/CountDown" });
-        animationInfos.Add("harm4left", new AnimationInfo() { Animation = "Prefabs/Harm4Left" });
-        animationInfos.Add("harm4right", new AnimationInfo() { Animation = "Prefabs/Harm4Right" });
-        animationInfos.Add("cardtipsleft", new AnimationInfo() { Animation = "Prefabs/CardTipsLeft" });
-        animationInfos.Add("cardtipsright", new AnimationInfo() { Animation = "Prefabs/CardTipsRight" });
-        animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardS" });
-        animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/rare_card", Animation = "Prefabs/RareCardSS" });
+        animationInfos.Add("gamestart", new AnimationInfo() { Path = "Prefabs/", Name = "GameStart" });
+        animationInfos.Add("gameoverleft", new AnimationInfo() { Path = "Prefabs/", Name = "GameOverLeft" });
+        animationInfos.Add("gameoverright", new AnimationInfo() { Path = "Prefabs/", Name = "GameOverRight" });
+        animationInfos.Add("cutcardleft", new AnimationInfo() { Path = "Prefabs/", Name = "CutCardLeft" });
+        animationInfos.Add("cutcardright", new AnimationInfo() { Path = "Prefabs/", Name = "CutCardRight" });
+        animationInfos.Add("countdown", new AnimationInfo() { Path = "Prefabs/", Name = "CountDown" });
+        animationInfos.Add("harm4left", new AnimationInfo() { Path = "Prefabs/", Name = "Harm4Left" });
+        animationInfos.Add("harm4right", new AnimationInfo() { Path = "Prefabs/", Name = "Harm4Right" });
+        animationInfos.Add("cardtipsleft", new AnimationInfo() { Path = "Prefabs/", Name = "CardTipsLeft" });
+        animationInfos.Add("cardtipsright", new AnimationInfo() { Path = "Prefabs/", Name = "CardTipsRight" });
+        animationInfos.Add("cr", new AnimationInfo() { Audio = "Audios/rare_card", Path = "Prefabs/", Name = "RareCardS" });
+        animationInfos.Add("ur", new AnimationInfo() { Audio = "Audios/rare_card", Path = "Prefabs/", Name = "RareCardSS" });
         animationInfos.Add("guzhang", new AnimationInfo() { Audio = "Audios/guzhang2" });
         animationInfos.Add("huanhu", new AnimationInfo() { Audio = "Audios/huanhu" });
     }
     /************************************************自 定 义 方 法************************************************/
+    //播放动画
     public BaseAnimation Play(string animationName, System.Action callback = null, bool single = true)
     {
         BaseAnimation baseAnimation = null;
@@ -49,10 +52,11 @@ public class AnimationPlayer : MonoBehaviourExtension
             this.audioPlayer.PlayOneShot(audioClip);
         }
 
-        if (!string.IsNullOrEmpty(animationInfo.Animation))
+        if (!string.IsNullOrEmpty(animationInfo.Name))
         {
-            Object animationObject = Resources.Load(animationInfo.Animation);
+            Object animationObject = Resources.Load(animationInfo.FullName);
             GameObject gameObject = GameObject.Instantiate(animationObject) as GameObject;
+            gameObject.name = animationInfo.Name;
             gameObject.transform.parent = this.animationRoot;
             gameObject.transform.localPosition = Vector3.zero;
             gameObject.transform.localRotation = Quaternion.identity;
@@ -66,25 +70,62 @@ public class AnimationPlayer : MonoBehaviourExtension
 
         return baseAnimation;
     }
-
+    //判断指定动画是否仍在播放
     public bool IsPlaying(string animationName)
     {
         if (!this.animationInfos.ContainsKey(animationName))
             return false;
 
-        string prefabName = this.animationInfos[animationName].Animation;
+        string prefabName = this.animationInfos[animationName].Name;
         if (string.IsNullOrEmpty(prefabName))
             return false;
 
-        prefabName = prefabName.Replace("Prefabs/", "");
         BaseAnimation[] animations = GameObject.FindObjectsOfType<BaseAnimation>();
         bool existed = animations != null && animations.Length > 0 && animations.ToList().Exists(t => t.name.Contains(prefabName));
         return existed;
+    }
+    //停止播放并删除指定动画
+    public void Stop(string animationName)
+    {
+        if (!this.animationInfos.ContainsKey(animationName))
+            return;
+
+        string prefabName = this.animationInfos[animationName].Name;
+        if (string.IsNullOrEmpty(prefabName))
+            return;
+
+        GameObject animationObject = GameObject.Find(prefabName);
+        if (animationObject != null)
+            GameObject.Destroy(animationObject);
+    }
+    //删除指定类型的动画
+    public void Stop(System.Type type)
+    {
+        Object[] animationObjects = GameObject.FindObjectsOfType(type);
+        if (animationObjects != null && animationObjects.Length > 0)
+        {
+            foreach (var animationObject in animationObjects)
+            {
+                GameObject gameObject = GameObject.Find(animationObject.name);
+                if (gameObject != null)
+                    GameObject.DestroyImmediate(gameObject);
+            }
+        }
     }
 }
 
 public class AnimationInfo
 {
     public string Audio { get; set; }
-    public string Animation { get; set; }
+    public string Path { get; set; }
+    public string Name { get; set; }
+    public string FullName
+    {
+        get
+        {
+            string path = string.IsNullOrEmpty(this.Path) ? "" : this.Path;
+            string name = string.IsNullOrEmpty(this.Name) ? "" : this.Name;
+            return path + name;
+        }
+    }
 }
