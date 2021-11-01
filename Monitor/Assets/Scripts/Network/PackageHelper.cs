@@ -325,5 +325,14 @@ public class PlayerInfo
     public string LeftAvatar { get; set; }
     public string RightAvatar { get; set; }
 }
+
+/// <summary>
+/// 游戏结束信息
+/// </summary>
+public class GameOver
+{
+    public string Winner { get; set; }
+    public bool ClearData { get; set; }
+}
 #endregion
 

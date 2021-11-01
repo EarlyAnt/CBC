@@ -140,6 +140,13 @@ public class MonitorView : MonoBehaviourExtension
             }
         }
     }
+    //停止计时器
+    private void CancelTimer()
+    {
+        this.CancelInvoke("RefreshTimer");
+        this.leftSeconds = 0;
+        this.timer.text = "00:00";
+    }
     //处理游戏事件
     private void HandleGameEvent(NetData netData)
     {
@@ -195,18 +202,41 @@ public class MonitorView : MonoBehaviourExtension
                 break;
             case GameEvents.Pause:
                 this.gameEvent = eventData.GameEvent;
-                GameOverAnimation animation = this.animationPlayer.Play("gameoverleft",
-                    () => this.InvokeRepeating("RefreshTimer", 0, 1)) as GameOverAnimation;
-                if (animation != null)
-                {
-                    animation.SetPlayerData(this.leftPlayerPanel.GetName(), this.rightPlayerPanel.GetName(),
-                                            this.leftPlayerPanel.GetAvatar(), this.rightPlayerPanel.GetAvatar());
-                    animation.Play();
-                }
                 break;
             case GameEvents.End:
                 this.gameEvent = eventData.GameEvent;
-                this.EndGame();
+                this.CancelTimer();
+                this.animationPlayer.Stop(typeof(GameOverAnimation));
+
+                if (eventData.Parameter != null)
+                {
+                    GameOver gameOver = JsonUtil.String2Json<GameOver>(eventData.Parameter.ToString());
+
+                    string animationName = "";
+                    switch (gameOver.Winner.ToLower())
+                    {
+                        case "winner.blue":
+                            animationName = "gameoverleft";
+                            break;
+                        case "winner.red":
+                            animationName = "gameoverright";
+                            break;
+                    }
+
+                    if (animationName != "")
+                    {
+                        GameOverAnimation animation = this.animationPlayer.Play(animationName) as GameOverAnimation;
+                        if (animation != null)
+                        {
+                            animation.SetPlayerData(this.leftPlayerPanel.GetName(), this.rightPlayerPanel.GetName(),
+                                                    this.leftPlayerPanel.GetAvatar(), this.rightPlayerPanel.GetAvatar());
+                            animation.Play();
+                        }
+                    }
+
+                    if (gameOver.ClearData)
+                        this.ClearData();
+                }
                 break;
         }
     }
@@ -226,28 +256,8 @@ public class MonitorView : MonoBehaviourExtension
     //结束游戏
     private void EndGame()
     {
-        this.CancelInvoke("RefreshTimer");
-        this.leftSeconds = 0;
-        this.timer.text = "00:00";
-
-        //this.leftPlayerPanel.SetAvatar(null);
-        //this.leftPlayerPanel.SetName("蓝方玩家");
-        //this.leftPlayerPanel.SetCardCount(40);
-        //this.leftPlayerPanel.SetHurtCount(0);
-        //this.leftStatusPanel.SetHealth(0);
-        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        //this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
-
-        //this.rightPlayerPanel.SetAvatar(null);
-        //this.rightPlayerPanel.SetName("红方玩家");
-        //this.rightPlayerPanel.SetCardCount(40);
-        //this.rightPlayerPanel.SetHurtCount(0);
-        //this.rightStatusPanel.SetHealth(0);
-        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
-        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
-        //this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
-
+        this.CancelTimer();
+        this.ClearData();
         this.animationPlayer.Stop(typeof(GameOverAnimation));
     }
     //处理音效
@@ -399,6 +409,27 @@ public class MonitorView : MonoBehaviourExtension
                 Debug.LogErrorFormat("<><MonitorView.OnReceiveData>Error: {0}", failureInfo.Message);
             }));
         }
+    }
+    //清空界面数据
+    private void ClearData()
+    {
+        this.leftPlayerPanel.SetAvatar(null);
+        this.leftPlayerPanel.SetName("蓝方玩家");
+        this.leftPlayerPanel.SetCardCount(40);
+        this.leftPlayerPanel.SetHurtCount(0);
+        this.leftStatusPanel.SetHealth(0);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.leftStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
+
+        this.rightPlayerPanel.SetAvatar(null);
+        this.rightPlayerPanel.SetName("红方玩家");
+        this.rightPlayerPanel.SetCardCount(40);
+        this.rightPlayerPanel.SetHurtCount(0);
+        this.rightStatusPanel.SetHealth(0);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Weak, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Aid, false);
+        this.rightStatusPanel.SetStatus(StatusPanel.Items.Effect, false);
     }
     //当收到未处理的日志时
     private void OnCatchUnhandledLog(string condition, string stackTrace, LogType type)

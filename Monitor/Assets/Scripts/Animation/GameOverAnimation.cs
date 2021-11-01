@@ -48,8 +48,6 @@ public class GameOverAnimation : BaseAnimation
     {
         this.rootObject.SetActive(true);
         this.intoSpine.gameObject.SetActive(true);
-        //this.intoSpine.AnimationState.ClearTracks();
-        //this.idleSpine.AnimationState.ClearTracks();
 
         this.intoSpine.AnimationState.SetAnimation(0, this.intoAnimation, false).Complete += (trackEntry) =>
         {
