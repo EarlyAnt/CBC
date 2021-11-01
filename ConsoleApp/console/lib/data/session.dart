@@ -1,3 +1,3 @@
-import 'command_data.dart';
+import 'common_data.dart';
 
 GameEvent? currentGameEvent;

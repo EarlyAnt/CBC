@@ -1,3 +1,5 @@
+import 'common_data.dart';
+
 class CommandUtil {
   static String buildHealthCommand(int health, String player) {
     return "{\"Tag\":\"health\",\"Data\":{\"Value\":$health,\"DataOwner\":\"$player\"}}";
@@ -32,8 +34,8 @@ class CommandUtil {
     return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.pause}\"}}";
   }
 
-  static String buildStopGameCommand() {
-    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.end}\"}}";
+  static String buildStopGameCommand(Winner winner, bool clearData) {
+    return "{\"Tag\":\"event\",\"Data\":{\"GameEventString\":\"${GameEvent.end}\",\"Parameter\":{\"winner\":\"$winner\",\"clearData\":\"$clearData\"}}}";
   }
 
   static String buildAvatarNameCommand(
@@ -49,8 +51,6 @@ class CommandUtil {
     return "{\"Tag\":\"animation\",\"Data\":{\"EffectFile\":\"$animation\"}}";
   }
 }
-
-enum GameEvent { start, pause, end }
 
 /*
   * command list:

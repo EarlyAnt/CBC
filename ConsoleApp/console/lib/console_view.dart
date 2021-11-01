@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:console/ui_component/toast.dart';
 import 'package:flutter/material.dart';
 
+import 'data/common_data.dart';
 import 'data/command_data.dart';
 import 'data/session.dart';
+import 'dialog/game_over_dialog.dart';
 import 'plugins/udp/udp.dart';
 import 'ui_component/game_setting_view.dart';
 import 'ui_component/status_bar.dart';
@@ -166,8 +167,7 @@ class _ConsoleViewState extends State<ConsoleView> {
           _sendStringMessage(CommandUtil.buildPauseGameCommand());
           break;
         case GameEvent.end:
-          _sendStringMessage(CommandUtil.buildStopGameCommand());
-          _endGame();
+          _endGame(context);
           break;
       }
     }, spacing: 5, defaultButtonIndex: 2, key: _gameEventToggleKey);
@@ -279,35 +279,22 @@ class _ConsoleViewState extends State<ConsoleView> {
     });
   }
 
-  void _endGame() {
-    Size screenSize = MediaQuery.of(context).size;
+  void _endGame(BuildContext context) async {
+    DialogResult dialogResult = await GameOverDialog.show(context);
+    print(
+        'dialogResult->winner: ${dialogResult.winner}, clearData: ${dialogResult.clearData}');
 
-    AwesomeDialog(
-      context: context,
-      width: screenSize.width * 0.5,
-      dialogType: DialogType.QUESTION,
-      headerAnimationLoop: false,
-      animType: AnimType.BOTTOMSLIDE,
-      // title: '确认',
-      desc: '需要清空页面数据吗？',
-      btnOkText: '是',
-      // btnOkColor: Colors.grey[300],
-      btnCancelText: '否',
-      // btnCancelColor: Colors.greenAccent[400],
-      buttonsTextStyle: const TextStyle(color: Colors.black),
-      showCloseIcon: false,
-      dismissOnTouchOutside: false,
-      dismissOnBackKeyPress: false,
-      btnCancelOnPress: () {},
-      btnOkOnPress: () {
-        _leftName = "";
-        _rightName = "";
-        _leftAvatar = "";
-        _rightAvatar = "";
-        _leftGameSettingViewKey.currentState?.reset();
-        _rightGameSettingViewKey.currentState?.reset();
-      },
-    ).show();
+    _sendStringMessage(CommandUtil.buildStopGameCommand(
+        dialogResult.winner ?? Winner.none, dialogResult.clearData ?? false));
+
+    if (dialogResult.clearData ?? false) {
+      _leftName = "";
+      _rightName = "";
+      _leftAvatar = "";
+      _rightAvatar = "";
+      _leftGameSettingViewKey.currentState?.reset();
+      _rightGameSettingViewKey.currentState?.reset();
+    }
   }
 
   void _sendStringMessage(String? message) async {
